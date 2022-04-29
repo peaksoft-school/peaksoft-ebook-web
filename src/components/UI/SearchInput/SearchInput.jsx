@@ -1,18 +1,29 @@
 import styled from '@emotion/styled/macro'
 import React from 'react'
-import { ReactComponent as Search } from '../../assets/icons/search.svg'
+import { ReactComponent as Search } from '../../../assets/icons/search.svg'
+import { FoundDataList } from './FoundDataList/FoundDataList'
 
-export const SearchInput = (props) => {
+export const SearchInput = ({ onChange, value, onClick, booksList }) => {
    return (
-      <StyledSearchInput>
-         <Input
-            placeholder="Искать жанр, книги, авторов, издательства... "
-            {...props}
-         />
-         <Search />
-      </StyledSearchInput>
+      <SearchInputWrapper>
+         <StyledSearchInput>
+            <Input
+               placeholder="Искать жанр, книги, авторов, издательства... "
+               type="text"
+               onChange={onChange}
+               value={value}
+            />
+            <Search onClick={onClick} />
+         </StyledSearchInput>
+         {booksList.length > 0 && <FoundDataList booksList={booksList} />}
+      </SearchInputWrapper>
    )
 }
+
+const SearchInputWrapper = styled.div`
+   width: 895px;
+   margin: 50px;
+`
 
 const Input = styled.input`
    width: 100%;
@@ -59,9 +70,9 @@ const Input = styled.input`
    }
 `
 const StyledSearchInput = styled.div`
+   background-color: #fafafa;
    transition: border 0.3s ease;
-   margin: 15px;
-   width: 895px;
+   width: 100%;
    height: 40px;
    cursor: auto;
    outline: none;
