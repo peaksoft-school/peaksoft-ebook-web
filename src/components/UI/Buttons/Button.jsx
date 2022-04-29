@@ -1,14 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
-// import { theme } from '../../assets/styles/styles'
 
 export const Button = (props) => {
    return <StyledButton {...props}>{props.children}</StyledButton>
 }
 
 const StyledButton = styled.button`
-   width: ${({ width }) => width || ''};
-   height: ${({ height }) => height || ''};
    background-color: ${({ bgColor }) => bgColor || ''};
    background: ${({ background }) => background || ''};
    outline: ${({ outline }) => outline || ''};

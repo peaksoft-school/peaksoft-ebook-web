@@ -6,8 +6,6 @@ export const Textbutton = (props) => {
 }
 
 const StyledUnderButton = styled.button`
-   width: ${({ width }) => width || ''};
-   height: ${({ height }) => height || ''};
    padding: ${({ padding }) => padding || '10px 24px 10px 24px'};
    line-height: ${({ lHeight }) => lHeight || ''};
    color: ${({ color }) => color || '#ffffff'};
