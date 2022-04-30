@@ -3,7 +3,13 @@ import React from 'react'
 import { ReactComponent as Search } from '../../../assets/icons/search.svg'
 import { FoundDataList } from './FoundDataList/FoundDataList'
 
-export const SearchInput = ({ onChange, value, onClick, booksList }) => {
+export const SearchInput = ({
+   onChange,
+   value,
+   onClick,
+   booksList,
+   onClickToItem,
+}) => {
    return (
       <SearchInputWrapper>
          <StyledSearchInput>
@@ -15,7 +21,12 @@ export const SearchInput = ({ onChange, value, onClick, booksList }) => {
             />
             <Search onClick={onClick} />
          </StyledSearchInput>
-         {booksList.length > 0 && <FoundDataList booksList={booksList} />}
+         {booksList.length > 0 && (
+            <FoundDataList
+               booksList={booksList}
+               onClickToItem={onClickToItem}
+            />
+         )}
       </SearchInputWrapper>
    )
 }

@@ -2,11 +2,15 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 import { FoundDataItem } from './FoundDataItem'
 
-export const FoundDataList = ({ booksList }) => {
+export const FoundDataList = ({ booksList, onClickToItem }) => {
    return (
-      <DropDownList booksList={booksList}>
+      <DropDownList maxLengthOfBooks={booksList.length}>
          {booksList.map((book) => (
-            <FoundDataItem key={book.id} nameOfbook={book.nameOfBook} />
+            <FoundDataItem
+               key={book.id}
+               nameOfbook={book.nameOfBook}
+               onClickToItem={onClickToItem}
+            />
          ))}
       </DropDownList>
    )
@@ -18,7 +22,8 @@ const DropDownList = styled.ul`
    max-height: 151px;
    font-family: 'Open Sans';
    background-color: #ffffff;
-   overflow-y: ${({ booksList }) => (booksList.length > 4 ? 'scroll' : '')};
+   overflow-y: ${({ maxLengthOfBooks }) =>
+      maxLengthOfBooks > 4 ? 'scroll' : ''};
    &::-webkit-scrollbar {
       background-color: transparent;
       width: 0.3rem;
