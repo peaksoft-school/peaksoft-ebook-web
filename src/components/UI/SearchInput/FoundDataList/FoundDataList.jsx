@@ -2,14 +2,14 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 import { FoundDataItem } from './FoundDataItem'
 
-export const FoundDataList = ({ booksList, onClickToItem }) => {
+export const FoundDataList = ({ booksList, onOptionItemSelect }) => {
    return (
       <DropDownList maxLengthOfBooks={booksList.length}>
          {booksList.map((book) => (
             <FoundDataItem
                key={book.id}
-               nameOfbook={book.nameOfBook}
-               onClickToItem={onClickToItem}
+               book={book}
+               onOptionItemSelect={onOptionItemSelect}
             />
          ))}
       </DropDownList>

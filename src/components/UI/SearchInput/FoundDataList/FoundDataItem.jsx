@@ -1,8 +1,12 @@
 import styled from '@emotion/styled'
 import React from 'react'
 
-export const FoundDataItem = ({ nameOfbook, onClickToItem }) => {
-   return <StyledListItem onClick={onClickToItem}>{nameOfbook}</StyledListItem>
+export const FoundDataItem = ({ book, onOptionItemSelect }) => {
+   return (
+      <StyledListItem onClick={() => onOptionItemSelect(book)}>
+         {book.nameOfBook}
+      </StyledListItem>
+   )
 }
 
 const StyledListItem = styled.li`

@@ -8,7 +8,7 @@ export const SearchInput = ({
    value,
    onClick,
    booksList,
-   onClickToItem,
+   onOptionItemSelect,
 }) => {
    return (
       <SearchInputWrapper>
@@ -24,7 +24,7 @@ export const SearchInput = ({
          {booksList.length > 0 && (
             <FoundDataList
                booksList={booksList}
-               onClickToItem={onClickToItem}
+               onOptionItemSelect={onOptionItemSelect}
             />
          )}
       </SearchInputWrapper>
