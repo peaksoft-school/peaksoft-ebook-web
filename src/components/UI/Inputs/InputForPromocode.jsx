@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as ArrowRight } from '../../../assets/icons/ArrowRight.svg'
 
-export const InputForPromocode = (props) => {
+export const InputForPromocode = forwardRef((props, ref) => {
    return (
       <StyledInputVectorIcon>
-         <input {...props} />
-         {props.children}
+         <input {...props} ref={ref} />
+
          <ArrowRight className="svg" />
       </StyledInputVectorIcon>
    )
-}
+})
 const StyledInputVectorIcon = styled.div`
    width: ${({ width }) => (width ? `${width}px` : '252px')};
    height: 34px;

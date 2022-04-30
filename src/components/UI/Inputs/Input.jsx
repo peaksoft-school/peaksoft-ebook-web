@@ -1,13 +1,9 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from '@emotion/styled'
 
-export const Input = (props) => {
-   return (
-      <div>
-         <StyledInput {...props}>{props.children}</StyledInput>
-      </div>
-   )
-}
+export const Input = forwardRef((props, ref) => {
+   return <StyledInput ref={ref} {...props} />
+})
 const StyledInput = styled.input`
    width: ${({ width }) => (width ? `${width}px` : '514px')};
    height: 41px;

@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg'
 import { ReactComponent as EyePassword } from '../../../assets/icons/EyePassword.svg'
 
-export const InputForPassword = (props) => {
+export const InputForPassword = forwardRef((props, ref) => {
    const [isEyeIconVisible, setIsEyeIconVisible] = useState(false)
+
    return (
       <StyledInputIcon Eye={Eye}>
-         <input type={isEyeIconVisible ? 'password' : 'text'} {...props} />
-         {props.children}
+         <input
+            ref={ref}
+            type={isEyeIconVisible ? 'password' : 'text'}
+            {...props}
+         />
          {isEyeIconVisible ? (
             <EyePassword
                className="svg"
@@ -19,7 +23,7 @@ export const InputForPassword = (props) => {
          )}
       </StyledInputIcon>
    )
-}
+})
 const StyledInputIcon = styled.div`
    width: ${({ width }) => (width ? `${width}px` : '514px')};
    height: 38px;
