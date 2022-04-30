@@ -22,5 +22,4 @@ const style = {
    bgcolor: 'background.paper',
    border: 'none',
    textAlign: 'center',
-   padding: '20px 95px 20px 95px',
 }
