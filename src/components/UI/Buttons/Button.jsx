@@ -13,15 +13,9 @@ const StyledButton = styled.button`
    font-size: ${({ fontSize }) => fontSize || '14px'};
    line-height: ${({ lHeight }) => lHeight || ''};
    color: ${({ color }) => color || '#ffffff'};
-   font-weight: ${({ fontWeight }) => fontWeight || '600'};
+   font-weight: ${({ fontWeight }) => fontWeight || ''};
    border: ${({ border }) => border || 'none'};
-   font-family: 'Open Sans', sans-serif;
-   font-style: SemiBold;
-   text-transform: none;
-   align-items: left;
-   border-radius: 0;
-   gap: 10px;
-   vertical-align: top;
+   font-family: 'Open Sans';
    cursor: pointer;
    &:hover {
       background-color: ${({ bgColorHover }) => bgColorHover || ''};

@@ -12,7 +12,7 @@ const StyledUnderButton = styled.button`
    outline: none;
    border: none;
    background: none;
-   weight: 400;
+   font-weight: 400;
    font-size: ${({ fontSize }) => fontSize || '16px'};
    font-family: 'Open Sans', sans-serif;
    font-style: SemiBold;
