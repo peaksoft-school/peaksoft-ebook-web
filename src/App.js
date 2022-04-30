@@ -1,10 +1,7 @@
-// import { AppRoutes } from './routes/AppRoutes'
-
-import { RadioButton } from './components/UI/RadioButton/RadioButton'
+import { AppRoutes } from './routes/AppRoutes'
 
 const App = () => {
-   return <RadioButton />
-   //  <AppRoutes />
+   return <AppRoutes />
 }
 
 export default App
