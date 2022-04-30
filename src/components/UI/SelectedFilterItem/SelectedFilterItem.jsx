@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { ReactComponent as SelectedFilterItemXIcon } from '../../../assets/icons/x-selected-filter-item.svg'
 
-export const SelectedFilterItem = (props) => {
+export const SelectedFilterItem = ({ children, onDeleteSelectedItem }) => {
    const [isHovered, setIsHovered] = useState(false)
    return (
       <SelectedFilterItemContainer
@@ -10,8 +10,8 @@ export const SelectedFilterItem = (props) => {
          onMouseLeave={() => setIsHovered(false)}
          isHovered={isHovered}
       >
-         {props.children}
-         <SelectedFilterItemXIcon />
+         {children}
+         <SelectedFilterItemXIcon onClick={onDeleteSelectedItem} />
       </SelectedFilterItemContainer>
    )
 }
