@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom'
 
 export const Backdrop = (props) => {
    return createPortal(
-      <StyledBackdrop {...props} />,
+      <StyledBackdrop onClick={props.onClose} />,
       document.getElementById('background')
    )
 }
