@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { GenreItem } from './GenreItem'
 
-export const GenreMenu = ({ genres }) => {
+export const GenreMenu = ({ genres, onGenreItem }) => {
    return (
       <GenreMenuContainer>
          {genres.map((genre) => (
@@ -10,6 +10,7 @@ export const GenreMenu = ({ genres }) => {
                key={Math.random().toString()}
                genre={genre.genre}
                count={genre.count}
+               onGenreItem={onGenreItem}
             />
          ))}
       </GenreMenuContainer>

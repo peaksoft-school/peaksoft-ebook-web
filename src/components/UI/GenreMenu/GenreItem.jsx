@@ -1,7 +1,7 @@
 import styled from '@emotion/styled/macro'
 import React from 'react'
 
-export const GenreItem = ({ genre, count }) => {
+export const GenreItem = ({ genre, count, onGenreItem }) => {
    const convertTo21Symbols = () => {
       if (genre.length > 22) {
          const genreAsArray = genre.split('')
@@ -11,7 +11,7 @@ export const GenreItem = ({ genre, count }) => {
       return genre
    }
    return (
-      <GenreItemContainer>
+      <GenreItemContainer onClick={onGenreItem}>
          <StyledGenre>{convertTo21Symbols()}</StyledGenre>
          <StyledCount>{count}</StyledCount>
       </GenreItemContainer>
