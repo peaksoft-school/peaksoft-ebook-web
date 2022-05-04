@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { createPortal } from 'react-dom'
+import ReactDOM from 'react-dom'
 
-export const Backdrop = (props) => {
-   return createPortal(
-      <StyledBackdrop onClick={props.onClose} />,
+export const Backdrop = ({ onClose }) => {
+   return ReactDOM.createPortal(
+      <StyledBackdrop onClick={onClose} />,
       document.getElementById('background')
    )
 }

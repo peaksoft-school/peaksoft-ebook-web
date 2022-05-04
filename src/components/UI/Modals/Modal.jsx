@@ -1,17 +1,19 @@
 import React from 'react'
-import { createPortal } from 'react-dom'
+import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import { Backdrop } from './Backdrop'
 
-export const Modal = ({ onCloseBackDrop, children }) => {
+export const Modal = ({ isOpen, onCloseBackDrop, children }) => {
    return (
-      <>
-         <Backdrop onClose={onCloseBackDrop} />
-         {createPortal(
-            <StyledModalWindow>{children}</StyledModalWindow>,
-            document.getElementById('modal')
-         )}
-      </>
+      isOpen && (
+         <>
+            <Backdrop onClose={onCloseBackDrop} />
+            {ReactDOM.createPortal(
+               <StyledModalWindow>{children}</StyledModalWindow>,
+               document.getElementById('modal')
+            )}
+         </>
+      )
    )
 }
 
