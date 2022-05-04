@@ -2,17 +2,9 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 
 export const GenreItem = ({ genre, count, onGenreItem }) => {
-   const convertTo21Symbols = () => {
-      if (genre.length > 22) {
-         const genreAsArray = genre.split('')
-         const convertedGenre = `${genreAsArray.splice(0, 19).join('')}...`
-         return convertedGenre
-      }
-      return genre
-   }
    return (
       <GenreItemContainer onClick={onGenreItem}>
-         <StyledGenre>{convertTo21Symbols()}</StyledGenre>
+         <StyledGenre>{genre}</StyledGenre>
          <StyledCount>{count}</StyledCount>
       </GenreItemContainer>
    )
@@ -31,9 +23,11 @@ const StyledGenre = styled.span`
    letter-spacing: 0.1em;
    color: #222222;
    font-weight: 400;
-   max-width: 233px;
+   width: 233px;
    height: 22px;
    overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
 `
 const GenreItemContainer = styled.p`
    display: flex;

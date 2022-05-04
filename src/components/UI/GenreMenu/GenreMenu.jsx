@@ -7,7 +7,7 @@ export const GenreMenu = ({ genres, onGenreItem }) => {
       <GenreMenuContainer>
          {genres.map((genre) => (
             <GenreItem
-               key={Math.random().toString()}
+               key={genre.genre}
                genre={genre.genre}
                count={genre.count}
                onGenreItem={onGenreItem}
