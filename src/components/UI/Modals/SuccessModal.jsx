@@ -6,33 +6,24 @@ import success from '../../../assets/icons/success.svg'
 import vector from '../../../assets/icons/vector.svg'
 import { Modal } from './Modal'
 
-export const SuccessModal = ({
-   message,
-   onClose,
-   onClick,
-   onCloseBackDrop,
-   isOpen,
-   props,
-}) => {
+export const SuccessModal = ({ onClose, onClick, onCloseBackDrop, isOpen }) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
          <SuccessConteiner>
             <SuccessImg>
                <SuccessIcon src={success} />
-               {!message && <CloseIcon src={vector} onClick={onClose} />}
+               <CloseIcon src={vector} onClick={onClose} />
             </SuccessImg>
-            <SuccessTitle>{props.title}</SuccessTitle>
-            {!message && (
-               <Button
-                  onClick={onClick}
-                  width="223px"
-                  bgColor="#1C1C1C"
-                  bgColorActive="#FF4C00"
-                  bgColorHover="#484848"
-               >
-                  Продолжить покупки
-               </Button>
-            )}
+            <SuccessTitle>Ваш заказ успешно оформлен!</SuccessTitle>
+            <Button
+               onClick={onClick}
+               width="223px"
+               bgColor="#1C1C1C"
+               bgColorActive="#FF4C00"
+               bgColorHover="#484848"
+            >
+               Продолжить покупки
+            </Button>
          </SuccessConteiner>
       </Modal>
    )
