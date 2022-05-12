@@ -1,12 +1,12 @@
 import styled from '@emotion/styled/macro'
 
-export const PopUp = ({ options, onMenuItem, ...props }) => {
+export const PopUp = ({ options, ...props }) => {
    return (
       <MenuContainer {...props}>
          {options &&
             options.map((option) => (
-               <MenuItem key={option.id} onClick={onMenuItem}>
-                  {option}
+               <MenuItem key={option.id} onClick={() => option.action()}>
+                  {option.title}
                </MenuItem>
             ))}
       </MenuContainer>

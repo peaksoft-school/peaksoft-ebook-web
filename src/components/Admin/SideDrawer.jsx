@@ -22,7 +22,7 @@ export const SideDrawer = () => {
          <nav>
             <ul>
                <li>
-                  <NavLink
+                  <StyledNavlink
                      to="applications"
                      className={({ isActive }) => (isActive ? 'active' : '')}
                   >
@@ -32,37 +32,37 @@ export const SideDrawer = () => {
                         <ApplicationsIcon />
                      )}
                      Заявки
-                  </NavLink>
+                  </StyledNavlink>
                </li>
                <li>
-                  <NavLink to="vendors">
+                  <StyledNavlink to="vendors">
                      {pathnameChangeHandler('/vendors') ? (
                         <FilledVendorIcon />
                      ) : (
                         <VendorIcon />
                      )}
                      Продавцы
-                  </NavLink>
+                  </StyledNavlink>
                </li>
                <li>
-                  <NavLink to="users">
+                  <StyledNavlink to="users">
                      {pathnameChangeHandler('/users') ? (
                         <FilledUserIcon />
                      ) : (
                         <UserIcon />
                      )}
                      Пользователи
-                  </NavLink>
+                  </StyledNavlink>
                </li>
                <li>
-                  <NavLink to="books">
+                  <StyledNavlink to="books">
                      {pathnameChangeHandler('/books') ? (
                         <FilledBooksIcon />
                      ) : (
                         <BooksIcon />
                      )}
                      Книги
-                  </NavLink>
+                  </StyledNavlink>
                </li>
             </ul>
          </nav>
@@ -99,13 +99,14 @@ const StyledContainer = styled.div`
    .active path {
       fill: #f34901;
    }
-   a {
-      width: 100%;
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-      font-size: 16px;
-   }
+`
+
+const StyledNavlink = styled(NavLink)`
+   width: 100%;
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   text-decoration: none;
+   color: white;
+   font-size: 16px;
 `

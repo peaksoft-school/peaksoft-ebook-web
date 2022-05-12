@@ -16,7 +16,14 @@ export const VendorHeader = () => {
    const handleClick = () => {
       setShowOptions(!showOptions)
    }
-   const options = ['Профиль', 'Выйти']
+   const options = [
+      {
+         title: 'Профиль',
+      },
+      {
+         title: 'Выйти',
+      },
+   ]
    const booksList = []
    return (
       <>

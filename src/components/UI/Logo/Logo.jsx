@@ -20,6 +20,7 @@ const StyledLogo = styled(Link)`
    color: #ffffff;
    text-align: center;
    justify-content: center;
+   display: block;
    margin: ${({ margin }) => margin || ''};
    padding: 20px;
    font-size: 30px;

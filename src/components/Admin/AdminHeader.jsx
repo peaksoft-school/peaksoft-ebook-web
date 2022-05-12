@@ -9,7 +9,11 @@ export const AdminHeader = () => {
    const handleClick = () => {
       setShowOptions(!showOptions)
    }
-   const options = ['Выйти']
+   const options = [
+      {
+         title: 'Выйти',
+      },
+   ]
    const booksList = []
    return (
       <AdminHeaderContainer>
@@ -17,7 +21,7 @@ export const AdminHeader = () => {
          <AdminTextContainer onClick={handleClick}>
             <ProfileIcon />
             <span>Администратор</span>
-            {showOptions && <PopUp options={options} />}
+            {showOptions && <PopUp right="20" top="75px" options={options} />}
          </AdminTextContainer>
       </AdminHeaderContainer>
    )
