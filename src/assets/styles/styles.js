@@ -1,3 +1,5 @@
+import styled from '@emotion/styled'
+
 export const theme = {
    primary: {
       black: '#222222',
@@ -18,3 +20,24 @@ export const theme = {
       errorRed: '#FFF5F5',
    },
 }
+
+export const AuthorizationContainer = styled.div`
+   min-width: 497px;
+   padding: 40px 30px;
+`
+
+export const AuthLinksContainer = styled.div`
+   margin: 0 auto;
+   width: 245px;
+   display: flex;
+   justify-content: space-between;
+`
+
+export const AuthLink = styled.p`
+   font-family: 'Open Sans';
+   font-weight: ${({ isActive }) => (isActive ? 600 : 400)};
+   font-size: 20px;
+   line-height: 130%;
+   color: ${({ isActive }) => (isActive ? '#222222' : '#969696')};
+   cursor: pointer;
+`
