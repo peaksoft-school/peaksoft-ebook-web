@@ -41,3 +41,11 @@ export const AuthLink = styled.p`
    color: ${({ isActive }) => (isActive ? '#222222' : '#969696')};
    cursor: pointer;
 `
+export const ErrorMessage = styled.p`
+   font-family: 'Nunito';
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 19px;
+   color: #f10000;
+   margin-bottom: 30px;
+`

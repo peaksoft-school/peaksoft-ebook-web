@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { appFetch } from '../api/appFetch'
+import { LOCAL_STORAGE_USER_KEY } from '../utils/constants/general'
 import { localstorage } from '../utils/helpers/general'
 
 export const signInUser = createAsyncThunk(
@@ -30,7 +31,7 @@ export const signUpClient = createAsyncThunk(
       }
    }
 )
-const localData = localstorage.get('user') || {}
+const localData = localstorage.get(LOCAL_STORAGE_USER_KEY) || {}
 
 const initialState = {
    isAuth: !!localData.token,

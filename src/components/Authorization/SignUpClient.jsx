@@ -8,6 +8,7 @@ import {
    AuthLink,
    AuthLinksContainer,
    AuthorizationContainer,
+   ErrorMessage,
    theme,
 } from '../../assets/styles/styles'
 import { authActions, signUpClient } from '../../store/auth-slice'
@@ -261,14 +262,6 @@ const SubscribeCheckboxContainer = styled.div`
    }
 `
 
-const ErrorMessage = styled.p`
-   font-family: 'Nunito';
-   font-weight: 400;
-   font-size: 14px;
-   line-height: 19px;
-   color: #f10000;
-   margin-bottom: 30px;
-`
 const ButtonsContainer = styled.div`
    height: 96px;
    display: flex;

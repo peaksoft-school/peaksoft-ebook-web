@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { AppRoutes } from './routes/AppRoutes'
+import { LOCAL_STORAGE_USER_KEY } from './utils/constants/general'
 import { localstorage } from './utils/helpers/general'
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
 
    useEffect(() => {
       if (token) {
-         localstorage.save('user', { token, role, userName })
+         localstorage.save(LOCAL_STORAGE_USER_KEY, { token, role, userName })
       }
    }, [token, role, userName])
 

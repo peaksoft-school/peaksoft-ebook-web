@@ -7,6 +7,7 @@ import {
    AuthLink,
    AuthLinksContainer,
    AuthorizationContainer,
+   ErrorMessage,
    theme,
 } from '../../assets/styles/styles'
 import { Button } from '../UI/Buttons/Button'
@@ -126,12 +127,4 @@ const RequestedFieldContainer = styled.div`
    justify-content: space-between;
    align-items: flex-start;
    min-height: 63px;
-`
-const ErrorMessage = styled.p`
-   font-family: 'Nunito';
-   font-weight: 400;
-   font-size: 14px;
-   line-height: 19px;
-   color: #f10000;
-   margin-bottom: 30px;
 `
