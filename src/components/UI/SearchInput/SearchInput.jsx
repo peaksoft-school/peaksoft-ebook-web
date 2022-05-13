@@ -33,7 +33,6 @@ export const SearchInput = ({
 
 const SearchInputWrapper = styled.div`
    width: 895px;
-   margin: 50px;
 `
 
 const Input = styled.input`
@@ -81,7 +80,6 @@ const Input = styled.input`
    }
 `
 const StyledSearchInput = styled.div`
-   background-color: #fafafa;
    transition: border 0.3s ease;
    width: 100%;
    height: 40px;

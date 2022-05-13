@@ -26,4 +26,16 @@ const GenreMenuContainer = styled.div`
    padding: 31px 30px;
    min-width: 1280px;
    min-height: 445px;
+   position: absolute;
+   top: 50px;
+   left: 0;
+   animation: GENRES 0.3s;
+   @keyframes GENRES {
+      from {
+         top: -150px;
+      }
+      to {
+         top: 50px;
+      }
+   }
 `
