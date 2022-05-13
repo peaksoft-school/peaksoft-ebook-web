@@ -2,15 +2,17 @@ import React, { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as ArrowRight } from '../../../assets/icons/ArrowRight.svg'
 
-export const InputForPromocode = forwardRef((props, ref) => {
-   return (
-      <StyledInputVectorIcon>
-         <input {...props} ref={ref} />
+export const InputForPromocode = forwardRef(
+   ({ onChange, value, ...props }, ref) => {
+      return (
+         <StyledInputVectorIcon {...props}>
+            <input {...props} ref={ref} />
 
-         <ArrowRight className="svg" />
-      </StyledInputVectorIcon>
-   )
-})
+            <ArrowRight className="svg" />
+         </StyledInputVectorIcon>
+      )
+   }
+)
 const StyledInputVectorIcon = styled.div`
    width: ${({ width }) => (width ? `${width}px` : '252px')};
    height: 34px;
@@ -44,6 +46,7 @@ const StyledInputVectorIcon = styled.div`
    .svg {
       position: absolute;
       right: 12px;
+      cursor: pointer;
       &:focus {
          background-color: #ffffff;
       }

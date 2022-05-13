@@ -50,7 +50,7 @@ const StyledInputIcon = styled.div`
       outline: none;
       background-color: #f8f8f8;
       width: 485px;
-      padding: 9px 18px;
+      padding: 8px px;
       transition: background-color 0.3s ease;
       &:hover {
          background-color: #ffffff;
