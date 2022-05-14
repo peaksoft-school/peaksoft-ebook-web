@@ -7,7 +7,7 @@ export const signInUser = createAsyncThunk(
    'auth/signInUser',
    async ({ data, closeSignInModal }, { dispatch }) => {
       try {
-         dispatch(authActions.disabelIsAuthorizedErrorMessage())
+         dispatch(authActions.disableErrorMessageInAuthorization())
          const result = await appFetch({
             path: 'auth/sign-in',
             method: 'POST',
@@ -18,18 +18,18 @@ export const signInUser = createAsyncThunk(
             return result
          }
          if (!result.token) {
-            dispatch(authActions.setIsAuthorizedErrorMessage())
+            dispatch(authActions.setErrorMessageInAuthorization())
          }
          return null
       } catch (error) {
-         return dispatch(authActions.setIsAuthorizedErrorMessage())
+         return dispatch(authActions.setErrorMessageInAuthorization())
       }
    }
 )
 export const signUpClient = createAsyncThunk(
    'auth/signUpClient',
    async ({ clientData, navigateToLogin }, { dispatch, rejectWithValue }) => {
-      dispatch(authActions.disabelErrorMessageInRegister())
+      dispatch(authActions.disableErrorMessageInRegister())
       try {
          const result = await appFetch({
             path: 'auth/signup/client',
@@ -49,7 +49,7 @@ const localData = localstorage.get(LOCAL_STORAGE_USER_KEY) || {}
 
 const initialState = {
    isAuthorized: !!localData.token,
-   isAuthorizedErrorMessage: null,
+   errorMessageInAuthorization: null,
    token: localData.token || null,
    role: localData.role || null,
    userName: localData.userName || null,
@@ -60,14 +60,14 @@ const authSlice = createSlice({
    name: 'auth',
    initialState,
    reducers: {
-      setIsAuthorizedErrorMessage(state) {
-         state.isAuthorizedErrorMessage =
+      setErrorMessageInAuthorization(state) {
+         state.errorMessageInAuthorization =
             'Неправильно указан Email и/или пароль'
       },
-      disabelIsAuthorizedErrorMessage(state) {
-         state.isAuthorizedErrorMessage = null
+      disableErrorMessageInAuthorization(state) {
+         state.errorMessageInAuthorization = null
       },
-      disabelErrorMessageInRegister(state) {
+      disableErrorMessageInRegister(state) {
          state.errorMessageInRegister = null
       },
    },

@@ -22,7 +22,7 @@ import {
 } from '../../utils/constants/general'
 
 export const SignIn = ({ onSubmit }) => {
-   const { isAuthorizedErrorMessage } = useSelector((state) => state.auth)
+   const { errorMessageInAuthorization } = useSelector((state) => state.auth)
 
    const dispatch = useDispatch()
 
@@ -39,7 +39,7 @@ export const SignIn = ({ onSubmit }) => {
 
    const resetFieldsAndErrors = () => {
       reset()
-      dispatch(authActions.disabelIsAuthorizedErrorMessage())
+      dispatch(authActions.disableErrorMessageInAuthorization())
    }
 
    const closeSignInModal = () => {
@@ -47,8 +47,8 @@ export const SignIn = ({ onSubmit }) => {
       resetFieldsAndErrors()
    }
    const navigateToRegister = () => {
-      setSearchParams({ [SIGN_UP_QUERY_PARAMS]: true })
       resetFieldsAndErrors()
+      setSearchParams({ [SIGN_UP_QUERY_PARAMS]: true })
    }
    const submitHandler = (data) => {
       onSubmit({ data, closeSignInModal })
@@ -78,11 +78,11 @@ export const SignIn = ({ onSubmit }) => {
                      />
                   </RequestedFieldContainer>
                </FieldsContainer>
-               {isAuthorizedErrorMessage && (
-                  <ErrorMessage>{isAuthorizedErrorMessage}</ErrorMessage>
+               {errorMessageInAuthorization && (
+                  <ErrorMessage>{errorMessageInAuthorization}</ErrorMessage>
                )}
                {(errors.email || errors.password) &&
-                  !isAuthorizedErrorMessage && (
+                  !errorMessageInAuthorization && (
                      <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>
                   )}
                <Button

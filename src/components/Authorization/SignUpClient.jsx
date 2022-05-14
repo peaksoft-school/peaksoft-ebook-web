@@ -52,7 +52,7 @@ export const SignUpClient = ({ onSubmit }) => {
    }, [isDirty])
    const resetFieldsAndErrors = () => {
       reset()
-      dispatch(authActions.disabelErrorMessageInRegister())
+      dispatch(authActions.disableErrorMessageInRegister())
    }
 
    const closeSignUpModal = () => {
