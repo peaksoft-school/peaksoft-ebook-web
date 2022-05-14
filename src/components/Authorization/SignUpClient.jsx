@@ -9,6 +9,7 @@ import {
    AuthLinksContainer,
    AuthorizationContainer,
    ErrorMessage,
+   StyledLoadingSpinner,
    theme,
 } from '../../assets/styles/styles'
 import { authActions } from '../../store/auth-slice'
@@ -28,7 +29,9 @@ import { InputForPassword } from '../UI/Inputs/InputForPassword'
 import { Modal } from '../UI/Modals/Modal'
 
 export const SignUpClient = ({ onSubmit }) => {
-   const { errorMessageInRegister } = useSelector((state) => state.auth)
+   const { errorMessageInRegister, isLoading } = useSelector(
+      (state) => state.auth
+   )
 
    const dispatch = useDispatch()
 
@@ -182,7 +185,7 @@ export const SignUpClient = ({ onSubmit }) => {
                      fullWidth
                      type="submit"
                   >
-                     Создать аккаунт
+                     {isLoading ? <StyledLoadingSpinner /> : 'Создать аккаунт'}
                   </Button>
                   <Button
                      padding="10px 24px"

@@ -54,6 +54,7 @@ const initialState = {
    role: localData.role || null,
    userName: localData.userName || null,
    errorMessageInRegister: null,
+   isLoading: false,
 }
 
 const authSlice = createSlice({
@@ -61,6 +62,7 @@ const authSlice = createSlice({
    initialState,
    reducers: {
       setErrorMessageInAuthorization(state) {
+         state.isLoading = false
          state.errorMessageInAuthorization =
             'Неправильно указан Email и/или пароль'
       },
@@ -72,7 +74,11 @@ const authSlice = createSlice({
       },
    },
    extraReducers: {
+      [signInUser.pending]: (state) => {
+         state.isLoading = true
+      },
       [signInUser.fulfilled]: (state, { payload }) => {
+         state.isLoading = false
          if (payload && payload.token) {
             state.isAuthorized = true
             state.token = payload.token
@@ -80,7 +86,14 @@ const authSlice = createSlice({
             state.userName = payload.firstName
          }
       },
+      [signUpClient.pending]: (state) => {
+         state.isLoading = true
+      },
+      [signUpClient.fulfilled]: (state) => {
+         state.isLoading = false
+      },
       [signUpClient.rejected]: (state, { payload }) => {
+         state.isLoading = false
          if (payload === 'Passwords are not the same!') {
             state.errorMessageInRegister = 'Введенные пароли не совпадают'
          }

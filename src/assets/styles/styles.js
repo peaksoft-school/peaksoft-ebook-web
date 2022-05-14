@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { ReactComponent as LoadingSpinner } from '../icons/loading-spinner.svg'
 
 export const theme = {
    primary: {
@@ -48,4 +49,15 @@ export const ErrorMessage = styled.p`
    line-height: 19px;
    color: #f10000;
    margin-bottom: 30px;
+`
+export const StyledLoadingSpinner = styled(LoadingSpinner)`
+   animation: LOADING linear 1s infinite;
+   @keyframes LOADING {
+      0% {
+         transform: rotate(0deg);
+      }
+      100% {
+         transform: rotate(360deg);
+      }
+   }
 `
