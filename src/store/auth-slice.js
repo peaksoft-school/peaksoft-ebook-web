@@ -5,27 +5,41 @@ import { localstorage } from '../utils/helpers/general'
 
 export const signInUser = createAsyncThunk(
    'auth/signInUser',
-   async (userSignInData) => {
+   async ({ data, closeSignInModal }, { dispatch }) => {
       try {
-         return await appFetch({
+         dispatch(authActions.disabelIsAuthorizedErrorMessage())
+         const result = await appFetch({
             path: 'auth/sign-in',
             method: 'POST',
-            body: userSignInData,
+            body: data,
          })
+         if (result.token) {
+            closeSignInModal()
+            return result
+         }
+         if (!result.token) {
+            dispatch(authActions.setIsAuthorizedErrorMessage())
+         }
+         return null
       } catch (error) {
-         return error.message
+         return dispatch(authActions.setIsAuthorizedErrorMessage())
       }
    }
 )
 export const signUpClient = createAsyncThunk(
    'auth/signUpClient',
-   async (clientSignUpData, { rejectWithValue }) => {
+   async ({ clientData, navigateToLogin }, { dispatch, rejectWithValue }) => {
+      dispatch(authActions.disabelErrorMessageInRegister())
       try {
-         return await appFetch({
+         const result = await appFetch({
             path: 'auth/signup/client',
             method: 'POST',
-            body: clientSignUpData,
+            body: clientData,
          })
+         if (result.message) {
+            navigateToLogin()
+         }
+         return result
       } catch (error) {
          return rejectWithValue(error.message)
       }
@@ -34,52 +48,45 @@ export const signUpClient = createAsyncThunk(
 const localData = localstorage.get(LOCAL_STORAGE_USER_KEY) || {}
 
 const initialState = {
-   isAuth: !!localData.token,
-   isRegistered: false,
-   isError: null,
-   token: null,
+   isAuthorized: !!localData.token,
+   isAuthorizedErrorMessage: null,
+   token: localData.token || null,
    role: localData.role || null,
    userName: localData.userName || null,
-   errorMessageWhenPasswordsAreNotTheSame: false,
-   errorMessageWhenEmailAlreadyIsAuthorized: false,
+   errorMessageInRegister: null,
 }
 
 const authSlice = createSlice({
    name: 'auth',
    initialState,
    reducers: {
-      disableError(state) {
-         state.isError = false
+      setIsAuthorizedErrorMessage(state) {
+         state.isAuthorizedErrorMessage =
+            'Неправильно указан Email и/или пароль'
       },
-      disableErrorMessageWhenPasswordsAreNotTheSame(state) {
-         state.errorMessageWhenPasswordsAreNotTheSame = false
+      disabelIsAuthorizedErrorMessage(state) {
+         state.isAuthorizedErrorMessage = null
       },
-      disableErrorMessageWhenEmailAlreadyIsAuthorized(state) {
-         state.errorMessageWhenEmailAlreadyIsAuthorized = false
-      },
-      disableIsRegistered(state) {
-         state.isRegistered = false
+      disabelErrorMessageInRegister(state) {
+         state.errorMessageInRegister = null
       },
    },
    extraReducers: {
       [signInUser.fulfilled]: (state, { payload }) => {
          if (payload && payload.token) {
-            state.isAuth = true
+            state.isAuthorized = true
             state.token = payload.token
             state.role = payload.role
             state.userName = payload.firstName
-         } else {
-            state.isError = true
          }
-      },
-      [signUpClient.fulfilled]: (state) => {
-         state.isRegistered = true
       },
       [signUpClient.rejected]: (state, { payload }) => {
          if (payload === 'Passwords are not the same!') {
-            state.errorMessageWhenPasswordsAreNotTheSame = true
-         } else if (payload === 'Error: Email is already in use!') {
-            state.errorMessageWhenEmailAlreadyIsAuthorized = true
+            state.errorMessageInRegister = 'Введенные пароли не совпадают'
+         }
+         if (payload === 'Error: Email is already in use!') {
+            state.errorMessageInRegister =
+               'Пользователь с таким email адресом уже существует'
          }
       },
    },

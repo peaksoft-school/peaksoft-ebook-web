@@ -11,8 +11,15 @@ import {
    ErrorMessage,
    theme,
 } from '../../assets/styles/styles'
-import { authActions, signUpClient } from '../../store/auth-slice'
-import { REGEXP_EMAIL, REGEXP_PASSWORD } from '../../utils/constants/general'
+import { authActions } from '../../store/auth-slice'
+import {
+   confirmMessage,
+   REGEXP_EMAIL,
+   REGEXP_PASSWORD,
+   SIGN_IN_QUERY_PARAMS,
+   SIGN_UP_QUERY_PARAMS,
+   SIGN_UP_VENDOR_QUERY_PARAMS,
+} from '../../utils/constants/general'
 import { Button } from '../UI/Buttons/Button'
 import { Checkbox } from '../UI/Checkbox/Checkbox'
 import { FieldName } from '../UI/FieldName/FieldName'
@@ -20,13 +27,8 @@ import { Input } from '../UI/Inputs/Input'
 import { InputForPassword } from '../UI/Inputs/InputForPassword'
 import { Modal } from '../UI/Modals/Modal'
 
-export const SignUpClient = () => {
-   const {
-      isAuth,
-      errorMessageWhenPasswordsAreNotTheSame,
-      errorMessageWhenEmailAlreadyIsAuthorized,
-      isRegistered,
-   } = useSelector((state) => state.auth)
+export const SignUpClient = ({ onSubmit }) => {
+   const { errorMessageInRegister } = useSelector((state) => state.auth)
 
    const dispatch = useDispatch()
 
@@ -41,65 +43,70 @@ export const SignUpClient = () => {
 
    const [searchParams, setSearchParams] = useSearchParams()
 
-   const isOpenSignUpModal = searchParams.get('sign-up')
-
-   useEffect(() => {
-      if (isAuth && isOpenSignUpModal) {
-         setSearchParams('')
-      }
-   }, [isAuth, searchParams])
+   const isOpenSignUpModal = searchParams.get(SIGN_UP_QUERY_PARAMS)
 
    useEffect(() => {
       window.onbeforeunload = () => {
          return isDirty ? 'Show warning' : null
       }
    }, [isDirty])
-
-   useEffect(() => {
-      if (isRegistered) {
-         setSearchParams({ 'sign-in': true })
-         reset()
-      }
-      return () => dispatch(authActions.disableIsRegistered())
-   }, [isRegistered])
+   const resetFieldsAndErrors = () => {
+      reset()
+      dispatch(authActions.disabelErrorMessageInRegister())
+   }
 
    const closeSignUpModal = () => {
       const willUserCloseTheModalWindow = isDirty
-         ? window.confirm(
-              'Are you sure you want to close the modal window? If you close the entered data will be cleared'
-           )
+         ? window.confirm(confirmMessage.whenCloseSignInModal)
          : true
       if (willUserCloseTheModalWindow) {
          setSearchParams('')
-         reset()
+         resetFieldsAndErrors()
       }
    }
 
-   const navigateToLogin = () => {
+   const passToSignIn = () => {
       const willUserPassToSignIn = isDirty
-         ? window.confirm(
-              'Are you sure you want to pass to sign-in? If you close the entered data will be cleared'
-           )
+         ? window.confirm(confirmMessage.whenPassToSignIn)
          : true
       if (willUserPassToSignIn) {
-         setSearchParams({ 'sign-in': true })
-         reset()
+         setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+         resetFieldsAndErrors()
       }
    }
-   const submitHandler = (signUpClientData) => {
-      dispatch(signUpClient(signUpClientData))
-      if (errorMessageWhenPasswordsAreNotTheSame) {
-         dispatch(authActions.disableErrorMessageWhenPasswordsAreNotTheSame())
-      } else if (errorMessageWhenEmailAlreadyIsAuthorized) {
-         dispatch(authActions.disableErrorMessageWhenEmailAlreadyIsAuthorized())
-      }
+   const navigateToLogin = () => {
+      resetFieldsAndErrors()
+      setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+   }
+   const validationParamsForPassword = {
+      required: true,
+      minLength: {
+         value: 6,
+         message: 'Пароль должен быть более 6-ти символов',
+      },
+      maxLength: {
+         value: 32,
+         message: 'Пароль должен быть менее 32-х символов',
+      },
+      pattern: {
+         value: REGEXP_PASSWORD,
+         message: 'Пароль должен содержать одну заглавную букву и одну цифру',
+      },
    }
 
+   const submitHandler = (clientData) => {
+      onSubmit({ clientData, navigateToLogin })
+   }
+   const errorForPasswordField =
+      errorMessageInRegister === 'Введенные пароли не совпадают'
+   const errorForEmailField =
+      errorMessageInRegister ===
+      'Пользователь с таким email адресом уже существует'
    return (
       <Modal isOpen={isOpenSignUpModal} onCloseBackDrop={closeSignUpModal}>
          <AuthorizationContainer>
             <AuthLinksContainer>
-               <AuthLink onClick={navigateToLogin}>Войти</AuthLink>
+               <AuthLink onClick={passToSignIn}>Войти</AuthLink>
                <AuthLink isActive={isOpenSignUpModal}>Регистрация</AuthLink>
             </AuthLinksContainer>
             <SignUpContainer onSubmit={handleSubmit(submitHandler)}>
@@ -121,30 +128,15 @@ export const SignUpClient = () => {
                            required: true,
                            pattern: REGEXP_EMAIL,
                         })}
-                        error={errorMessageWhenEmailAlreadyIsAuthorized}
+                        error={errorForEmailField}
                      />
                   </RequestedFieldContainer>
                   <RequestedFieldContainer>
                      <FieldName>Пароль</FieldName>
                      <InputForPassword
                         placeholder="Напишите пароль"
-                        {...register('password', {
-                           required: true,
-                           minLength: {
-                              value: 6,
-                              message: 'Пароль должен быть более 6-ти символов',
-                           },
-                           maxLength: {
-                              value: 32,
-                              message: 'Пароль должен быть менее 32-х символов',
-                           },
-                           pattern: {
-                              value: REGEXP_PASSWORD,
-                              message:
-                                 'Пароль должен содержать одну заглавную букву и одну цифру',
-                           },
-                        })}
-                        error={errorMessageWhenPasswordsAreNotTheSame}
+                        {...register('password', validationParamsForPassword)}
+                        error={errorForPasswordField}
                      />
                      {errors?.password?.message && (
                         <ErrorMessageForExactField>
@@ -159,24 +151,19 @@ export const SignUpClient = () => {
                         {...register('confirmPassword', {
                            required: true,
                         })}
-                        error={errorMessageWhenPasswordsAreNotTheSame}
+                        error={errorForPasswordField}
                      />
                   </RequestedFieldContainer>
                </FieldsContainer>
-               {errorMessageWhenEmailAlreadyIsAuthorized && (
-                  <ErrorMessage>
-                     Пользователь с таким email адресом уже существует
-                  </ErrorMessage>
-               )}
-               {errorMessageWhenPasswordsAreNotTheSame && (
-                  <ErrorMessage>Введенные пароли не совпадают</ErrorMessage>
+               {errorMessageInRegister && (
+                  <ErrorMessage>{errorMessageInRegister}</ErrorMessage>
                )}
                {Object.values(errors).some(
-                  (error) =>
-                     error.type === 'required' &&
-                     !errorMessageWhenPasswordsAreNotTheSame &&
-                     !errorMessageWhenEmailAlreadyIsAuthorized
-               ) && <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>}
+                  (error) => error.type === 'required'
+               ) &&
+                  !errorMessageInRegister && (
+                     <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>
+                  )}
 
                <SubscribeCheckboxContainer>
                   <Checkbox />
@@ -208,7 +195,9 @@ export const SignUpClient = () => {
                      bgColorActive={theme.secondary.darkBackground}
                      colorActive="#ffffff"
                      fullWidth
-                     onClick={() => setSearchParams({ 'sign-up-vendor': true })}
+                     onClick={() =>
+                        setSearchParams({ [SIGN_UP_VENDOR_QUERY_PARAMS]: true })
+                     }
                      type="button"
                   >
                      Стать продавцом на eBook

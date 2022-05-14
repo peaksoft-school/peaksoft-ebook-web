@@ -7,10 +7,13 @@ import { GuestRoutes } from './GuestRoutes'
 import { VendorRoutes } from './VendorRoutes'
 
 export const AppRoutes = () => {
-   const { isAuth, role } = useSelector((state) => state.auth)
+   const { isAuthorized, role } = useSelector((state) => state.auth)
+
+   if (!isAuthorized) {
+      return <GuestRoutes />
+   }
    return (
       <>
-         {!isAuth && <GuestRoutes />}
          {role === ROLES.ADMIN && <AdminRoutes />}
          {role === ROLES.VENDOR && <VendorRoutes />}
          {role === ROLES.CLIENT && <ClientRoutes />}

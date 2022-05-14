@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
@@ -15,10 +15,14 @@ import { Input } from '../UI/Inputs/Input'
 import { InputForPassword } from '../UI/Inputs/InputForPassword'
 import { FieldName } from '../UI/FieldName/FieldName'
 import { Modal } from '../UI/Modals/Modal'
-import { authActions, signInUser } from '../../store/auth-slice'
+import { authActions } from '../../store/auth-slice'
+import {
+   SIGN_IN_QUERY_PARAMS,
+   SIGN_UP_QUERY_PARAMS,
+} from '../../utils/constants/general'
 
-export const SignIn = () => {
-   const { isAuth, isError } = useSelector((state) => state.auth)
+export const SignIn = ({ onSubmit }) => {
+   const { isAuthorizedErrorMessage } = useSelector((state) => state.auth)
 
    const dispatch = useDispatch()
 
@@ -31,31 +35,23 @@ export const SignIn = () => {
 
    const [searchParams, setSearchParams] = useSearchParams()
 
-   const isOpenSignInModal = searchParams.get('sign-in')
+   const isOpenSignInModal = searchParams.get(SIGN_IN_QUERY_PARAMS)
 
-   useEffect(() => {
-      if (isAuth && isOpenSignInModal) {
-         setSearchParams('')
-      }
-   }, [isAuth, isOpenSignInModal])
-
-   useEffect(() => {
-      if (isError) {
-         reset()
-      }
-   }, [isError])
+   const resetFieldsAndErrors = () => {
+      reset()
+      dispatch(authActions.disabelIsAuthorizedErrorMessage())
+   }
 
    const closeSignInModal = () => {
       setSearchParams('')
-      reset()
-   }
-   const submitHandler = (data) => {
-      dispatch(signInUser(data))
+      resetFieldsAndErrors()
    }
    const navigateToRegister = () => {
-      setSearchParams({ 'sign-up': true })
-      reset()
-      dispatch(authActions.disableError())
+      setSearchParams({ [SIGN_UP_QUERY_PARAMS]: true })
+      resetFieldsAndErrors()
+   }
+   const submitHandler = (data) => {
+      onSubmit({ data, closeSignInModal })
    }
    return (
       <Modal isOpen={isOpenSignInModal} onCloseBackDrop={closeSignInModal}>
@@ -71,7 +67,6 @@ export const SignIn = () => {
                      <Input
                         placeholder="Напишите email"
                         {...register('email', { required: true })}
-                        onFocus={() => dispatch(authActions.disableError())}
                         type="email"
                      />
                   </RequestedFieldContainer>
@@ -83,14 +78,13 @@ export const SignIn = () => {
                      />
                   </RequestedFieldContainer>
                </FieldsContainer>
-               {isError && (
-                  <ErrorMessage>
-                     Неправильно указан Email и/или пароль
-                  </ErrorMessage>
+               {isAuthorizedErrorMessage && (
+                  <ErrorMessage>{isAuthorizedErrorMessage}</ErrorMessage>
                )}
-               {(errors.email || errors.password) && (
-                  <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>
-               )}
+               {(errors.email || errors.password) &&
+                  !isAuthorizedErrorMessage && (
+                     <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>
+                  )}
                <Button
                   padding="10px 24px"
                   bgColor={theme.secondary.darkBackground}
