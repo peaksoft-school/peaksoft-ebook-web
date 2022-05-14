@@ -5,9 +5,9 @@ import { Button } from '../Buttons/Button'
 import { Checkbox } from '../Checkbox/CheckboxHeart'
 
 export const UserBookCard = ({
-   bookName,
-   bookAuthor,
-   bookPrice,
+   name,
+   author,
+   price,
    bookURL,
    bookType,
    onAddToBasket,
@@ -15,7 +15,8 @@ export const UserBookCard = ({
    return (
       <UserCardConteiner>
          <TypeIcons>
-            {bookType && (
+            {bookType ===
+            (
                <AudioIcon>
                   <img src={audioIcon} alt="audio-icon-img" />
                </AudioIcon>
@@ -26,9 +27,9 @@ export const UserBookCard = ({
          </TypeIcons>
          <BooksImage src={bookURL} alt="book-image" />
          <CardText>
-            <BooksName>{bookName}</BooksName>
-            <BooksAthor>{bookAuthor}</BooksAthor>
-            <BooksPrice>{bookPrice} с</BooksPrice>
+            <BooksName>{name}</BooksName>
+            <BooksAthor>{author}</BooksAthor>
+            <BooksPrice>{price} с</BooksPrice>
          </CardText>
          <AddBasket>
             <Button
