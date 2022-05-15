@@ -3,32 +3,43 @@ import styled from '@emotion/styled'
 import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg'
 import { ReactComponent as EyePassword } from '../../../assets/icons/EyePassword.svg'
 
-export const InputForPassword = forwardRef((props, ref) => {
-   const [isEyeIconVisible, setIsEyeIconVisible] = useState(false)
+export const InputForPassword = forwardRef(
+   ({ error, width, fontSize, ...props }, ref) => {
+      const [isEyeIconVisible, setIsEyeIconVisible] = useState(true)
 
-   return (
-      <StyledInputIcon Eye={Eye}>
-         <input
-            ref={ref}
-            type={isEyeIconVisible ? 'password' : 'text'}
-            {...props}
-         />
-         {isEyeIconVisible ? (
-            <EyePassword
-               className="svg"
-               onClick={() => setIsEyeIconVisible(false)}
+      return (
+         <StyledInputContainer
+            Eye={Eye}
+            error={error}
+            width={width}
+            fontSize={fontSize}
+         >
+            <input
+               ref={ref}
+               type={isEyeIconVisible ? 'password' : 'text'}
+               {...props}
             />
-         ) : (
-            <Eye className="svg" onClick={() => setIsEyeIconVisible(true)} />
-         )}
-      </StyledInputIcon>
-   )
-})
-const StyledInputIcon = styled.div`
-   width: ${({ width }) => (width ? `${width}px` : '514px')};
-   height: 38px;
+            {isEyeIconVisible ? (
+               <Eye
+                  className="svg"
+                  onClick={() => setIsEyeIconVisible(false)}
+               />
+            ) : (
+               <EyePassword
+                  className="svg"
+                  onClick={() => setIsEyeIconVisible(true)}
+               />
+            )}
+         </StyledInputContainer>
+      )
+   }
+)
+const StyledInputContainer = styled.div`
+   width: ${({ width }) => (width ? `${width}px` : '100%')};
+   height: 37px;
    font-size: ${({ fontSize }) => fontSize || '16px'};
-   border: 1px solid #c4c4c4;
+   border: ${({ error }) =>
+      error ? '0.5px solid #F10000' : '1px solid #c4c4c4'};
    background-color: #f8f8f8;
    display: flex;
    align-items: center;
@@ -48,9 +59,9 @@ const StyledInputIcon = styled.div`
       font-size: ${({ fontSize }) => fontSize || '16px'};
       border: none;
       outline: none;
-      background-color: #f8f8f8;
-      width: 485px;
-      padding: 9px 18px;
+      background-color: ${({ error }) => (error ? '#FFF5F5' : '#f8f8f8;')};
+      width: 100%;
+      padding: 6px 51px 7px 18px;
       transition: background-color 0.3s ease;
       &:hover {
          background-color: #ffffff;
@@ -60,6 +71,9 @@ const StyledInputIcon = styled.div`
       &:focus {
          transition: background-color 0.3s ease;
          background-color: #ffffff;
+      }
+      &::placeholder {
+         color: #969696;
       }
    }
 
