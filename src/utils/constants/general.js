@@ -19,9 +19,29 @@ export const SIGN_UP_QUERY_PARAMS = 'sign-up'
 
 export const SIGN_UP_VENDOR_QUERY_PARAMS = 'sign-up-vendor'
 
-export const confirmMessage = {
-   whenCloseSignInModal:
+export const CONFIRM_MESSAGE = {
+   WHENCLOSEMODAL:
       'Are you sure you want to close the modal window? If you close the entered data will be cleared',
-   whenPassToSignIn:
+   WHENPASSTOSIGNIN:
       'Are you sure you want to pass to sign-in? If you close the entered data will be cleared',
+   WHENPASSTOSIGNUPFORCLIENT:
+      'Are you sure you want to pass to sign-up? If you close the entered data will be cleared',
+}
+
+export const INPUT_MASK_NUMBER = '+999 (999) 99 99 99'
+
+export const VALIDATION_PARAMS_FOR_PASSWORD = {
+   required: true,
+   minLength: {
+      value: 6,
+      message: 'Пароль должен быть более 6-ти символов',
+   },
+   maxLength: {
+      value: 32,
+      message: 'Пароль должен быть менее 32-х символов',
+   },
+   pattern: {
+      value: REGEXP_PASSWORD,
+      message: 'Пароль должен содержать одну заглавную букву и одну цифру',
+   },
 }

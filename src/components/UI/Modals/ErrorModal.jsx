@@ -4,7 +4,7 @@ import { Modal } from './Modal'
 import vector from '../../../assets/icons/vector.svg'
 import { Button } from '../Buttons/Button'
 import styled from '@emotion/styled'
-import { theme } from '../../../assets/styles/styles'
+import { theme } from '../../../utils/constants/theme'
 
 export const ErrorModal = ({ onCloseBackDrop, onClose, isOpen }) => {
    return (
