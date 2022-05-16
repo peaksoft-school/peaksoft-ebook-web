@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { theme } from '../../assets/styles/styles'
+import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as BellIcon } from '../../assets/icons/bell-icon.svg'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/profile-icon.svg'
@@ -13,7 +13,7 @@ import { PopUp } from '../UI/PopUp/PopUp'
 
 export const VendorHeader = () => {
    const [showOptions, setShowOptions] = useState(false)
-   const handleClick = () => {
+   const showPopUp = () => {
       setShowOptions(!showOptions)
    }
    const options = [
@@ -32,7 +32,7 @@ export const VendorHeader = () => {
             <InnerContainer>
                <SearchInput booksList={booksList} />
                <NewBellIcon />
-               <ContainerOfIcons onClick={handleClick}>
+               <ContainerOfIcons onClick={showPopUp}>
                   <ProfileIcon />
                   <ArrowDownIcon />
                   {showOptions && <PopUp options={options} />}

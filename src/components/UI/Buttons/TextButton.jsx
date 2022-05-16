@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export const Textbutton = (props) => {
+export const TextButton = (props) => {
    return <StyledUnderButton {...props}>{props.children}</StyledUnderButton>
 }
 
@@ -12,7 +12,7 @@ const StyledUnderButton = styled.button`
    outline: none;
    border: none;
    background: none;
-   font-weight: 400;
+   font-weight: ${({ fontWeight }) => fontWeight || '400'};
    font-size: ${({ fontSize }) => fontSize || '16px'};
    font-family: 'Open Sans', sans-serif;
    font-style: SemiBold;

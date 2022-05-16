@@ -6,7 +6,7 @@ import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
-import { theme } from '../../assets/styles/styles'
+import { theme } from '../../utils/constants/theme'
 import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 
 export const UserHeader = ({ countOfItems }) => {

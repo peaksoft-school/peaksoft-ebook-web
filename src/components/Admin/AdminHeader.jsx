@@ -6,7 +6,7 @@ import { PopUp } from '../UI/PopUp/PopUp'
 
 export const AdminHeader = () => {
    const [showOptions, setShowOptions] = useState(false)
-   const handleClick = () => {
+   const showPopUp = () => {
       setShowOptions(!showOptions)
    }
    const options = [
@@ -18,7 +18,7 @@ export const AdminHeader = () => {
    return (
       <AdminHeaderContainer>
          <SearchInput booksList={booksList} />
-         <AdminTextContainer onClick={handleClick}>
+         <AdminTextContainer onClick={showPopUp}>
             <ProfileIcon />
             <span>Администратор</span>
             {showOptions && <PopUp right="20" top="75px" options={options} />}
@@ -39,7 +39,7 @@ const AdminTextContainer = styled.div`
    width: max-content;
    justify-content: space-between;
    align-items: center;
-   padding-left: 35px;
+   padding-right: 35px;
    svg {
       cursor: pointer;
    }

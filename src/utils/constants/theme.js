@@ -1,4 +1,6 @@
-export const theme = {
+import { createTheme } from '@mui/material/styles'
+
+export const theme = createTheme({
    primary: {
       black: '#222222',
       white: '#FFFFFF',
@@ -17,4 +19,4 @@ export const theme = {
       green: '#00AB1B',
       errorRed: '#FFF5F5',
    },
-}
+})

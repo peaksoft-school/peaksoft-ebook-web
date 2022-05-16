@@ -13,6 +13,7 @@ import { Logo } from '../UI/Logo/Logo'
 
 export const SideDrawer = () => {
    const { pathname } = useLocation()
+   console.log(pathname.split('/'))
    const pathnameChangeHandler = (path) => {
       return pathname === path
    }

@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'
 import App from './App'
-import { theme } from './assets/styles/styles'
+import { theme } from './utils/constants/theme'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
