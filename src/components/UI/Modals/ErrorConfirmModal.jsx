@@ -1,9 +1,9 @@
 /* eslint-disable import/order */
 import React from 'react'
 import { Button } from '../Buttons/Button'
-import { theme } from '../../../assets/styles/styles'
 import { Modal } from './Modal'
 import styled from '@emotion/styled'
+import { theme } from '../../../utils/constants/theme'
 
 export const ErrorConfirmModal = ({ onCloseBackDrop, isOpen, exit, props }) => {
    return (

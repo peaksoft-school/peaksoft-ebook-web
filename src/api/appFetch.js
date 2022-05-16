@@ -1,11 +1,18 @@
 import { SERVER_BASE_URL } from '../utils/constants/general'
+import { getJwt } from '../utils/helpers/general'
 
 export const appFetch = async (options) => {
+   const token = getJwt()
    try {
       const { path, body, method, params } = options
       const requestOptions = {
          method: method || 'GET',
-         headers: { 'Content-Type': 'application/json' },
+         headers: token
+            ? {
+                 'Content-Type': 'application/json',
+                 Authorization: `Bearer ${token}`,
+              }
+            : { 'Content-Type': 'application/json' },
       }
       if (method !== 'GET') {
          requestOptions.body = JSON.stringify(body || {})

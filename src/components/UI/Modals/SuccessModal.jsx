@@ -9,7 +9,7 @@ import { Modal } from './Modal'
 export const SuccessModal = ({ onClose, onClick, onCloseBackDrop, isOpen }) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
-         <SuccessConteiner>
+         <SuccessContainer>
             <SuccessImg>
                <SuccessIcon src={success} />
                <CloseIcon src={vector} onClick={onClose} />
@@ -24,11 +24,11 @@ export const SuccessModal = ({ onClose, onClick, onCloseBackDrop, isOpen }) => {
             >
                Продолжить покупки
             </Button>
-         </SuccessConteiner>
+         </SuccessContainer>
       </Modal>
    )
 }
-const SuccessConteiner = styled.div`
+const SuccessContainer = styled.div`
    width: 460px;
    padding: 20px 29px 20px;
 `
