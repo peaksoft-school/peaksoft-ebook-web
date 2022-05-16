@@ -2,36 +2,35 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 import audioIcon from '../../../assets/icons/audio-icon.svg'
 import { Button } from '../Buttons/Button'
-import { Checkbox } from '../Checkbox/CheckboxHeart'
+import { CheckboxHeart } from '../Checkbox/CheckboxHeart'
 
 export const UserBookCard = ({
    name,
    author,
    price,
-   bookURL,
-   bookType,
+   imageURL,
+   isAudio,
    onAddToBasket,
 }) => {
    return (
-      <UserCardConteiner>
+      <UserCardContainer>
          <TypeIcons>
-            {bookType ===
-            (
+            {isAudio && (
                <AudioIcon>
                   <img src={audioIcon} alt="audio-icon-img" />
                </AudioIcon>
             )}
-            <FovoritesIcon>
-               <Checkbox />
-            </FovoritesIcon>
+            <FavoriteBookIcon>
+               <CheckboxHeart />
+            </FavoriteBookIcon>
          </TypeIcons>
-         <BooksImage src={bookURL} alt="book-image" />
-         <CardText>
-            <BooksName>{name}</BooksName>
-            <BooksAthor>{author}</BooksAthor>
-            <BooksPrice>{price} с</BooksPrice>
-         </CardText>
-         <AddBasket>
+         <BooksImage src={imageURL} alt="book-image" />
+         <BookDetailsContainer>
+            <BookName>{name}</BookName>
+            <BookAuthor>{author}</BookAuthor>
+            <BookPrice>{price} с</BookPrice>
+         </BookDetailsContainer>
+         <AddToBusketButtonContainer>
             <Button
                onClick={onAddToBasket}
                bgColor="#FF4C00"
@@ -41,11 +40,11 @@ export const UserBookCard = ({
             >
                Добавить в корзину
             </Button>
-         </AddBasket>
-      </UserCardConteiner>
+         </AddToBusketButtonContainer>
+      </UserCardContainer>
    )
 }
-const AddBasket = styled.div`
+const AddToBusketButtonContainer = styled.div`
    position: absolute;
    opacity: 0;
    transition: visibility 1s, opacity 0.3s linear;
@@ -53,30 +52,30 @@ const AddBasket = styled.div`
       width: 224px;
    }
 `
-const FovoritesIcon = styled.button`
+const FavoriteBookIcon = styled.button`
    position: absolute;
    opacity: 0;
    transition: visibility 1s, opacity 0.3s linear;
    cursor: pointer;
    left: 155px;
 `
-const UserCardConteiner = styled.div`
+const UserCardContainer = styled.div`
    width: 224px;
    height: 422px;
    background-color: #f8f8f8;
-   :hover ${AddBasket} {
+   :hover ${AddToBusketButtonContainer} {
       transition: visibility 1s, opacity 0.3s ease-out;
       opacity: 1;
    }
-   :hover ${FovoritesIcon} {
+   :hover ${FavoriteBookIcon} {
       transition: visibility 1s, opacity 0.3s ease-out;
       opacity: 1;
    }
 `
-const CardText = styled.div`
+const BookDetailsContainer = styled.div`
    background-color: #f8f8f8;
 `
-const BooksName = styled.p`
+const BookName = styled.p`
    margin: 6px 0px 6px 0px;
    font-family: 'Open Sans';
    font-style: normal;
@@ -90,7 +89,7 @@ const BooksName = styled.p`
    -webkit-line-clamp: 1;
    -webkit-box-orient: vertical;
 `
-const BooksAthor = styled.p`
+const BookAuthor = styled.p`
    font-family: 'Open Sans';
    font-style: normal;
    font-weight: 400;
@@ -104,7 +103,7 @@ const BooksAthor = styled.p`
    -webkit-line-clamp: 1;
    -webkit-box-orient: vertical;
 `
-const BooksPrice = styled.p`
+const BookPrice = styled.p`
    font-family: 'Open Sans';
    font-style: normal;
    font-weight: 600;

@@ -9,13 +9,13 @@ import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
 export const VendorBookCard = ({
    like,
    amount,
-   bookName,
+   name,
    date,
    price,
    isInProccess,
    isRejected,
    onClickToBook,
-   vendorBookUrl,
+   vendorImageUrl,
 }) => {
    const [isPopUpVisisble, setIsPopUpVisisble] = useState(false)
 
@@ -48,8 +48,8 @@ export const VendorBookCard = ({
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
-               <img src={vendorBookUrl} alt="book" />
-               <p>{bookName}</p>
+               <img src={vendorImageUrl} alt="book" />
+               <p>{name}</p>
                <VenderCardFooter>
                   <span>{date}</span>
                   <h3>{price}c</h3>
@@ -86,8 +86,8 @@ export const VendorBookCard = ({
                onClickToBook()
             }}
          >
-            <img src={vendorBookUrl} alt="book" />
-            <p>{bookName}</p>
+            <img src={vendorImageUrl} alt="book" />
+            <p>{name}</p>
             <VenderCardFooter>
                <span>{date}</span>
                <h3>{price}c</h3>

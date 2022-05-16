@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import checkboxDefaultHeart from '../../../assets/icons/checkboxDefaultHeart.svg'
 import checkboxCheckedHeart from '../../../assets/icons/checkboxCheckedHeart.svg'
 
-export const Checkbox = forwardRef(({ isChecked, onChange }, ref) => {
+export const CheckboxHeart = forwardRef(({ isChecked, onChange }, ref) => {
    return (
       <StyledCheckbox isChecked={isChecked}>
          <input
