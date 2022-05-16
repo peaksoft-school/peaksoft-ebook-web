@@ -3,20 +3,26 @@ import styled from '@emotion/styled/macro'
 export const PopUp = ({ options, ...props }) => {
    return (
       <MenuContainer {...props}>
-         {options &&
-            options.map((option) => (
-               <MenuItem key={option.id} onClick={() => option.action()}>
-                  {option.title}
-               </MenuItem>
-            ))}
+         <StyledOptions {...props}>
+            {options &&
+               options.map((option) => (
+                  <MenuItem key={option.id} onClick={() => option.action()}>
+                     {option.title}
+                  </MenuItem>
+               ))}
+         </StyledOptions>
       </MenuContainer>
    )
 }
 
+const StyledOptions = styled.div`
+   padding: ${({ padding }) => padding || ''};
+`
+
 const MenuItem = styled.p`
-   padding: 10px 70px 10px 10px;
+   padding: 10px 0px 10px 10px;
    background-color: white;
-   border-bottom: 1px solid #c4c4c4;
+   border-bottom: 1px solid #d4d4d4;
    line-height: 20px;
    cursor: pointer;
    font-size: 14px;

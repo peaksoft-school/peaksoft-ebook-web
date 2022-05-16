@@ -6,6 +6,7 @@ export const Button = (props) => {
 }
 
 const StyledButton = styled.button`
+   width: ${({ fullWidth }) => (fullWidth ? '100%' : '')};
    background-color: ${({ bgColor }) => bgColor || ''};
    background: ${({ background }) => background || ''};
    outline: ${({ outline }) => outline || ''};
@@ -24,6 +25,7 @@ const StyledButton = styled.button`
    }
    &:active {
       background-color: ${({ bgColorActive }) => bgColorActive || ''};
+      color: ${({ colorActive }) => colorActive || ''};
    }
    &:disabled {
       background-color: #ffffff;

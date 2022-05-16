@@ -5,9 +5,62 @@ import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
 import { Modal } from '../../../components/UI/Modals/Modal'
 
-export const VendorProfile = ({ vendorData }) => {
+const VENDORDATA = [
+   {
+      vendorId: 1,
+      count: 1,
+      firstName: 'Мыктыбекdasghdghjas',
+      lastName: 'Мыктыбековdbhasdhjga',
+      phoneNumber: '+996 500 123 123',
+      email: 'dpeetermandashdjgsadjasndgashjdgashdgasjhdghajsdgasjhdgajshd0@tmall.com',
+      amountOfBooks: 346767,
+      dateOfRegistration: '2022-05-14',
+   },
+   {
+      vendorId: 2,
+      count: 4,
+      firstName: 'Мыктыбек2',
+      lastName: 'Мыктыбеков2',
+      phoneNumber: '+996 500 123 123',
+      email: 'dpeetermann0@tmall.com',
+      amountOfBooks: 3,
+      dateOfRegistration: '2022-05-14',
+   },
+   {
+      vendorId: 3,
+      count: 1,
+      firstName: 'Мыктыбек3',
+      lastName: 'Мыктыбеков3',
+      phoneNumber: '+996 500 123 123',
+      email: 'dpeetermann0@tmall.com',
+      amountOfBooks: 4,
+      dateOfRegistration: '2022-05-14',
+   },
+   {
+      vendorId: 4,
+      count: 1,
+      firstName: 'Мыктыбек4',
+      lastName: 'Мыктыбеков4',
+      phoneNumber: '+996 500 123 123',
+      email: 'dpeetermann0@tmall.com',
+      amountOfBooks: 74,
+      dateOfRegistration: '2022-05-14',
+   },
+   {
+      vendorId: 5,
+      count: 1,
+      firstName: 'Мыктыбек5',
+      lastName: 'Мыктыбеков5',
+      phoneNumber: '+996 500 123 123',
+      email: 'dpeetermann0@tmall.com',
+      amountOfBooks: 64,
+      dateOfRegistration: '2022-05-14',
+   },
+]
+
+export const VendorProfile = () => {
    const { id } = useParams()
-   const seller = vendorData.find((item) => item.vendorId.toString() === id)
+   const seller = VENDORDATA.find((item) => item.vendorId.toString() === id)
    const [isOpen, setIsOpen] = useState(false)
    const showModal = (obj) => {
       setIsOpen(obj)
@@ -52,7 +105,7 @@ export const VendorProfile = ({ vendorData }) => {
                Удалить профиль
             </TextButton>
          </ProfileContainer>
-         <Modal isOpen={isOpen}>
+         <Modal isOpen={isOpen} onCloseBackDrop={() => showModal(false)}>
             <StyledModal>
                <p>
                   Вы уверены, что хотите удалить
