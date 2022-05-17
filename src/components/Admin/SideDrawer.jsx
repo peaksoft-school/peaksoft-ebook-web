@@ -80,7 +80,7 @@ const StyledContainer = styled.div`
       text-decoration: none;
       font-size: 16px;
       font-family: 'Open Sans';
-      font-weight: 400;
+      font-weight: 600;
       display: block;
       list-style: none;
       line-height: 50px;

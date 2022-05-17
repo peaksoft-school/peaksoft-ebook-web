@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
-import { ReactComponent as ProfileIcon } from '../../assets/icons/profile-icon.svg'
+import { ReactComponent as ProfileIcon } from '../../assets/icons/single-profile-icon.svg'
 import { PopUp } from '../UI/PopUp/PopUp'
 
 export const AdminHeader = () => {
