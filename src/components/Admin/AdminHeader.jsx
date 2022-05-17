@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
-import { ReactComponent as ProfileIcon } from '../../assets/icons/profile-icon.svg'
+import { ReactComponent as ProfileIcon } from '../../assets/icons/single-profile-icon.svg'
 import { PopUp } from '../UI/PopUp/PopUp'
 
 export const AdminHeader = () => {
@@ -18,11 +18,15 @@ export const AdminHeader = () => {
    return (
       <AdminHeaderContainer>
          <SearchInput booksList={booksList} />
-         <AdminTextContainer onClick={showPopUp}>
-            <ProfileIcon />
-            <span>Администратор</span>
-            {showOptions && <PopUp right="20" top="75px" options={options} />}
-         </AdminTextContainer>
+         <StyledContainer>
+            <AdminTextContainer onClick={handleClick}>
+               <ProfileIcon />
+               <span>Администратор</span>
+               {showOptions && (
+                  <PopUp right="20" top="75px" options={options} />
+               )}
+            </AdminTextContainer>
+         </StyledContainer>
       </AdminHeaderContainer>
    )
 }
@@ -32,6 +36,8 @@ const AdminHeaderContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
+   position: fixed;
+   padding: 30px 40px 0 270px;
 `
 
 const AdminTextContainer = styled.div`
@@ -39,7 +45,11 @@ const AdminTextContainer = styled.div`
    width: max-content;
    justify-content: space-between;
    align-items: center;
+<<<<<<< HEAD
    padding-right: 35px;
+=======
+   padding-right: 30px;
+>>>>>>> 885178b78f3be44d4ce8a20f128eaadd19904751
    svg {
       cursor: pointer;
    }
@@ -50,4 +60,11 @@ const AdminTextContainer = styled.div`
       font-size: 16px;
       cursor: pointer;
    }
+`
+
+const StyledContainer = styled.div`
+   min-width: fit-content;
+   position: relative;
+   right: 0;
+   padding-left: 5px;
 `

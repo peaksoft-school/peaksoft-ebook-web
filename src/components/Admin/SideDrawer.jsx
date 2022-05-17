@@ -75,12 +75,13 @@ const StyledContainer = styled.div`
    min-width: 250px;
    height: 100%;
    background-color: #f34901;
+   position: fixed;
    ul {
       padding: 60px 0;
       text-decoration: none;
       font-size: 16px;
       font-family: 'Open Sans';
-      font-weight: 400;
+      font-weight: 600;
       display: block;
       list-style: none;
       line-height: 50px;
