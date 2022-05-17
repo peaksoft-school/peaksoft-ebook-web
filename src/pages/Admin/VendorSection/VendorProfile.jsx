@@ -1,47 +1,56 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
 import { Modal } from '../../../components/UI/Modals/Modal'
+import { getSingleVendor } from '../../../store/admin-panel-vendor-slice'
 
 export const VendorProfile = () => {
+   const { singleVendor } = useSelector((state) => state.adminVendors)
+   const dispatch = useDispatch()
    const { id } = useParams()
-   const seller = [].find((item) => item.vendorId.toString() === id)
+   const seller = singleVendor.find((item) => item.vendorId.toString() === id)
    const [isOpen, setIsOpen] = useState(false)
    const showModal = (obj) => {
       setIsOpen(obj)
    }
+   useEffect(() => {
+      dispatch(getSingleVendor())
+   }, [])
+   console.log(seller)
+   // console.log(singleVendor)
    return (
       <>
          <ProfileContainer>
             <ContainerOfFirstLine>
                <div>
                   <StyledIndex>Имя</StyledIndex>
-                  <p>{seller.firstName}</p>
+                  <p>{singleVendor.firstName}</p>
                </div>
                <div>
                   <StyledIndex>Номер телефона</StyledIndex>
-                  <p>{seller.phoneNumber}</p>
+                  <p>{singleVendor.phoneNumber}</p>
                </div>
                <div>
                   <StyledIndex>Дата регистрации</StyledIndex>
-                  <p>{seller.dateOfRegistration}</p>
+                  <p>{singleVendor.dateOfRegistration}</p>
                </div>
             </ContainerOfFirstLine>
             <ContainerOfSecondLine>
                <div>
                   <StyledIndex>Фамилия</StyledIndex>
-                  <p>{seller.lastName}</p>
+                  <p>{singleVendor.lastName}</p>
                </div>
                <div>
                   <StyledIndex>Email</StyledIndex>
-                  <p>{seller.email}</p>
+                  <p>{singleVendor.email}</p>
                </div>
             </ContainerOfSecondLine>
             <TextButton
                onClick={(e) => {
-                  showModal(seller)
+                  showModal(singleVendor)
                   e.stopPropagation()
                }}
                padding="88px"

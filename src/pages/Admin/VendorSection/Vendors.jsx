@@ -28,7 +28,7 @@ export const Vendors = () => {
    useEffect(() => {
       dispatch(getAllVendors())
    }, [])
-   console.log(listOfVendors)
+   // console.log(listOfVendors)
    return (
       <>
          <StyledTableContainer component={Paper}>

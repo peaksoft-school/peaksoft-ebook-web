@@ -16,9 +16,24 @@ export const getAllVendors = createAsyncThunk(
    }
 )
 
+export const getSingleVendor = createAsyncThunk(
+   'admin_panel_vendors/getSingleVendor',
+   async (_, { fulfillWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: 'admin/vendors',
+            method: 'GET',
+         })
+         return fulfillWithValue(result)
+      } catch (error) {
+         return console.log(error.message)
+      }
+   }
+)
+
 const initialState = {
    listOfVendors: [],
-   singleVendor: null,
+   singleVendor: [],
    listOfVendorBooks: [],
 }
 
@@ -29,6 +44,9 @@ export const adminPanelVendorSlice = createSlice({
    extraReducers: {
       [getAllVendors.fulfilled]: (state, { payload }) => {
          state.listOfVendors = payload
+      },
+      [getSingleVendor.fulfilled]: (state, { payload }) => {
+         state.singleVendor = payload
       },
    },
 })
