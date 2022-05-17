@@ -11,9 +11,10 @@ import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
 
 export const VendorHeader = () => {
-   const [showOptions, setShowOptions] = useState(false)
+   const [isShowOptions, setIsShowOptions] = useState(false)
+
    const showPopUp = () => {
-      setShowOptions(!showOptions)
+      setIsShowOptions((isShowOptions) => !isShowOptions)
    }
    const options = [
       {
@@ -33,7 +34,7 @@ export const VendorHeader = () => {
                <StyledBellIcon />
                <ContainerOfIcons onClick={showPopUp}>
                   <ProfileIcon />
-                  {showOptions && <PopUp options={options} />}
+                  {isShowOptions && <PopUp options={options} />}
                </ContainerOfIcons>
             </InnerContainer>
          </SearchHeaderContainer>
