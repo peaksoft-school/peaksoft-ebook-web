@@ -6,7 +6,7 @@ import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
-import { theme } from '../../assets/styles/styles'
+import { theme } from '../../utils/constants/theme'
 import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 
 export const UserHeader = ({ countOfItems }) => {
@@ -16,15 +16,13 @@ export const UserHeader = ({ countOfItems }) => {
       setIsVisibleGenreMenu((prevState) => !prevState)
    }
    return (
-      <>
-         <VendorHeaderContainer>
-            <Logo />
-            <InnerContainer>
-               <SearchInput booksList={booksList} />
-               <StyledFavoriteIcon />
-               <Basket>Корзина ({countOfItems})</Basket>
-            </InnerContainer>
-         </VendorHeaderContainer>
+      <VendorHeaderContainer>
+         <InnerContainer>
+            <StyledLogo />
+            <SearchInput booksList={booksList} />
+            <StyledFavoriteIcon />
+            <Basket>Корзина ({countOfItems})</Basket>
+         </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>
                <StyledGenres onClick={changeVisibleGenreMenu}>
@@ -55,7 +53,7 @@ export const UserHeader = ({ countOfItems }) => {
                </ul>
             </StyledNavlinks>
             <Button
-               padding="10px 24px 10px 24px"
+               padding="10px 24px"
                bgColor={theme.secondary.darkBackground}
                fontSize="16px"
                ling-height="21.79px"
@@ -65,14 +63,18 @@ export const UserHeader = ({ countOfItems }) => {
                Войти
             </Button>
          </ContainerOfLinks>
-      </>
+      </VendorHeaderContainer>
    )
 }
+
+const StyledLogo = styled(Logo)`
+   margin-right: 30px;
+`
 
 const StyledNavlinks = styled.div`
    display: flex;
    justify-content: space-between;
-   width: 800px;
+   width: 760px;
 `
 
 const StyledGenres = styled.div`
@@ -88,12 +90,10 @@ const StyledGenres = styled.div`
 `
 
 const ContainerOfLinks = styled.div`
-   margin: 0 auto;
-   width: 1270px;
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 40px 0;
+   padding: 40px 15px;
    ul {
       list-style: none;
       width: 598px;
@@ -120,7 +120,7 @@ const ContainerOfLinks = styled.div`
 `
 
 const StyledFavoriteIcon = styled(FavoriteIcon)`
-   margin-right: 30px;
+   margin: 0 30px 0 37px;
    cursor: pointer;
 `
 
@@ -131,16 +131,16 @@ const Basket = styled.p`
    cursor: pointer;
 `
 const VendorHeaderContainer = styled.div`
-   width: 100%;
+   min-width: 1280px;
    display: flex;
    justify-content: center;
-   svg {
-      margin-left: 37px;
-   }
+   flex-direction: column;
+   position: fixed;
+   right: 50%;
+   transform: translateX(50%);
 `
 const InnerContainer = styled.div`
    display: flex;
    align-items: center;
    justify-content: center;
-   padding-left: 44px;
 `

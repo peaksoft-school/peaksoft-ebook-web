@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { theme } from '../../assets/styles/styles'
+import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as BellIcon } from '../../assets/icons/bell-icon.svg'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/profile-icon.svg'
-import { ReactComponent as ArrowDownIcon } from '../../assets/icons/arrow-down-icon.svg'
 import { ReactComponent as InfoIcon } from '../../assets/icons/info-icon.svg'
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg'
 import { Logo } from '../UI/Logo/Logo'
@@ -12,9 +11,10 @@ import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
 
 export const VendorHeader = () => {
-   const [showOptions, setShowOptions] = useState(false)
-   const handleClick = () => {
-      setShowOptions(!showOptions)
+   const [isShowOptions, setIsShowOptions] = useState(false)
+
+   const showPopUp = () => {
+      setIsShowOptions((isShowOptions) => !isShowOptions)
    }
    const options = [
       {
@@ -26,20 +26,18 @@ export const VendorHeader = () => {
    ]
    const booksList = []
    return (
-      <>
-         <VendorHeaderContainer>
-            <Logo />
+      <VendorHeaderContainer>
+         <SearchHeaderContainer>
+            <StyledLogo />
+            <SearchInput booksList={booksList} />
             <InnerContainer>
-               <SearchInput booksList={booksList} />
-               <NewBellIcon />
-               <ContainerOfIcons onClick={handleClick}>
+               <StyledBellIcon />
+               <ContainerOfIcons onClick={showPopUp}>
                   <ProfileIcon />
-                  <ArrowDownIcon />
-                  {showOptions && <PopUp options={options} />}
+                  {isShowOptions && <PopUp options={options} />}
                </ContainerOfIcons>
             </InnerContainer>
-         </VendorHeaderContainer>
-
+         </SearchHeaderContainer>
          <ButtonsContainer>
             <StyledContainer>
                <Button
@@ -53,28 +51,40 @@ export const VendorHeader = () => {
                <InfoIcon />
             </StyledContainer>
             <Button
-               padding="10px 24px 10px 24px"
+               padding="10px 24px"
                bgColor={theme.secondary.orange}
                fontSize="16px"
                lHeight="21.79px"
                bgColorHover={theme.secondary.orange}
                bgColorActive={theme.secondary.orange}
             >
-               <Plus style={{ marginRight: '17px' }} />
+               <Plus style={{ marginRight: '15px' }} />
                Добавить книгу
             </Button>
          </ButtonsContainer>
-      </>
+      </VendorHeaderContainer>
    )
 }
+
+const StyledLogo = styled(Logo)`
+   margin-right: 44px;
+`
 
 const StyledContainer = styled.div`
    display: flex;
    align-items: center;
-   svg {
-      margin-left: 20px;
+   position: relative;
+   & svg {
+      position: absolute;
+      right: -2rem;
       cursor: pointer;
    }
+`
+const SearchHeaderContainer = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
 `
 
 const ButtonsContainer = styled.div`
@@ -82,11 +92,11 @@ const ButtonsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 40px 96px;
+   padding: 40px 0;
 `
-const NewBellIcon = styled(BellIcon)`
-   margin-right: 30px;
+const StyledBellIcon = styled(BellIcon)`
    cursor: pointer;
+   margin-right: 40px;
 `
 
 const ContainerOfIcons = styled.div`
@@ -94,18 +104,14 @@ const ContainerOfIcons = styled.div`
    align-items: center;
    justify-content: space-around;
    position: relative;
-   svg {
-      margin-left: 6.5px;
-      cursor: pointer;
-   }
 `
 const VendorHeaderContainer = styled.div`
-   width: 100%;
    display: flex;
    justify-content: center;
-   svg {
-      margin-left: 37px;
-   }
+   flex-direction: column;
+   position: fixed;
+   right: 50%;
+   transform: translateX(50%);
 `
 const InnerContainer = styled.div`
    display: flex;

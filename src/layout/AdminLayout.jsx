@@ -8,8 +8,8 @@ export const AdminLayout = () => {
    return (
       <AdminLayoutContainer>
          <SideDrawer />
+         <AdminHeader />
          <ContentContainer>
-            <AdminHeader />
             <Outlet />
          </ContentContainer>
       </AdminLayoutContainer>
@@ -30,5 +30,5 @@ const ContentContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
-   margin: 30px;
+   padding: 70px 0 0 250px;
 `
