@@ -19,11 +19,11 @@ export const AdminHeader = () => {
       <AdminHeaderContainer>
          <SearchInput booksList={booksList} />
          <StyledContainer>
-            <AdminTextContainer onClick={handleClick}>
+            <AdminTextContainer onClick={showPopUp}>
                <ProfileIcon />
                <span>Администратор</span>
                {showOptions && (
-                  <PopUp right="20" top="75px" options={options} />
+                  <PopUp right="20" top="40px" options={options} />
                )}
             </AdminTextContainer>
          </StyledContainer>
@@ -45,11 +45,7 @@ const AdminTextContainer = styled.div`
    width: max-content;
    justify-content: space-between;
    align-items: center;
-<<<<<<< HEAD
-   padding-right: 35px;
-=======
    padding-right: 30px;
->>>>>>> 885178b78f3be44d4ce8a20f128eaadd19904751
    svg {
       cursor: pointer;
    }
