@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
+import InputMask from 'react-input-mask'
 import {
    AuthLink,
    AuthLinksContainer,
@@ -12,29 +13,29 @@ import {
    ErrorMessageForExactField,
    RequestedFieldContainer,
 } from '../../assets/styles/styles'
-import { authActions } from '../../store/auth-slice'
 import {
    CONFIRM_MESSAGE,
+   INPUT_MASK_NUMBER,
    REGEXP_EMAIL,
    SIGN_IN_QUERY_PARAMS,
    SIGN_UP_QUERY_PARAMS,
    SIGN_UP_VENDOR_QUERY_PARAMS,
    VALIDATION_PARAMS_FOR_PASSWORD,
 } from '../../utils/constants/general'
-import { theme } from '../../utils/constants/theme'
 import { Button } from '../UI/Buttons/Button'
-import { Checkbox } from '../UI/Checkbox/Checkbox'
 import { FieldName } from '../UI/FieldName/FieldName'
 import { Input } from '../UI/Inputs/Input'
 import { InputForPassword } from '../UI/Inputs/InputForPassword'
 import { LoadingSpinner } from '../UI/LoadingSpinner/LoadingSpinner'
 import { Modal } from '../UI/Modals/Modal'
+import { authActions } from '../../store/auth-slice'
+import { theme } from '../../utils/constants/theme'
 
-export const SignUpClient = ({ onSubmit }) => {
-   const { errorMessageInRegister, isLoading } = useSelector(
+export const SignUpVendor = ({ onSubmit }) => {
+   const { isLoading, errorMessageInRegister } = useSelector(
       (state) => state.auth
    )
-
+   const [searchParams, setSearchParams] = useSearchParams()
    const dispatch = useDispatch()
 
    const {
@@ -46,46 +47,52 @@ export const SignUpClient = ({ onSubmit }) => {
       mode: 'onSubmit',
    })
 
-   const [searchParams, setSearchParams] = useSearchParams()
-
-   const isOpenSignUpModal = searchParams.get(SIGN_UP_QUERY_PARAMS)
+   const isOpenSignUpVendorModal = searchParams.get(SIGN_UP_VENDOR_QUERY_PARAMS)
 
    useEffect(() => {
       window.onbeforeunload = () => {
          return isDirty ? 'Show warning' : null
       }
    }, [isDirty])
+
    const resetFieldsAndErrors = () => {
       reset()
       dispatch(authActions.disableErrorMessageInRegister())
    }
 
-   const closeSignUpModal = () => {
-      const willUserCloseTheModalWindow = isDirty
+   const closeSignInModal = () => {
+      const willVendorCloseTheModalWindow = isDirty
          ? window.confirm(CONFIRM_MESSAGE.WHENCLOSEMODAL)
          : true
-      if (willUserCloseTheModalWindow) {
+      if (willVendorCloseTheModalWindow) {
          setSearchParams('')
          resetFieldsAndErrors()
       }
    }
-
    const passToSignIn = () => {
-      const willUserPassToSignIn = isDirty
+      const willVendorPassToSignIn = isDirty
          ? window.confirm(CONFIRM_MESSAGE.WHENPASSTOSIGNIN)
          : true
-      if (willUserPassToSignIn) {
+      if (willVendorPassToSignIn) {
          setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
          resetFieldsAndErrors()
       }
    }
-   const navigateToLogin = () => {
-      resetFieldsAndErrors()
-      setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+   const passToSignUpClient = () => {
+      const willVendorPassToSignUpForClient = isDirty
+         ? window.confirm(CONFIRM_MESSAGE.WHENPASSTOSIGNUPFORCLIENT)
+         : true
+      if (willVendorPassToSignUpForClient) {
+         setSearchParams({ [SIGN_UP_QUERY_PARAMS]: true })
+         resetFieldsAndErrors()
+      }
    }
-
-   const submitHandler = (clientData) => {
-      onSubmit({ clientData, navigateToLogin })
+   const navigateToLoginAfterSuccessRegister = () => {
+      setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+      resetFieldsAndErrors()
+   }
+   const submitHandler = (vendorData) => {
+      onSubmit({ vendorData, navigateToLoginAfterSuccessRegister })
    }
    const errorForPasswordField =
       errorMessageInRegister === 'Введенные пароли не совпадают'
@@ -93,13 +100,21 @@ export const SignUpClient = ({ onSubmit }) => {
       errorMessageInRegister ===
       'Пользователь с таким email адресом уже существует'
    return (
-      <Modal isOpen={isOpenSignUpModal} onCloseBackDrop={closeSignUpModal}>
+      <Modal
+         isOpen={isOpenSignUpVendorModal}
+         onCloseBackDrop={closeSignInModal}
+      >
          <AuthorizationContainer>
             <AuthLinksContainer>
                <AuthLink onClick={passToSignIn}>Войти</AuthLink>
-               <AuthLink isActive={isOpenSignUpModal}>Регистрация</AuthLink>
+               <AuthLink
+                  isActive={isOpenSignUpVendorModal}
+                  onClick={passToSignUpClient}
+               >
+                  Регистрация
+               </AuthLink>
             </AuthLinksContainer>
-            <SignUpContainer onSubmit={handleSubmit(submitHandler)}>
+            <SignUpVendorContainer onSubmit={handleSubmit(submitHandler)}>
                <FieldsContainer>
                   <RequestedFieldContainer>
                      <FieldName>Ваше имя</FieldName>
@@ -108,6 +123,29 @@ export const SignUpClient = ({ onSubmit }) => {
                         type="text"
                         {...register('firstName', { required: true })}
                      />
+                  </RequestedFieldContainer>
+                  <RequestedFieldContainer>
+                     <FieldName>Ваша фамилия</FieldName>
+                     <Input
+                        placeholder="Напишите вашу фамилию"
+                        type="text"
+                        {...register('lastName', { required: true })}
+                     />
+                  </RequestedFieldContainer>
+                  <RequestedFieldContainer>
+                     <FieldName>Номер вашего телефона</FieldName>
+                     <InputMask
+                        mask={INPUT_MASK_NUMBER}
+                        {...register('number', { required: true })}
+                     >
+                        {(inputProps) => (
+                           <Input
+                              placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                              type="tel"
+                              {...inputProps}
+                           />
+                        )}
+                     </InputMask>
                   </RequestedFieldContainer>
                   <RequestedFieldContainer>
                      <FieldName>Email</FieldName>
@@ -141,102 +179,46 @@ export const SignUpClient = ({ onSubmit }) => {
                      <FieldName>Подтвердите пароль</FieldName>
                      <InputForPassword
                         placeholder="Подтвердите пароль"
-                        {...register('confirmPassword', {
-                           required: true,
-                        })}
+                        {...register('confirmPassword', { required: true })}
                         error={errorForPasswordField}
                      />
                   </RequestedFieldContainer>
                </FieldsContainer>
+               {Object.values(errors).some(
+                  (error) =>
+                     error.type === 'required' && !errorMessageInRegister
+               ) && <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>}
                {errorMessageInRegister && (
                   <ErrorMessage>{errorMessageInRegister}</ErrorMessage>
                )}
-               {Object.values(errors).some(
-                  (error) => error.type === 'required'
-               ) &&
-                  !errorMessageInRegister && (
-                     <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>
-                  )}
 
-               <SubscribeCheckboxContainer>
-                  <Checkbox />
-                  <p>
-                     Подпишитесь на рассылку, чтобы получать новости от eBook
-                  </p>
-               </SubscribeCheckboxContainer>
-               <ButtonsContainer>
-                  <Button
-                     padding="10px 24px"
-                     bgColor={theme.secondary.darkBackground}
-                     fontSize="16px"
-                     ling-height="21.79px"
-                     bgColorHover="#484848"
-                     bgColorActive={theme.secondary.orange}
-                     fullWidth
-                     type="submit"
-                  >
-                     {isLoading ? <LoadingSpinner /> : 'Создать аккаунт'}
-                  </Button>
-                  <Button
-                     padding="10px 24px"
-                     bgColor="inherit"
-                     color="#222222"
-                     fontSize="16px"
-                     fontWeight={600}
-                     ling-height="21.79px"
-                     border="1px solid #222222"
-                     bgColorActive={theme.secondary.darkBackground}
-                     colorActive="#ffffff"
-                     fullWidth
-                     onClick={() =>
-                        setSearchParams({ [SIGN_UP_VENDOR_QUERY_PARAMS]: true })
-                     }
-                     type="button"
-                  >
-                     Стать продавцом на eBook
-                  </Button>
-               </ButtonsContainer>
-            </SignUpContainer>
+               <Button
+                  padding="10px 24px"
+                  bgColor={theme.secondary.darkBackground}
+                  fontSize="16px"
+                  ling-height="21.79px"
+                  bgColorHover="#484848"
+                  bgColorActive={theme.secondary.orange}
+                  fullWidth
+               >
+                  {isLoading ? <LoadingSpinner /> : 'Создать аккаунт'}
+               </Button>
+            </SignUpVendorContainer>
          </AuthorizationContainer>
       </Modal>
    )
 }
 
-const SignUpContainer = styled.form`
+const SignUpVendorContainer = styled.form`
    min-height: 510px;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
 `
-
 const FieldsContainer = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: space-between;
    height: fit-content;
    margin: 28px 0 25px 0;
-`
-
-const SubscribeCheckboxContainer = styled.div`
-   width: 100%;
-   display: flex;
-   align-items: center;
-   margin-bottom: 25px;
-   & p {
-      font-family: 'Open Sans';
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 16px;
-      text-align: center;
-      position: relative;
-      left: 35px;
-      color: #777777;
-   }
-`
-
-const ButtonsContainer = styled.div`
-   height: 96px;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
 `

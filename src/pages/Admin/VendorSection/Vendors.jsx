@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
    TableContainer,
    Table,
@@ -11,69 +11,24 @@ import {
 } from '@mui/material'
 import styled from '@emotion/styled/macro'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { ReactComponent as Delete } from '../../../assets/icons/delete-icon.svg'
-
-const VENDORDATA = [
-   {
-      vendorId: 1,
-      count: 1,
-      firstName: 'Мыктыбекdasghdghjas',
-      lastName: 'Мыктыбековdbhasdhjga',
-      phoneNumber: '+996 500 123 123',
-      email: 'dpeetermandashdjgsadjasndgashjdgashdgasjhdghajsdgasjhdgajshd0@tmall.com',
-      amountOfBooks: 346767,
-      dateOfRegistration: '2022-05-14',
-   },
-   {
-      vendorId: 2,
-      count: 4,
-      firstName: 'Мыктыбек2',
-      lastName: 'Мыктыбеков2',
-      phoneNumber: '+996 500 123 123',
-      email: 'dpeetermann0@tmall.com',
-      amountOfBooks: 3,
-      dateOfRegistration: '2022-05-14',
-   },
-   {
-      vendorId: 3,
-      count: 1,
-      firstName: 'Мыктыбек3',
-      lastName: 'Мыктыбеков3',
-      phoneNumber: '+996 500 123 123',
-      email: 'dpeetermann0@tmall.com',
-      amountOfBooks: 4,
-      dateOfRegistration: '2022-05-14',
-   },
-   {
-      vendorId: 4,
-      count: 1,
-      firstName: 'Мыктыбек4',
-      lastName: 'Мыктыбеков4',
-      phoneNumber: '+996 500 123 123',
-      email: 'dpeetermann0@tmall.com',
-      amountOfBooks: 74,
-      dateOfRegistration: '2022-05-14',
-   },
-   {
-      vendorId: 5,
-      count: 1,
-      firstName: 'Мыктыбек5',
-      lastName: 'Мыктыбеков5',
-      phoneNumber: '+996 500 123 123',
-      email: 'dpeetermann0@tmall.com',
-      amountOfBooks: 64,
-      dateOfRegistration: '2022-05-14',
-   },
-]
+import { getAllVendors } from '../../../store/admin-panel-vendor-slice'
 
 export const Vendors = () => {
+   const { listOfVendors } = useSelector((state) => state.adminVendors)
+   const dispatch = useDispatch()
    const navigate = useNavigate()
    const [isOpen, setIsOpen] = useState(false)
    const showModal = (obj) => {
       setIsOpen(obj)
    }
+   useEffect(() => {
+      dispatch(getAllVendors())
+   }, [])
+   console.log(listOfVendors)
    return (
       <>
          <StyledTableContainer component={Paper}>
@@ -88,7 +43,7 @@ export const Vendors = () => {
                   </TableRow>
                </TableHead>
                <TableBody>
-                  {VENDORDATA.map((vendor) => (
+                  {listOfVendors.map((vendor) => (
                      <TableRow
                         key={vendor.vendorId}
                         sx={[
@@ -103,7 +58,7 @@ export const Vendors = () => {
                            navigate(`${vendor.vendorId}/profile`)
                         }}
                      >
-                        <TableCell>{vendor.count}</TableCell>
+                        <TableCell>{vendor.vendorId}</TableCell>
                         <TableCell>
                            {vendor.firstName} {vendor.lastName}
                         </TableCell>

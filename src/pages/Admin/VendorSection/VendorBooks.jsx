@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
+import { VendorBookCard } from '../../../components/UI/Card/VendorBookCard'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 
@@ -18,21 +19,33 @@ export const VendorBooks = ({ countOfBooks }) => {
    const options = [
       {
          title: 'Все',
+         id: 's1',
+         action: () => console.log('isfbsdjm'),
       },
       {
          title: 'В избранном',
+         id: 's2',
+         action: null,
       },
       {
          title: 'В корзине',
+         id: 's3',
+         action: null,
       },
       {
          title: 'Проданы',
+         id: 's4',
+         action: null,
       },
       {
          title: 'В обработке',
+         id: 's5',
+         action: null,
       },
       {
          title: 'Отклоненные',
+         id: 's6',
+         action: null,
       },
    ]
    return (
@@ -54,6 +67,9 @@ export const VendorBooks = ({ countOfBooks }) => {
                   )}
                </ContainerOfIcons>
             </HeadContainer>
+            <ContentContainer>
+               <VendorBookCard />
+            </ContentContainer>
             <TextButton
                onClick={(e) => {
                   showModal()
@@ -101,6 +117,11 @@ export const VendorBooks = ({ countOfBooks }) => {
       </>
    )
 }
+const ContentContainer = styled.div`
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+`
 
 const BooksAmount = styled.span`
    color: #969696;

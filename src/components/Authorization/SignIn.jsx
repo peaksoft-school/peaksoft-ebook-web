@@ -8,7 +8,6 @@ import {
    AuthLinksContainer,
    AuthorizationContainer,
    ErrorMessage,
-   StyledLoadingSpinner,
 } from '../../assets/styles/styles'
 import { Button } from '../UI/Buttons/Button'
 import { Input } from '../UI/Inputs/Input'
@@ -21,12 +20,12 @@ import {
    SIGN_IN_QUERY_PARAMS,
    SIGN_UP_QUERY_PARAMS,
 } from '../../utils/constants/general'
+import { LoadingSpinner } from '../UI/LoadingSpinner/LoadingSpinner'
 
 export const SignIn = ({ onSubmit }) => {
    const { errorMessageInAuthorization, isLoading } = useSelector(
       (state) => state.auth
    )
-
    const dispatch = useDispatch()
 
    const {
@@ -98,7 +97,7 @@ export const SignIn = ({ onSubmit }) => {
                   fullWidth
                   type="submit"
                >
-                  {isLoading ? <StyledLoadingSpinner /> : 'Войти'}
+                  {isLoading ? <LoadingSpinner /> : 'Войти'}
                </Button>
             </SignInContainer>
          </AuthorizationContainer>

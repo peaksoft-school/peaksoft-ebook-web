@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authSlice from './auth-slice'
+import { adminPanelVendorSlice } from './admin-panel-vendor-slice'
+import { authSlice } from './auth-slice'
 
-const store = configureStore({
+export const store = configureStore({
    reducer: {
       auth: authSlice.reducer,
+      adminVendors: adminPanelVendorSlice.reducer,
    },
 })
-
-export default store

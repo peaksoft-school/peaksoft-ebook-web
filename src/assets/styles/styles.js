@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { ReactComponent as LoadingSpinner } from '../icons/loading-spinner.svg'
 
 export const AuthorizationContainer = styled.div`
    min-width: 497px;
@@ -29,14 +28,22 @@ export const ErrorMessage = styled.p`
    color: #f10000;
    margin-bottom: 30px;
 `
-export const StyledLoadingSpinner = styled(LoadingSpinner)`
-   animation: LOADING linear 1s infinite;
-   @keyframes LOADING {
-      0% {
-         transform: rotate(0deg);
-      }
-      100% {
-         transform: rotate(360deg);
-      }
-   }
+
+export const RequestedFieldContainer = styled.div`
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: flex-start;
+   height: 63px;
+   margin-top: 12px;
+   position: relative;
+`
+export const ErrorMessageForExactField = styled.p`
+   color: red;
+   font-size: 10px;
+   font-family: 'Nunito';
+   position: absolute;
+   top: 9px;
+   text-align: end;
+   width: 100%;
 `

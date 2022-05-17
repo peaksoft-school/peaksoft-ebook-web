@@ -17,6 +17,7 @@ const StyledButton = styled.button`
    font-weight: ${({ fontWeight }) => fontWeight || ''};
    border: ${({ border }) => border || 'none'};
    font-family: 'Open Sans';
+   margin: ${({ margin }) => margin || ''};
    cursor: pointer;
    &:hover {
       background-color: ${({ bgColorHover }) => bgColorHover || ''};
