@@ -23,7 +23,7 @@ export const AdminHeader = () => {
                <ProfileIcon />
                <span>Администратор</span>
                {showOptions && (
-                  <PopUp right="20" top="75px" options={options} />
+                  <PopUp right="20" top="40px" options={options} />
                )}
             </AdminTextContainer>
          </StyledContainer>
