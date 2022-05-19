@@ -117,7 +117,7 @@ const ContainerOfFirstLine = styled.div`
    width: 100%;
    padding-bottom: 30px;
    div {
-      padding-right: 180px;
+      width: 250px;
    }
 `
 
@@ -125,7 +125,7 @@ const ContainerOfSecondLine = styled.div`
    display: flex;
    width: 100%;
    div {
-      padding-right: 140px;
+      width: 250px;
    }
 `
 

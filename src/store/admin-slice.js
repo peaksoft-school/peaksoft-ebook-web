@@ -11,7 +11,7 @@ export const getAllVendors = createAsyncThunk(
          })
          return fulfillWithValue(result)
       } catch (error) {
-         return console.log(error.message)
+         return fulfillWithValue(error.message)
       }
    }
 )
@@ -19,7 +19,6 @@ export const getAllVendors = createAsyncThunk(
 export const getSingleVendor = createAsyncThunk(
    'admin_panel_vendors/getSingleVendor',
    async (id, { rejectWithValue }) => {
-      console.log(id)
       try {
          const result = await appFetch({
             path: `admin/vendor/${id}`,
@@ -34,14 +33,12 @@ export const getSingleVendor = createAsyncThunk(
 )
 export const getListOfVendorBooks = createAsyncThunk(
    'admin_panel_vendors/getListOfVendorBooks',
-   async (data, id, { rejectWithValue }) => {
-      console.log(data)
+   async ({ data, id, offset }, { rejectWithValue }) => {
       try {
          const result = await appFetch({
-            path: `admin/vendors/${id}/${data}`,
+            path: `admin/vendor/${id}/${data}/${offset}`,
             method: 'GET',
          })
-         console.log(result)
          return result
       } catch (error) {
          return rejectWithValue(error.message)
@@ -57,7 +54,6 @@ export const removeVendor = createAsyncThunk(
             path: `admin/removeUser/${id}`,
             method: 'DELETE',
          })
-         console.log(result)
          navigateAfterSuccessDelete()
          return result
       } catch (error) {

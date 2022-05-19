@@ -27,52 +27,53 @@ export const VendorBooks = ({ countOfBooks }) => {
       setShowOptions(!showOptions)
    }
    const { id } = useParams()
+
    useEffect(() => {
-      console.log(books)
-      dispatch(getListOfVendorBooks(id))
-   })
+      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
+   }, [])
+
    const options = [
       {
          title: 'Все',
          value: 'books',
          id: 's1',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В избранном',
          value: 'favorite-books',
          id: 's2',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В корзине',
          value: 'basket-books',
          id: 's3',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
-      },
-      {
-         title: 'Проданы',
-         // value: 'basket',
-         id: 's4',
-         // action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'Со скидками',
          value: 'books-discount',
          id: 's9',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В обработке',
          value: 'books-in-process',
          id: 's5',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'Отклоненные',
          value: 'books-refused',
          id: 's6',
-         action: (data) => dispatch(getListOfVendorBooks(data)),
+         action: (data) =>
+            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
       },
    ]
    return (
