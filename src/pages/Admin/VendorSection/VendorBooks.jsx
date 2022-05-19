@@ -1,51 +1,78 @@
 import styled from '@emotion/styled/macro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
-import { VendorBookCard } from '../../../components/UI/Card/VendorBookCard'
+import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
+import { removeVendor, getListOfVendorBooks } from '../../../store/admin-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {
+   const books = useSelector((state) => state.adminVendors.listOfVendorBooks)
    const [showOptions, setShowOptions] = useState(false)
-   const [isOpen, setIsOpen] = useState(false)
-   const showModal = (obj) => {
-      setIsOpen(obj)
+   const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const navigateAfterSuccessDelete = () => {
+      navigate('/vendors')
    }
+   const deleteVendor = () => {
+      dispatch(removeVendor({ id, navigateAfterSuccessDelete }))
+   }
+
    const showPopUp = () => {
       setShowOptions(!showOptions)
    }
+   const { id } = useParams()
+   useEffect(() => {
+      console.log(books)
+      dispatch(getListOfVendorBooks(id))
+   })
    const options = [
       {
          title: 'Все',
+         value: 'books',
          id: 's1',
-         action: () => console.log('isfbsdjm'),
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
       {
          title: 'В избранном',
+         value: 'favorite-books',
          id: 's2',
-         action: null,
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
       {
          title: 'В корзине',
+         value: 'basket-books',
          id: 's3',
-         action: null,
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
       {
          title: 'Проданы',
+         // value: 'basket',
          id: 's4',
-         action: null,
+         // action: (data) => dispatch(getListOfVendorBooks(data)),
+      },
+      {
+         title: 'Со скидками',
+         value: 'books-discount',
+         id: 's9',
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
       {
          title: 'В обработке',
+         value: 'books-in-process',
          id: 's5',
-         action: null,
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
       {
          title: 'Отклоненные',
+         value: 'books-refused',
          id: 's6',
-         action: null,
+         action: (data) => dispatch(getListOfVendorBooks(data)),
       },
    ]
    return (
@@ -68,37 +95,43 @@ export const VendorBooks = ({ countOfBooks }) => {
                </ContainerOfIcons>
             </HeadContainer>
             <ContentContainer>
-               <VendorBookCard />
+               {books.map((vendorBooks) => (
+                  <AdminBookCard
+                     key={vendorBooks.id}
+                     vendorImageUrl={vendorBooks.img}
+                     like={vendorBooks.like}
+                     date={vendorBooks.date}
+                     name={vendorBooks.name}
+                     price={vendorBooks.price}
+                  />
+               ))}
             </ContentContainer>
-            <TextButton
-               onClick={(e) => {
-                  showModal()
-                  e.stopPropagation()
-               }}
-               padding="88px"
-               color="#f10000"
-               fontWeight="600"
-               lHeight="22px"
-            >
-               Удалить профиль
-            </TextButton>
+            <StyledButton>
+               <TextButton
+                  onClick={(e) => {
+                     setIsOpenDeleteUserModal(true)
+                     e.stopPropagation()
+                  }}
+                  color="#f10000"
+                  fontWeight="600"
+                  lHeight="22px"
+               >
+                  Удалить профиль
+               </TextButton>
+            </StyledButton>
          </BooksContainer>
-         <Modal isOpen={isOpen} onCloseBackDrop={() => showModal(false)}>
+         <Modal
+            isOpen={isOpenDeleteUserModal}
+            onCloseBackDrop={() => setIsOpenDeleteUserModal(false)}
+         >
             <StyledModal>
-               <p>
-                  Вы уверены, что хотите удалить
-                  <br />
-                  <span style={{ fontWeight: '600' }}>
-                     {isOpen.firstName} {isOpen.lastName}
-                  </span>
-                  ?
-               </p>
+               <p>Вы уверены, что хотите удалить профиль ?</p>
                <div>
                   <Button
                      fontSize="16px"
                      color="#A3A3A3"
                      bgColor="white"
-                     onClick={() => showModal(false)}
+                     onClick={() => setIsOpenDeleteUserModal(false)}
                   >
                      Отменить
                   </Button>
@@ -108,6 +141,7 @@ export const VendorBooks = ({ countOfBooks }) => {
                      color="white"
                      bgColorHover="#484848"
                      bgColorActive="#F34901"
+                     onClick={deleteVendor}
                   >
                      Удалить
                   </Button>
@@ -117,10 +151,19 @@ export const VendorBooks = ({ countOfBooks }) => {
       </>
    )
 }
+
+const StyledButton = styled.div`
+   padding: 20px 10px 0 930px;
+`
+
 const ContentContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
-   width: 100%;
+   padding-top: 30px;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-template-rows: repeat(1, 1fr);
+   grid-column-gap: 20px;
+   grid-row-gap: 20px;
+   max-width: 100%;
 `
 
 const BooksAmount = styled.span`
@@ -137,8 +180,8 @@ const HeadContainer = styled.div`
 
 const BooksContainer = styled.div`
    button {
-      padding: 88px;
-      padding-left: 900px;
+      width: 193px;
+      height: 42px;
    }
    p {
       font-size: 16px;

@@ -6,7 +6,10 @@ export const PopUp = ({ options, ...props }) => {
          <StyledOptions {...props}>
             {options &&
                options.map((option) => (
-                  <MenuItem key={option.id} onClick={() => option.action()}>
+                  <MenuItem
+                     key={option.id}
+                     onClick={() => option.action(option.value)}
+                  >
                      {option.title}
                   </MenuItem>
                ))}
@@ -43,4 +46,5 @@ const MenuContainer = styled.div`
    display: flex;
    flex-direction: column;
    background-color: white;
+   z-index: 99;
 `

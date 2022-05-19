@@ -36,8 +36,11 @@ const AdminHeaderContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
+   z-index: 99;
    position: fixed;
+   background: white;
    padding: 30px 40px 0 270px;
+   padding-bottom: 20px;
 `
 
 const AdminTextContainer = styled.div`

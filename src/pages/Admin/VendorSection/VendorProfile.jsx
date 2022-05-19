@@ -1,82 +1,81 @@
 import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
 import { Modal } from '../../../components/UI/Modals/Modal'
-import { getSingleVendor } from '../../../store/admin-panel-vendor-slice'
+import { getSingleVendor, removeVendor } from '../../../store/admin-slice'
 
 export const VendorProfile = () => {
-   const { singleVendor } = useSelector((state) => state.adminVendors)
+   const seller = useSelector((state) => state.adminVendors.singleVendor)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { id } = useParams()
-   const seller = singleVendor.find((item) => item.vendorId.toString() === id)
-   const [isOpen, setIsOpen] = useState(false)
-   const showModal = (obj) => {
-      setIsOpen(obj)
+   const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
+
+   const navigateAfterSuccessDelete = () => {
+      return navigate('/vendors')
+   }
+   const deleteVendor = () => {
+      dispatch(removeVendor({ id, navigateAfterSuccessDelete }))
    }
    useEffect(() => {
-      dispatch(getSingleVendor())
+      dispatch(getSingleVendor(id))
    }, [])
-   console.log(seller)
-   // console.log(singleVendor)
    return (
       <>
          <ProfileContainer>
             <ContainerOfFirstLine>
                <div>
                   <StyledIndex>Имя</StyledIndex>
-                  <p>{singleVendor.firstName}</p>
+                  <p>{seller?.firstName}</p>
                </div>
                <div>
                   <StyledIndex>Номер телефона</StyledIndex>
-                  <p>{singleVendor.phoneNumber}</p>
+                  <p>{seller?.phoneNumber}</p>
                </div>
                <div>
                   <StyledIndex>Дата регистрации</StyledIndex>
-                  <p>{singleVendor.dateOfRegistration}</p>
+                  <p>{seller?.dateOfRegistration}</p>
                </div>
             </ContainerOfFirstLine>
             <ContainerOfSecondLine>
                <div>
                   <StyledIndex>Фамилия</StyledIndex>
-                  <p>{singleVendor.lastName}</p>
+                  <p>{seller?.lastName}</p>
                </div>
                <div>
                   <StyledIndex>Email</StyledIndex>
-                  <p>{singleVendor.email}</p>
+                  <p>{seller?.email}</p>
                </div>
             </ContainerOfSecondLine>
-            <TextButton
-               onClick={(e) => {
-                  showModal(singleVendor)
-                  e.stopPropagation()
-               }}
-               padding="88px"
-               color="#f10000"
-               fontWeight="600"
-               lHeight="22px"
-            >
-               Удалить профиль
-            </TextButton>
+            <StyledButton>
+               <TextButton
+                  onClick={(e) => {
+                     setIsOpenDeleteUserModal(true)
+                     e.stopPropagation()
+                  }}
+                  color="#f10000"
+                  fontWeight="600"
+                  lHeight="22px"
+               >
+                  Удалить профиль
+               </TextButton>
+            </StyledButton>
          </ProfileContainer>
-         <Modal isOpen={isOpen} onCloseBackDrop={() => showModal(false)}>
+         <Modal
+            isOpen={isOpenDeleteUserModal}
+            onCloseBackDrop={() => setIsOpenDeleteUserModal(false)}
+         >
             <StyledModal>
-               <p>
-                  Вы уверены, что хотите удалить
-                  <br />
-                  <span style={{ fontWeight: '600' }}>
-                     {isOpen.firstName} {isOpen.lastName}
-                  </span>
-                  ?
-               </p>
+               <p>Вы уверены, что хотите удалить профиль ?</p>
                <div>
                   <Button
                      fontSize="16px"
                      color="#A3A3A3"
                      bgColor="white"
-                     onClick={() => showModal(false)}
+                     onClick={() => setIsOpenDeleteUserModal(false)}
                   >
                      Отменить
                   </Button>
@@ -86,6 +85,7 @@ export const VendorProfile = () => {
                      color="white"
                      bgColorHover="#484848"
                      bgColorActive="#F34901"
+                     onClick={deleteVendor}
                   >
                      Удалить
                   </Button>
@@ -95,14 +95,17 @@ export const VendorProfile = () => {
       </>
    )
 }
+const StyledButton = styled.div`
+   padding: 20px 10px 0 930px;
+`
 const ProfileContainer = styled.div`
    display: flex;
    flex-direction: column;
    line-height: 35px;
    width: 100%;
    button {
-      padding: 88px;
-      padding-left: 900px;
+      width: 193px;
+      height: 42px;
    }
    p {
       font-size: 16px;
@@ -111,15 +114,19 @@ const ProfileContainer = styled.div`
 `
 const ContainerOfFirstLine = styled.div`
    display: flex;
-   width: 60%;
-   justify-content: space-between;
+   width: 100%;
    padding-bottom: 30px;
+   div {
+      padding-right: 180px;
+   }
 `
 
 const ContainerOfSecondLine = styled.div`
    display: flex;
-   width: 39.5%;
-   justify-content: space-between;
+   width: 100%;
+   div {
+      padding-right: 140px;
+   }
 `
 
 const StyledIndex = styled.p`

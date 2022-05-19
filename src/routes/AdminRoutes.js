@@ -1,11 +1,11 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AdminLayout } from '../layout/AdminLayout'
-import { Vendors } from '../pages/Admin/VendorSection/Vendors'
 import { VendorBooks } from '../pages/Admin/VendorSection/VendorBooks'
 import { VendorDetails } from '../pages/Admin/VendorSection/VendorDetails'
 import { VendorProfile } from '../pages/Admin/VendorSection/VendorProfile'
 import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
+import { Vendors } from '../pages/Admin/VendorSection/Vendors'
 
 export const AdminRoutes = () => {
    return (

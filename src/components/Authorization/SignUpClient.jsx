@@ -116,10 +116,18 @@ export const SignUpClient = ({ onSubmit }) => {
                         type="email"
                         {...register('email', {
                            required: true,
-                           pattern: REGEXP_EMAIL,
+                           pattern: {
+                              value: REGEXP_EMAIL,
+                              message: 'Некорректный email',
+                           },
                         })}
                         error={errorForEmailField}
                      />
+                     {errors?.email?.message && (
+                        <ErrorMessageForExactField>
+                           {errors.email.message}
+                        </ErrorMessageForExactField>
+                     )}
                   </RequestedFieldContainer>
                   <RequestedFieldContainer>
                      <FieldName>Пароль</FieldName>
