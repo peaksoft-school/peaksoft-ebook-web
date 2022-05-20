@@ -112,6 +112,8 @@ const VendorHeaderContainer = styled.div`
    position: fixed;
    right: 50%;
    transform: translateX(50%);
+   width: 100%;
+   padding: 0 80px;
 `
 const InnerContainer = styled.div`
    display: flex;

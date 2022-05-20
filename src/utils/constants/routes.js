@@ -10,7 +10,12 @@ export const DEFAULT_ROUTES = {
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {}
-export const VENDOR_ROUTES = {}
+export const VENDOR_ROUTES = {
+   ADD_BOOK: {
+      PATH: '/add-book',
+      LABEL: 'Добавить книгу',
+   },
+}
 
 export const ADMIN_ROUTES = {
    APPLICATIONS: {
