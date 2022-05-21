@@ -1,11 +1,17 @@
 import styled from '@emotion/styled/macro'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ImagePicker } from '../../components/UI/ImagePicker/ImagePicker'
 import { DEFAULT_ROUTES, VENDOR_ROUTES } from '../../utils/constants/routes'
 import circle from '../../assets/icons/circle-for-list.svg'
+import { RadioButton } from '../../components/UI/RadioButton/RadioButton'
 
 export const AddBook = () => {
+   const typesOfBook = ['Бумажная', 'Аудиокнига', 'Электронная книга']
+   const [selectedType, setSelectedType] = useState('Бумажная')
+   const changeTypeOfBookHandler = (e) => {
+      setSelectedType(e.target.value)
+   }
    return (
       <AddBookContainer>
          <NameOfPageContainer>
@@ -61,6 +67,21 @@ export const AddBook = () => {
                </DescriptionAboutUploadImage>
             </InnerUploadImagesContainer>
          </UploadImagesContainer>
+         <TypesOfUploadBookContainer>
+            <p>Тип</p>
+            <TypesContainer>
+               {typesOfBook.map((type) => (
+                  <div key={type}>
+                     <RadioButton
+                        value={type}
+                        onChange={changeTypeOfBookHandler}
+                        checked={selectedType === type}
+                     />
+                     <span>{type}</span>
+                  </div>
+               ))}
+            </TypesContainer>
+         </TypesOfUploadBookContainer>
       </AddBookContainer>
    )
 }
@@ -91,6 +112,7 @@ const UploadImageText = styled.p`
    font-size: 18px;
    line-height: 130%;
    color: #969696;
+   margin: 30px 0 27px 0;
    & span {
       color: red;
    }
@@ -166,6 +188,32 @@ const DescriptionAboutUploadImage = styled.div`
             width: 8px;
             height: 8px;
          }
+      }
+   }
+`
+const TypesOfUploadBookContainer = styled.div`
+   height: 59px;
+   padding: 76px 0 33px 0;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   font-weight: 400;
+   font-size: 16px;
+   p {
+      margin-bottom: 12px;
+   }
+`
+
+const TypesContainer = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 501px;
+   & div {
+      display: flex;
+      align-items: center;
+      input {
+         margin-right: 10px;
       }
    }
 `
