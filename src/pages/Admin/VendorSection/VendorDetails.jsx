@@ -1,12 +1,21 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { NavLink, Outlet, useParams } from 'react-router-dom'
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
+import { Breadcrumbs, Typography } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { theme } from '../../../utils/constants/theme'
 
 export const VendorDetails = () => {
+   const seller = useSelector((state) => state.adminVendors.singleVendor)
    const params = useParams()
    return (
       <VendorProfileContainer>
-         <span> Продавцы / Мыктыбек Мыктыбеков</span>
+         <Breadcrumbs>
+            <Link to="/vendors">Продавцы</Link>
+            <Typography color={theme.primary.black}>
+               {seller?.firstName} {seller?.lastName}
+            </Typography>
+         </Breadcrumbs>
          <ContainerOfLinks>
             <ul>
                <li>
@@ -36,7 +45,17 @@ const VendorProfileContainer = styled.div`
    width: 1147px;
    height: 456px;
    padding-top: 50px;
-   span {
+   .MuiBreadcrumbs-root {
+      font-size: 14px;
+      font-weight: 400px;
+      a {
+         text-decoration: none;
+         color: inherit;
+      }
+   }
+   .MuiTypography-root {
+      font-size: 14px;
+      font-weight: 400px;
    }
 `
 const ContainerOfLinks = styled.div`

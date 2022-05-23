@@ -13,7 +13,6 @@ export const VendorProfile = () => {
    const navigate = useNavigate()
    const { id } = useParams()
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
-
    const navigateAfterSuccessDelete = () => {
       return navigate('/vendors')
    }

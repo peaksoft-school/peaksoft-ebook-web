@@ -16,6 +16,7 @@ export const VendorBookCard = ({
    isRejected,
    onClickToBook,
    vendorImageUrl,
+   ...props
 }) => {
    const [isPopUpVisisble, setIsPopUpVisisble] = useState(false)
 
@@ -34,7 +35,7 @@ export const VendorBookCard = ({
    ]
 
    return isRejected ? (
-      <RejectedVendorCardContainer>
+      <RejectedVendorCardContainer {...props}>
          <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
@@ -64,7 +65,7 @@ export const VendorBookCard = ({
          )}
       </RejectedVendorCardContainer>
    ) : (
-      <VendorCardContainer isInProccess={isInProccess}>
+      <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
             <WrapperForLike>
                {like && (
@@ -98,10 +99,7 @@ export const VendorBookCard = ({
 }
 const RejectedVendorCardContainer = styled.div`
    position: relative;
-   max-width: 305px;
-   min-width: 300px;
-   height: 427px;
-   padding: 20px 17px 20px 54px;
+   padding: ${({ paddingR }) => paddingR || '20px 17px 20px 54px'};
    background-color: #ededed;
    display: flex;
    align-items: flex-start;
@@ -122,10 +120,11 @@ const RegectedVendorCardHeader = styled.div`
    position: relative;
 `
 const VendorCardContainer = styled.div`
-   max-width: 305px;
-   min-width: 300px;
-   height: 427px;
-   padding: 20px 17px 20px 54px;
+   max-width: ${({ maxWidth }) => maxWidth || '305px'};
+   min-width: ${({ minWidth }) => minWidth || '300px'};
+   max-height: ${({ maxHeight }) => maxHeight || '427px'};
+   min-height: ${({ minHeight }) => minHeight || '408px'};
+   padding: ${({ padding }) => padding || '20px 17px 20px 54px'};
    background-color: ${({ isInProccess }) =>
       isInProccess ? 'rgba(243, 73, 1, 0.08)' : '#ededed'};
    border: ${({ isInProccess }) =>
@@ -167,7 +166,7 @@ const VenderCardMain = styled.div`
       height: 297px;
    }
    p {
-      margin-top: 15px;
+      margin-top: ${({ marginTop }) => marginTop || '8px'}
       font-family: 'Open Sans';
       font-style: normal;
       font-weight: 600;

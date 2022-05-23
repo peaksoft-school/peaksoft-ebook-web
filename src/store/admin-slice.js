@@ -11,7 +11,7 @@ export const getAllVendors = createAsyncThunk(
          })
          return fulfillWithValue(result)
       } catch (error) {
-         return fulfillWithValue(error.message)
+         return error.message
       }
    }
 )
@@ -24,7 +24,6 @@ export const getSingleVendor = createAsyncThunk(
             path: `admin/vendor/${id}`,
             method: 'GET',
          })
-         // console.log(result)
          return result
       } catch (error) {
          return rejectWithValue(error.message)

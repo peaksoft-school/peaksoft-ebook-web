@@ -1,20 +1,24 @@
 import styled from '@emotion/styled/macro'
+import { PopUpBackdrop } from './PopUpBackdrop'
 
-export const PopUp = ({ options, ...props }) => {
+export const PopUp = ({ options, onCloseBackDrop, ...props }) => {
    return (
-      <MenuContainer {...props}>
-         <StyledOptions {...props}>
-            {options &&
-               options.map((option) => (
-                  <MenuItem
-                     key={option.id}
-                     onClick={() => option.action(option.value)}
-                  >
-                     {option.title}
-                  </MenuItem>
-               ))}
-         </StyledOptions>
-      </MenuContainer>
+      <>
+         <PopUpBackdrop onClose={onCloseBackDrop} />
+         <MenuContainer {...props}>
+            <StyledOptions {...props}>
+               {options &&
+                  options.map((option) => (
+                     <MenuItem
+                        key={option.id}
+                        onClick={() => option.action(option.value)}
+                     >
+                        {option.title}
+                     </MenuItem>
+                  ))}
+            </StyledOptions>
+         </MenuContainer>
+      </>
    )
 }
 

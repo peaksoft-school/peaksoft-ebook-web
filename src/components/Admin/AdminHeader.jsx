@@ -11,6 +11,7 @@ export const AdminHeader = () => {
    }
    const options = [
       {
+         id: 1,
          title: 'Выйти',
       },
    ]
@@ -23,7 +24,12 @@ export const AdminHeader = () => {
                <ProfileIcon />
                <span>Администратор</span>
                {showOptions && (
-                  <PopUp right="20" top="40px" options={options} />
+                  <PopUp
+                     key={options.id}
+                     right="20"
+                     top="40px"
+                     options={options}
+                  />
                )}
             </AdminTextContainer>
          </StyledContainer>

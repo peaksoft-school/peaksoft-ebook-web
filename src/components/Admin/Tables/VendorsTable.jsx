@@ -25,7 +25,7 @@ export const VendorsTable = ({ listOfVendors }) => {
                </TableRow>
             </TableHead>
             <TableBody>
-               {listOfVendors.map((vendor) => (
+               {listOfVendors?.map((vendor) => (
                   <VendorsTableItem
                      id={vendor.vendorId}
                      key={vendor.vendorId}
