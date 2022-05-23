@@ -87,7 +87,7 @@ export const AddBook = () => {
 }
 
 const AddBookContainer = styled.div`
-   padding: 250px 80px 0 80px;
+   padding: 200px 80px 0 80px;
    margin: 0 auto;
    width: inherit;
    font-family: 'Open Sans';
@@ -203,7 +203,6 @@ const TypesOfUploadBookContainer = styled.div`
       margin-bottom: 12px;
    }
 `
-
 const TypesContainer = styled.div`
    display: flex;
    justify-content: space-between;

@@ -92,7 +92,7 @@ const ButtonsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 40px 0;
+   padding: 40px 0 10px 0;
 `
 const StyledBellIcon = styled(BellIcon)`
    cursor: pointer;
@@ -114,6 +114,7 @@ const VendorHeaderContainer = styled.div`
    transform: translateX(50%);
    width: 100%;
    padding: 0 80px;
+   background-color: #ffffff;
 `
 const InnerContainer = styled.div`
    display: flex;
