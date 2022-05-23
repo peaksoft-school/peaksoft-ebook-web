@@ -7,8 +7,8 @@ import { SideDrawer } from '../components/Admin/SideDrawer'
 export const AdminLayout = () => {
    return (
       <AdminLayoutContainer>
-         <SideDrawer />
          <AdminHeader />
+         <SideDrawer />
          <ContentContainer>
             <Outlet />
          </ContentContainer>
@@ -30,5 +30,5 @@ const ContentContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
-   padding: 70px 0 0 250px;
+   padding: 70px 0 0 270px;
 `

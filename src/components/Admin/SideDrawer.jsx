@@ -73,8 +73,9 @@ export const SideDrawer = () => {
 const StyledContainer = styled.div`
    min-width: 250px;
    height: 100%;
-   background-color: #f34901;
+   background: #f34901;
    position: fixed;
+   z-index: 99;
    ul {
       padding: 60px 0;
       text-decoration: none;
