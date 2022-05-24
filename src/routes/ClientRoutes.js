@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { Promocode } from '../components/UI/Promocode/Promocode'
 import { DEFAULT_ROUTES } from '../utils/constants/routes'
 
 export const ClientRoutes = () => {
@@ -13,6 +14,7 @@ export const ClientRoutes = () => {
             path={DEFAULT_ROUTES.NOT_FOUND.PATH}
             element={<div>Страница не найдена</div>}
          />
+         <Route path="/promo" element={<Promocode />} />
       </Routes>
    )
 }
