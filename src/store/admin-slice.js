@@ -75,6 +75,9 @@ export const adminPanelVendorSlice = createSlice({
       [getAllVendors.fulfilled]: (state, { payload }) => {
          state.listOfVendors = payload
       },
+      [getAllVendors.rejected]: (state) => {
+         state.listOfVendors = []
+      },
       [getSingleVendor.fulfilled]: (state, { payload }) => {
          state.singleVendor = payload
       },
