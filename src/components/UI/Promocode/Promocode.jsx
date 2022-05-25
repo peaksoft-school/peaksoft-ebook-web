@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { formatDate } from '../../../utils/helpers/general'
 import { DatePicker } from '../DatePicker/DatePicker'
@@ -44,9 +44,10 @@ export const Promocode = ({
          }
       },
    }
-   const errorMessageIfFormNotEntered = Object.values(errors).some(
-      (item) => item
-   ) && <ErrorMessage>Заполните все поля</ErrorMessage>
+   const errorMessageHandler = useCallback(() => {
+      return Object.values(errors).some((item) => item)
+   }, [errors])
+
    return (
       <Modal
          isOpen={isPromocodeModalOpen}
@@ -89,8 +90,10 @@ export const Promocode = ({
                </DiscountContainer>
             </FieldsContainer>
             <ButtonContainer>
-               {errorMessageIfFormNotEntered}
-               <button>Создать</button>
+               {errorMessageHandler() && (
+                  <ErrorMessage>Заполните все поля</ErrorMessage>
+               )}
+               <button type="submit">Создать</button>
             </ButtonContainer>
          </PromocodeContainer>
       </Modal>
