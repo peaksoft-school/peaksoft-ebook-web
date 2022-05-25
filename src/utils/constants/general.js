@@ -45,3 +45,18 @@ export const VALIDATION_PARAMS_FOR_PASSWORD = {
       message: 'Пароль должен содержать одну заглавную букву и одну цифру',
    },
 }
+
+export const TYPES_OF_BOOKS = {
+   PAPER: {
+      type: 'PAPERBOOK',
+      title: 'Бумажная',
+   },
+   AUDIO: {
+      type: 'AUDIOBOOK',
+      title: 'Аудиокнига',
+   },
+   ELECTRONIC: {
+      type: 'EBOOK',
+      title: 'Электронная книга',
+   },
+}

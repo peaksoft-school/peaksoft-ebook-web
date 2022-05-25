@@ -5,12 +5,19 @@ import { ImagePicker } from '../../components/UI/ImagePicker/ImagePicker'
 import { DEFAULT_ROUTES, VENDOR_ROUTES } from '../../utils/constants/routes'
 import circle from '../../assets/icons/circle-for-list.svg'
 import { RadioButton } from '../../components/UI/RadioButton/RadioButton'
+import { TYPES_OF_BOOKS } from '../../utils/constants/general'
+import { CurrentBookForm } from '../../components/Vendor/AddBookForms/CurrentBookForm'
 
 export const AddBook = () => {
-   const typesOfBook = ['Бумажная', 'Аудиокнига', 'Электронная книга']
-   const [selectedType, setSelectedType] = useState('Бумажная')
-   const changeTypeOfBookHandler = (e) => {
-      setSelectedType(e.target.value)
+   const typesOfBook = Object.values(TYPES_OF_BOOKS)
+
+   const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.PAPER.type)
+
+   const changeTypeOfBookHandler = (type) => {
+      setSelectedType(type)
+   }
+   const isTypeOfBookSelected = (type) => {
+      return selectedType === type
    }
    return (
       <AddBookContainer>
@@ -70,23 +77,24 @@ export const AddBook = () => {
          <TypesOfUploadBookContainer>
             <p>Тип</p>
             <TypesContainer>
-               {typesOfBook.map((type) => (
-                  <div key={type}>
+               {typesOfBook.map((bookType) => (
+                  <div key={bookType.type}>
                      <RadioButton
-                        value={type}
-                        onChange={changeTypeOfBookHandler}
-                        checked={selectedType === type}
+                        value={bookType.title}
+                        onChange={() => changeTypeOfBookHandler(bookType.type)}
+                        checked={isTypeOfBookSelected(bookType.type)}
                      />
-                     <span>{type}</span>
+                     <span>{bookType.title}</span>
                   </div>
                ))}
             </TypesContainer>
          </TypesOfUploadBookContainer>
+         <CurrentBookForm type={selectedType} />
       </AddBookContainer>
    )
 }
 
-const AddBookContainer = styled.div`
+const AddBookContainer = styled.form`
    padding: 200px 80px 0 80px;
    margin: 0 auto;
    width: inherit;
