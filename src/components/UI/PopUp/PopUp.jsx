@@ -1,22 +1,35 @@
 import styled from '@emotion/styled/macro'
+import { PopUpBackdrop } from './PopUpBackdrop'
 
-export const PopUp = ({ options, ...props }) => {
+export const PopUp = ({ options, onCloseBackDrop, ...props }) => {
    return (
-      <MenuContainer {...props}>
-         {options &&
-            options.map((option) => (
-               <MenuItem key={option.id} onClick={() => option.action()}>
-                  {option.title}
-               </MenuItem>
-            ))}
-      </MenuContainer>
+      <>
+         <PopUpBackdrop onClose={onCloseBackDrop} />
+         <MenuContainer {...props}>
+            <StyledOptions {...props}>
+               {options &&
+                  options.map((option) => (
+                     <MenuItem
+                        key={option.id}
+                        onClick={() => option.action(option.value)}
+                     >
+                        {option.title}
+                     </MenuItem>
+                  ))}
+            </StyledOptions>
+         </MenuContainer>
+      </>
    )
 }
 
+const StyledOptions = styled.div`
+   padding: ${({ padding }) => padding || ''};
+`
+
 const MenuItem = styled.p`
-   padding: 10px 70px 10px 10px;
+   padding: 10px 0px 10px 10px;
    background-color: white;
-   border-bottom: 1px solid #c4c4c4;
+   border-bottom: 1px solid #d4d4d4;
    line-height: 20px;
    cursor: pointer;
    font-size: 14px;
@@ -37,4 +50,5 @@ const MenuContainer = styled.div`
    display: flex;
    flex-direction: column;
    background-color: white;
+   z-index: 99;
 `

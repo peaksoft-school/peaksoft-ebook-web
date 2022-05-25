@@ -15,12 +15,12 @@ import { InputForPassword } from '../UI/Inputs/InputForPassword'
 import { FieldName } from '../UI/FieldName/FieldName'
 import { Modal } from '../UI/Modals/Modal'
 import { authActions } from '../../store/auth-slice'
+import { theme } from '../../utils/constants/theme'
 import {
    SIGN_IN_QUERY_PARAMS,
    SIGN_UP_QUERY_PARAMS,
 } from '../../utils/constants/general'
 import { LoadingSpinner } from '../UI/LoadingSpinner/LoadingSpinner'
-import { theme } from '../../utils/constants/theme'
 
 export const SignIn = ({ onSubmit }) => {
    const { errorMessageInAuthorization, isLoading } = useSelector(

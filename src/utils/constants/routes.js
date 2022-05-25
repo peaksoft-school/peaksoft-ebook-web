@@ -26,6 +26,18 @@ export const ADMIN_ROUTES = {
       PATH: '/vendors',
       LABEL: 'Продавцы',
    },
+   VENDORS_DETAILS: {
+      PATH: '/vendors/:id',
+      LABEL: 'Продавцы',
+   },
+   VENDORS_PROFILE: {
+      PATH: '/vendors/:id/profile',
+      LABEL: 'Профиль',
+   },
+   VENDORS_BOOKS: {
+      PATH: '/vendors/:id/books',
+      LABEL: 'Книги',
+   },
    USERS: {
       PATH: '/users',
       LABEL: 'Пользователи',

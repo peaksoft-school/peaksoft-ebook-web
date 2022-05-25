@@ -24,7 +24,10 @@ export const appFetch = async (options) => {
          const path = `${path}?${queryParamsStringValue}`
       }
       const response = await fetch(`${SERVER_BASE_URL}/${path}`, requestOptions)
-      const result = await response.json()
+
+      const result =
+         method === 'DELETE' ? await response.text() : await response.json()
+
       if (!response.ok) {
          let errorMessage = 'Some thing went wrong'
          if (result && result.message) {

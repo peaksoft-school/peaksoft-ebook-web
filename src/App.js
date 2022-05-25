@@ -6,6 +6,7 @@ import { localstorage } from './utils/helpers/general'
 
 const App = () => {
    const { role, token, userName } = useSelector((state) => state.auth)
+   // console.log(token)
    useEffect(() => {
       if (token) {
          localstorage.save(LOCAL_STORAGE_USER_KEY, { token, role, userName })
