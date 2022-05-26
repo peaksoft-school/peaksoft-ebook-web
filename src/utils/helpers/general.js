@@ -1,14 +1,29 @@
 import { store } from '../../store'
 
+export const padTo2Digits = (value) => {
+   return value.toString().padStart(2, '0')
+}
+export const formatDate = {
+   DD_MM_YYYY: (date) => {
+      return [
+         padTo2Digits(date.getDate()),
+         padTo2Digits(date.getMonth() + 1),
+         date.getFullYear(),
+      ].join('/')
+   },
+   YYYY_MM_DD: (date) => {
+      return [
+         date.getFullYear(),
+         padTo2Digits(date.getMonth() + 1),
+         padTo2Digits(date.getDate()),
+      ].join('-')
+   },
+}
 export const getTimeAsString = (seconds) => {
-   const min = Math.floor(seconds / 60)
-   const stringSec = String(seconds)
-   const sec = Math.floor(seconds / 60 - min <= 0.15)
-      ? `0${stringSec[stringSec.length - 1]}`
-      : `${seconds - 60 * min}`
+   const min = padTo2Digits(Math.floor(seconds / 60))
+   const sec = padTo2Digits(seconds - 60 * min)
    return `${min} : ${sec}`
 }
-
 export const localstorage = {
    save(key, value) {
       return localStorage.setItem(key, JSON.stringify(value))
