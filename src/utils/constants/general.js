@@ -60,3 +60,18 @@ export const TYPES_OF_BOOKS = {
       title: 'Электронная книга',
    },
 }
+
+export const LANGUAGES = {
+   RUSSIAN: {
+      title: 'Русский',
+      key: 'RUSSIAN',
+   },
+   KYRGYZ: {
+      title: 'Кыргызский',
+      key: 'KYRGYZ',
+   },
+   ENGLISH: {
+      title: 'Английский',
+      key: 'ENGLISH',
+   },
+}

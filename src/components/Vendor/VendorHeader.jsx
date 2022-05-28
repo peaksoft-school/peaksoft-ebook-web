@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
@@ -9,8 +10,10 @@ import { ReactComponent as Plus } from '../../assets/icons/plus.svg'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
+import { VENDOR_ROUTES } from '../../utils/constants/routes'
 
 export const VendorHeader = () => {
+   const navigate = useNavigate()
    const [isShowOptions, setIsShowOptions] = useState(false)
 
    const showPopUp = () => {
@@ -25,6 +28,7 @@ export const VendorHeader = () => {
       },
    ]
    const booksList = []
+
    return (
       <VendorHeaderContainer>
          <SearchHeaderContainer>
@@ -55,8 +59,9 @@ export const VendorHeader = () => {
                bgColor={theme.secondary.orange}
                fontSize="16px"
                lHeight="21.79px"
-               bgColorHover={theme.secondary.orange}
-               bgColorActive={theme.secondary.orange}
+               bgColorHover="#FE6F33"
+               bgColorActive="#E54400"
+               onClick={() => navigate(VENDOR_ROUTES.ADD_BOOK.PATH)}
             >
                <Plus style={{ marginRight: '15px' }} />
                Добавить книгу
@@ -115,6 +120,7 @@ const VendorHeaderContainer = styled.div`
    width: 100%;
    padding: 0 80px;
    background-color: #ffffff;
+   z-index: 99;
 `
 const InnerContainer = styled.div`
    display: flex;

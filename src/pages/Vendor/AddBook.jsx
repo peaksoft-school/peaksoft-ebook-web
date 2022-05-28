@@ -1,24 +1,40 @@
 import styled from '@emotion/styled/macro'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ImagePicker } from '../../components/UI/ImagePicker/ImagePicker'
 import { DEFAULT_ROUTES, VENDOR_ROUTES } from '../../utils/constants/routes'
 import circle from '../../assets/icons/circle-for-list.svg'
 import { RadioButton } from '../../components/UI/RadioButton/RadioButton'
 import { TYPES_OF_BOOKS } from '../../utils/constants/general'
-import { CurrentBookForm } from '../../components/Vendor/AddBookForms/CurrentBookForm'
+import { CurrentBookForm } from '../../components/Vendor/AddBookForms/Forms/CurrentBookForm'
 
 export const AddBook = () => {
    const typesOfBook = Object.values(TYPES_OF_BOOKS)
 
    const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.PAPER.type)
-
    const changeTypeOfBookHandler = (type) => {
       setSelectedType(type)
    }
-   const isTypeOfBookSelected = (type) => {
-      return selectedType === type
+   const isTypeOfBookSelected = useCallback(
+      (type) => {
+         return selectedType === type
+      },
+      [selectedType]
+   )
+   const [imageOfBook, setImageOfBook] = useState({
+      main: null,
+      second: null,
+      third: null,
+   })
+   const collectBookImageHandler = (name, image) => {
+      setImageOfBook((prevImages) => {
+         return {
+            ...prevImages,
+            [name]: image[0],
+         }
+      })
    }
+
    return (
       <AddBookContainer>
          <NameOfPageContainer>
@@ -34,15 +50,34 @@ export const AddBook = () => {
             <InnerUploadImagesContainer>
                <ImagePickersContainer>
                   <SingleImageWithText>
-                     <ImagePicker />
+                     <ImagePicker
+                        name="main"
+                        file={imageOfBook.main}
+                        setFile={setImageOfBook}
+                        onDrop={(file) => collectBookImageHandler('main', file)}
+                     />
                      <h4>Главное фото</h4>
                   </SingleImageWithText>
                   <SingleImageWithText>
-                     <ImagePicker />
+                     <ImagePicker
+                        name="second"
+                        file={imageOfBook.second}
+                        setFile={setImageOfBook}
+                        onDrop={(file) =>
+                           collectBookImageHandler('second', file)
+                        }
+                     />
                      <h4>2</h4>
                   </SingleImageWithText>
                   <SingleImageWithText>
-                     <ImagePicker />
+                     <ImagePicker
+                        name="third"
+                        file={imageOfBook.third}
+                        setFile={setImageOfBook}
+                        onDrop={(file) =>
+                           collectBookImageHandler('third', file)
+                        }
+                     />
                      <h4>3</h4>
                   </SingleImageWithText>
                </ImagePickersContainer>
@@ -89,12 +124,12 @@ export const AddBook = () => {
                ))}
             </TypesContainer>
          </TypesOfUploadBookContainer>
-         <CurrentBookForm type={selectedType} />
+         <CurrentBookForm type={selectedType} imagesOfBook={imageOfBook} />
       </AddBookContainer>
    )
 }
 
-const AddBookContainer = styled.form`
+const AddBookContainer = styled.div`
    padding: 200px 80px 0 80px;
    margin: 0 auto;
    width: inherit;
@@ -200,7 +235,6 @@ const DescriptionAboutUploadImage = styled.div`
    }
 `
 const TypesOfUploadBookContainer = styled.div`
-   height: 59px;
    padding: 76px 0 33px 0;
    display: flex;
    flex-direction: column;
