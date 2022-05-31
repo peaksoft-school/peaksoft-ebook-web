@@ -50,14 +50,17 @@ export const TYPES_OF_BOOKS = {
    PAPER: {
       type: 'PAPERBOOK',
       title: 'Бумажная',
+      key: 'paperBook',
    },
    AUDIO: {
       type: 'AUDIOBOOK',
       title: 'Аудиокнига',
+      key: 'audioBook',
    },
    ELECTRONIC: {
       type: 'EBOOK',
       title: 'Электронная книга',
+      key: 'electronicBook',
    },
 }
 
@@ -73,5 +76,13 @@ export const LANGUAGES = {
    ENGLISH: {
       title: 'Английский',
       key: 'ENGLISH',
+   },
+}
+
+export const optionsForFieldsThatMustBeNumber = {
+   required: true,
+   valueAsNumber: true,
+   validate: {
+      valueBelowZero: (v) => v >= 0 || 'Must be more than 0',
    },
 }

@@ -1,55 +1,67 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { ReactComponent as Download } from '../../../assets/icons/download.svg'
 import { ReactComponent as Loading } from '../../../assets/icons/loading.svg'
 import { ReactComponent as Checkmark } from '../../../assets/icons/checkmark.svg'
 
-export const FileUploader = ({ isLoading, isSuccess, onGetFile, type }) => {
-   const currentFormatOfFile = type === 'pdf' ? 'application/pdf' : 'audio/*'
-   const currentText = type === 'pdf' ? 'PDF' : 'аудиозапись'
-   const capitalizeirstLetterOfText = (text) => {
-      return text[0].toUpperCase() + text.slice(1)
+export const FileUploader = forwardRef(
+   ({ isLoading, isSuccess, onGetFile, type, name }, ref) => {
+      const currentFormatOfFile = type === 'pdf' ? 'application/pdf' : 'audio/*'
+      const currentText = type === 'pdf' ? 'PDF' : 'аудиозапись'
+      return (
+         <>
+            {!isLoading && !isSuccess && (
+               <StyledDiv color="#969696">
+                  <input
+                     name={name}
+                     type="file"
+                     id="file"
+                     accept={currentFormatOfFile}
+                     onChange={onGetFile}
+                     ref={ref}
+                  />
+                  <label htmlFor="file">
+                     <Download />
+                     Загрузите {currentText}
+                  </label>
+               </StyledDiv>
+            )}
+            {isLoading && (
+               <StyledDiv color="#c4c4c4">
+                  <label>
+                     <Loading className="loading" />
+                     Загрузите {currentText}
+                  </label>
+               </StyledDiv>
+            )}
+            {isSuccess && (
+               <StyledDiv color="white" bgColor="#00AB1B">
+                  <label>
+                     <Checkmark />
+                     <CapitalizedText>
+                        {`${currentText}`}{' '}
+                        <span>{type === 'pdf' ? 'загружен' : 'загружена'}</span>
+                     </CapitalizedText>
+                  </label>
+               </StyledDiv>
+            )}
+         </>
+      )
    }
-   return (
-      <>
-         {!isLoading && !isSuccess && (
-            <StyledDiv color="#969696">
-               <input
-                  type="file"
-                  id="file"
-                  accept={currentFormatOfFile}
-                  onChange={onGetFile}
-               />
-               <label htmlFor="file">
-                  <Download />
-                  Загрузите {currentText}
-               </label>
-            </StyledDiv>
-         )}
-         {isLoading && (
-            <StyledDiv color="#c4c4c4">
-               <label>
-                  <Loading className="loading" />
-                  Загрузите {currentText}
-               </label>
-            </StyledDiv>
-         )}
-         {isSuccess && (
-            <StyledDiv color="white" bgColor="#00AB1B">
-               <label>
-                  <Checkmark />
-                  {capitalizeirstLetterOfText(currentText)} загружен
-               </label>
-            </StyledDiv>
-         )}
-      </>
-   )
-}
+)
+
+const CapitalizedText = styled.span`
+   text-transform: capitalize;
+   & span:first-of-type {
+      text-transform: none;
+   }
+`
 
 const StyledDiv = styled.div`
    border: 1px solid #e5e5e5;
    background-color: ${({ bgColor }) => bgColor || 'white'};
    width: fit-content;
+   padding: 11px 30px;
    input[type='file'] {
       display: none;
    }
@@ -59,11 +71,14 @@ const StyledDiv = styled.div`
       font-size: 14px;
       font-family: 'Open Sans', sans-serif;
       line-height: 16.8px;
-      weight: 600;
+      font-weight: 600;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      padding: 11px 40px;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      width: max-content;
+      height: 1rem;
    }
    svg {
       margin-right: 20px;

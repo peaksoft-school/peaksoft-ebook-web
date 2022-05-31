@@ -12,6 +12,7 @@ export const SendButton = ({ onAdd }) => {
             ling-height="19px"
             bgColorHover="#FE6F33"
             bgColorActive="#E54400"
+            type="submit"
          >
             Отправить
          </Button>

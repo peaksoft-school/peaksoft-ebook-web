@@ -1,6 +1,10 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useState } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
+import InputMask from 'react-input-mask'
 import { useSelectLanguage } from '../../../../hooks/useSelectLanguage'
+import { optionsForFieldsThatMustBeNumber } from '../../../../utils/constants/general'
+import { discountOptions } from '../../../../utils/helpers/general'
 import { Checkbox } from '../../../UI/Checkbox/Checkbox'
 import { FieldName } from '../../../UI/FieldName/FieldName'
 import { FileUploader } from '../../../UI/FileUploader/FileUploader'
@@ -8,8 +12,10 @@ import { FieldWithText } from '../Fields/FieldWithText'
 import { LanguageField } from '../Fields/LanguageField'
 import { SendButton } from '../SendButton/SendButton'
 
-export const ElectronicBookForm = () => {
+export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
    const { language, changeLanguage } = useSelectLanguage()
+   const { register, control } = useFormContext()
+   const [discount, setDiscount] = useState(0)
    return (
       <>
          <RightSideContainer>
@@ -17,22 +23,57 @@ export const ElectronicBookForm = () => {
                <FieldParentContainer>
                   <FieldContainer>
                      <FieldName large>Язык </FieldName>
-                     <LanguageField
-                        selectedLanguage={language}
-                        onSelectLanguage={changeLanguage}
+                     <Controller
+                        control={control}
+                        name="language"
+                        render={({ field: { onChange } }) => {
+                           return (
+                              <LanguageField
+                                 selectedLanguage={language}
+                                 onSelectLanguage={changeLanguage}
+                                 onChange={onChange}
+                              />
+                           )
+                        }}
+                        defaultValue={language.key}
                      />
                   </FieldContainer>
                   <FieldContainer>
                      <FieldName large>Год выпуска </FieldName>
-                     <FieldWithText innerText="гг" />
+                     <Controller
+                        name="yearOfIssue"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange } }) => (
+                           <InputMask
+                              mask="9999"
+                              maskChar=""
+                              onChange={(e) => onChange(Number(e.target.value))}
+                           >
+                              {(inputProps) => (
+                                 <FieldWithText
+                                    innerText="гг"
+                                    {...inputProps}
+                                 />
+                              )}
+                           </InputMask>
+                        )}
+                     />
                   </FieldContainer>
                   <FieldContainer>
                      <FieldName large>Объем </FieldName>
-                     <FieldWithText innerText="стр." />
+                     <FieldWithText
+                        innerText="стр."
+                        type="number"
+                        {...register(
+                           'electronicBook.numberOfPages',
+                           optionsForFieldsThatMustBeNumber
+                        )}
+                     />
                   </FieldContainer>
                   <BestsellerContainer>
                      <BestsellerInnerContainer>
-                        <Checkbox />
+                        <Checkbox {...register('isBestseller')} />
                         <FieldName large withoutAsterisk>
                            Бестселлер
                         </FieldName>
@@ -40,19 +81,33 @@ export const ElectronicBookForm = () => {
                   </BestsellerContainer>
                   <FieldContainer>
                      <FieldName large>Стоимость </FieldName>
-                     <FieldWithText innerText="сом" />
+                     <FieldWithText
+                        innerText="сом"
+                        type="number"
+                        {...register('price', optionsForFieldsThatMustBeNumber)}
+                     />
                   </FieldContainer>
                   <FieldContainer>
                      <FieldName large withoutAsterisk>
                         Скидка
                      </FieldName>
-                     <FieldWithText innerText="%" />
+                     <FieldWithText
+                        innerText="%"
+                        value={discount}
+                        isDefaultValueMustBeEmpty
+                        {...register('discount', discountOptions(setDiscount))}
+                     />
                   </FieldContainer>
                </FieldParentContainer>
                <UploadFileContainer>
                   <FieldName large>Загрузите книгу </FieldName>
                   <UploadFileInnerContainer>
-                     <FileUploader type="pdf" />
+                     <FileUploader
+                        type="pdf"
+                        onGetFile={onUploadEbookFile}
+                        isLoading={ebookFile.isLoading}
+                        isSuccess={ebookFile.isSuccess}
+                     />
                   </UploadFileInnerContainer>
                </UploadFileContainer>
             </InnerRightSideContainer>

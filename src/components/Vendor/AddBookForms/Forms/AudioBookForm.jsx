@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { Controller, useFormContext } from 'react-hook-form'
+import InputMask from 'react-input-mask'
 import { LanguageField } from '../Fields/LanguageField'
 import { FieldName } from '../../../UI/FieldName/FieldName'
 import { FieldWithText } from '../Fields/FieldWithText'
@@ -7,35 +9,89 @@ import { Checkbox } from '../../../UI/Checkbox/Checkbox'
 import { FileUploader } from '../../../UI/FileUploader/FileUploader'
 import { SendButton } from '../SendButton/SendButton'
 import { useSelectLanguage } from '../../../../hooks/useSelectLanguage'
+import { optionsForFieldsThatMustBeNumber } from '../../../../utils/constants/general'
+import { discountOptions } from '../../../../utils/helpers/general'
 
-export const AudioBookForm = () => {
+export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
    const { language, changeLanguage } = useSelectLanguage()
+   const { register, control } = useFormContext()
+   const [discount, setDiscount] = useState(0)
+
    return (
       <>
          <RightSideContainer>
             <InnerRightSideContainer>
                <FieldContainer>
                   <FieldName large>Язык </FieldName>
-                  <LanguageField
-                     selectedLanguage={language}
-                     onSelectLanguage={changeLanguage}
+                  <Controller
+                     control={control}
+                     name="language"
+                     render={({ field: { onChange } }) => {
+                        return (
+                           <LanguageField
+                              selectedLanguage={language}
+                              onSelectLanguage={changeLanguage}
+                              onChange={onChange}
+                           />
+                        )
+                     }}
+                     defaultValue={language.key}
                   />
                </FieldContainer>
                <FieldContainer>
                   <FieldName large>Год выпуска </FieldName>
-                  <FieldWithText innerText="гг" />
+                  <Controller
+                     name="yearOfIssue"
+                     control={control}
+                     rules={{ required: true }}
+                     render={({ field: { onChange } }) => (
+                        <InputMask
+                           mask="9999"
+                           maskChar=""
+                           onChange={(e) => onChange(Number(e.target.value))}
+                        >
+                           {(inputProps) => (
+                              <FieldWithText innerText="гг" {...inputProps} />
+                           )}
+                        </InputMask>
+                     )}
+                  />
                </FieldContainer>
             </InnerRightSideContainer>
             <FieldContainer>
                <FieldName large>Длительность </FieldName>
                <DurationContainer>
-                  <FieldWithText innerText="ч" width="118px" />
-                  <FieldWithText innerText="мин" width="130px" />
-                  <FieldWithText innerText="сек" width="125px" />
+                  <FieldWithText
+                     innerText="ч"
+                     width="118px"
+                     type="number"
+                     {...register(
+                        'audioBook.hour',
+                        optionsForFieldsThatMustBeNumber
+                     )}
+                  />
+                  <FieldWithText
+                     innerText="мин"
+                     width="130px"
+                     type="number"
+                     {...register(
+                        'audioBook.minute',
+                        optionsForFieldsThatMustBeNumber
+                     )}
+                  />
+                  <FieldWithText
+                     innerText="сек"
+                     width="125px"
+                     type="number"
+                     {...register(
+                        'audioBook.second',
+                        optionsForFieldsThatMustBeNumber
+                     )}
+                  />
                </DurationContainer>
             </FieldContainer>
             <BestsellerContainer>
-               <Checkbox />
+               <Checkbox {...register('isBestseller')} />
                <FieldName large withoutAsterisk>
                   Бестселлер
                </FieldName>
@@ -43,27 +99,46 @@ export const AudioBookForm = () => {
             <InnerRightSideContainer>
                <FieldContainer>
                   <FieldName large>Стоимость </FieldName>
-                  <FieldWithText innerText="сом" />
+                  <FieldWithText
+                     innerText="сом"
+                     type="number"
+                     {...register('price', optionsForFieldsThatMustBeNumber)}
+                  />
                </FieldContainer>
                <FieldContainer>
                   <FieldName large withoutAsterisk>
                      Скидка
                   </FieldName>
-                  <FieldWithText innerText="%" />
+                  <FieldWithText
+                     innerText="%"
+                     value={discount}
+                     isDefaultValueMustBeEmpty
+                     {...register('discount', discountOptions(setDiscount))}
+                  />
                </FieldContainer>
             </InnerRightSideContainer>
             <UploadAudioParentContainer>
                <UploadAudioContainer>
                   <FieldName large>Загрузите фрагмент аудиозаписи </FieldName>
                   <InnerUploadAudioContainer>
-                     <FileUploader />
+                     <FileUploader
+                        name="fragment"
+                        onGetFile={onUploadAudioFile}
+                        isLoading={audioFile.fragment.isLoading}
+                        isSuccess={audioFile.fragment.isSuccess}
+                     />
                      <MaxSizeText>максимум 10 мин.</MaxSizeText>
                   </InnerUploadAudioContainer>
                </UploadAudioContainer>
                <UploadAudioContainer>
                   <FieldName large>Загрузите аудиозапись </FieldName>
                   <InnerUploadAudioContainer>
-                     <FileUploader />
+                     <FileUploader
+                        name="tape"
+                        onGetFile={onUploadAudioFile}
+                        isLoading={audioFile.tape.isLoading}
+                        isSuccess={audioFile.tape.isSuccess}
+                     />
                   </InnerUploadAudioContainer>
                </UploadAudioContainer>
             </UploadAudioParentContainer>

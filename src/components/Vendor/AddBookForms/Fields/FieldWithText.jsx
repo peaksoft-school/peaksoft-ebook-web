@@ -2,8 +2,18 @@ import styled from '@emotion/styled'
 import React, { forwardRef } from 'react'
 
 export const FieldWithText = forwardRef(
-   ({ innerText, paddingRight, width, value, isDate, ...props }, ref) => {
-      const currentValue = isDate ? value : value || ''
+   (
+      {
+         innerText,
+         paddingRight,
+         width,
+         value,
+         isDefaultValueMustBeEmpty,
+         ...props
+      },
+      ref
+   ) => {
+      const currentValue = isDefaultValueMustBeEmpty ? value || '' : value
       return (
          <FieldWithTextContainer paddingRight={paddingRight} width={width}>
             <input {...props} value={currentValue} ref={ref} />

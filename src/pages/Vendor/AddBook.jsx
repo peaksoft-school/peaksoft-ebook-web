@@ -1,6 +1,7 @@
 import styled from '@emotion/styled/macro'
 import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FormProvider, useForm } from 'react-hook-form'
 import { ImagePicker } from '../../components/UI/ImagePicker/ImagePicker'
 import { DEFAULT_ROUTES, VENDOR_ROUTES } from '../../utils/constants/routes'
 import circle from '../../assets/icons/circle-for-list.svg'
@@ -10,8 +11,8 @@ import { CurrentBookForm } from '../../components/Vendor/AddBookForms/Forms/Curr
 
 export const AddBook = () => {
    const typesOfBook = Object.values(TYPES_OF_BOOKS)
-
-   const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.PAPER.type)
+   const methodsOfForm = useForm()
+   const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.AUDIO.type)
    const changeTypeOfBookHandler = (type) => {
       setSelectedType(type)
    }
@@ -22,9 +23,9 @@ export const AddBook = () => {
       [selectedType]
    )
    const [imageOfBook, setImageOfBook] = useState({
-      main: null,
-      second: null,
-      third: null,
+      firstPhoto: null,
+      secondPhoto: null,
+      thirdPhoto: null,
    })
    const collectBookImageHandler = (name, image) => {
       setImageOfBook((prevImages) => {
@@ -51,31 +52,33 @@ export const AddBook = () => {
                <ImagePickersContainer>
                   <SingleImageWithText>
                      <ImagePicker
-                        name="main"
-                        file={imageOfBook.main}
+                        name="firstPhoto"
+                        file={imageOfBook.firstPhoto}
                         setFile={setImageOfBook}
-                        onDrop={(file) => collectBookImageHandler('main', file)}
+                        onDrop={(file) =>
+                           collectBookImageHandler('firstPhoto', file)
+                        }
                      />
                      <h4>Главное фото</h4>
                   </SingleImageWithText>
                   <SingleImageWithText>
                      <ImagePicker
-                        name="second"
-                        file={imageOfBook.second}
+                        name="secondPhoto"
+                        file={imageOfBook.secondPhoto}
                         setFile={setImageOfBook}
                         onDrop={(file) =>
-                           collectBookImageHandler('second', file)
+                           collectBookImageHandler('secondPhoto', file)
                         }
                      />
                      <h4>2</h4>
                   </SingleImageWithText>
                   <SingleImageWithText>
                      <ImagePicker
-                        name="third"
-                        file={imageOfBook.third}
+                        name="thirdPhoto"
+                        file={imageOfBook.thirdPhoto}
                         setFile={setImageOfBook}
                         onDrop={(file) =>
-                           collectBookImageHandler('third', file)
+                           collectBookImageHandler('thirdPhoto', file)
                         }
                      />
                      <h4>3</h4>
@@ -124,7 +127,9 @@ export const AddBook = () => {
                ))}
             </TypesContainer>
          </TypesOfUploadBookContainer>
-         <CurrentBookForm type={selectedType} imagesOfBook={imageOfBook} />
+         <FormProvider {...methodsOfForm}>
+            <CurrentBookForm type={selectedType} imagesOfBook={imageOfBook} />
+         </FormProvider>
       </AddBookContainer>
    )
 }
@@ -163,6 +168,7 @@ const UploadImageText = styled.p`
 const InnerUploadImagesContainer = styled.div`
    display: flex;
    justify-content: space-between;
+   gap: 0 15px;
 `
 const SingleImageWithText = styled.div`
    display: flex;
@@ -183,9 +189,7 @@ const ImagePickersContainer = styled.div`
    justify-content: space-between;
    width: fit-content;
    height: 350px;
-   ${SingleImageWithText} {
-      padding-right: 20px;
-   }
+   gap: 0 15px;
 `
 const DescriptionAboutUploadImage = styled.div`
    width: 449px;

@@ -1,17 +1,28 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { FieldName } from '../../../UI/FieldName/FieldName'
 import { Input } from '../../../UI/Inputs/Input'
 import { SelectGenreDropdown } from '../SelectGenreDropdown/SelectGenreDropdown'
 
 export const AboutBookFields = ({
    isAudioBook,
-   register,
-   control,
    selectedGenre,
    setSelectedGenre,
+   getCurrentTypeKey,
 }) => {
+   const { watch, register, control } = useFormContext()
+
+   const aboutBookText = watch('aboutBook')
+
+   const fragmentOfBookText = watch(`${getCurrentTypeKey()}.fragmentOfBook`)
+
+   const selectGenreOptions = {
+      required: true,
+      validate: {
+         checkIfGenreIsEmpty: (v) => v !== '' || 'ERROR MESSAGE',
+      },
+   }
    return (
       <>
          <FieldContainer>
@@ -19,7 +30,7 @@ export const AboutBookFields = ({
             <Input
                borderActive
                placeholder="Напишите полное название книги"
-               {...register('title')}
+               {...register('title', { required: true })}
             />
          </FieldContainer>
          <FieldContainer>
@@ -27,7 +38,7 @@ export const AboutBookFields = ({
             <Input
                borderActive
                placeholder="Напишите ФИО автора"
-               {...register('authorFullName')}
+               {...register('authorFullName', { required: true })}
             />
          </FieldContainer>
          <FieldContainer>
@@ -44,12 +55,7 @@ export const AboutBookFields = ({
                      />
                   )
                }}
-               rules={{
-                  required: true,
-                  validate: {
-                     checkIfGenreIsEmpty: (v) => v !== '' || 'ERROR MESSAGE',
-                  },
-               }}
+               rules={selectGenreOptions}
             />
          </FieldContainer>
          {!isAudioBook && (
@@ -58,7 +64,7 @@ export const AboutBookFields = ({
                <Input
                   borderActive
                   placeholder="Напишите название издательства"
-                  {...register('publishingHouse')}
+                  {...register('publishingHouse', { required: true })}
                />
             </FieldContainer>
          )}
@@ -66,18 +72,30 @@ export const AboutBookFields = ({
             <FieldName large>О книге </FieldName>
             <textarea
                placeholder="Напишите о книге"
-               {...register('aboutBook')}
+               value={aboutBookText}
+               {...register('aboutBook', {
+                  required: true,
+               })}
+               maxLength={1234}
             />
-            <FieldTextLength>0 / 1234</FieldTextLength>
+            <FieldTextLength>
+               {aboutBookText?.length || 0} / 1234
+            </FieldTextLength>
          </FieldContainer>
          {!isAudioBook && (
             <FieldContainer>
                <FieldName large>Фрагмент книги </FieldName>
                <textarea
                   placeholder="Напишите фрагмент книги"
-                  {...register('fragmentOfBook')}
+                  value={fragmentOfBookText}
+                  {...register(`${getCurrentTypeKey()}.fragmentOfBook`, {
+                     required: true,
+                  })}
+                  maxLength={9234}
                />
-               <FieldTextLength>0 / 9234</FieldTextLength>
+               <FieldTextLength>
+                  {fragmentOfBookText?.length || 0} / 9234
+               </FieldTextLength>
             </FieldContainer>
          )}
       </>

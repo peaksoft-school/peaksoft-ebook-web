@@ -42,3 +42,14 @@ export const localstorage = {
 export const getJwt = () => {
    return store.getState().auth.token
 }
+
+export const discountOptions = (setDiscount) => {
+   return {
+      onChange: ({ target: { value } }) => {
+         if (value <= 100 && value.length <= 6 && value >= 0) {
+            setDiscount(value)
+         }
+      },
+      setValueAs: (v) => Number(v),
+   }
+}

@@ -23,7 +23,7 @@ export const SelectGenreDropdown = ({
    const changeOptionHandler = (option) => {
       onSelectGenre(option)
       changeIsVisibleOptions()
-      onChange(option.name)
+      onChange(option.id)
    }
    return (
       <SelectGenreDropdownContainer>
@@ -88,7 +88,7 @@ const OptionsContainer = styled.div`
    border: 1px solid #c4c4c4;
    max-height: 250px;
    overflow-y: scroll;
-   z-index: 99;
+   z-index: 98;
    &::-webkit-scrollbar {
       background-color: transparent;
       width: 0.3rem;

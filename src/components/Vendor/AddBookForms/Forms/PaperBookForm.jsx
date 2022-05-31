@@ -1,46 +1,20 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import InputMask from 'react-input-mask'
+import { optionsForFieldsThatMustBeNumber } from '../../../../utils/constants/general'
+import { discountOptions } from '../../../../utils/helpers/general'
 import { Checkbox } from '../../../UI/Checkbox/Checkbox'
 import { FieldName } from '../../../UI/FieldName/FieldName'
 import { FieldWithText } from '../Fields/FieldWithText'
 import { LanguageField } from '../Fields/LanguageField'
 import { SendButton } from '../SendButton/SendButton'
 
-export const PaperBookForm = ({
-   // images,
-   onAddHandler,
-   register,
-   language,
-   changeLanguage,
-   control,
-}) => {
-   // console.log(images)
-   const addBookHandler = (data) => {
-      console.log(data)
-   }
-   const checkIsValueBelowZero = (value, setValue) => {
-      return value <= 0 ? setValue(0) : setValue(value)
-   }
-   const [numberOfPages, setNumberOfPages] = useState(0)
-   const [numberOfSelected, setNumberOfSelected] = useState(0)
-   const [price, setPrice] = useState(0)
+export const PaperBookForm = ({ language, changeLanguage }) => {
+   const { register, control } = useFormContext()
+
    const [discount, setDiscount] = useState(0)
 
-   const optionsForFieldThatMustBeANumber = (setValue) => {
-      return {
-         required: true,
-         valueAsNumber: true,
-         onChange: ({ target: { value } }) =>
-            checkIsValueBelowZero(value, setValue),
-      }
-   }
-   const discountOptions = {
-      valueAsNumber: true,
-      onChange: ({ target: { value } }) =>
-         checkIsValueBelowZero(value, setDiscount),
-   }
    return (
       <>
          <InnerRightSideContainer>
@@ -66,6 +40,7 @@ export const PaperBookForm = ({
                <Controller
                   name="yearOfIssue"
                   control={control}
+                  rules={{ required: true }}
                   render={({ field: { onChange } }) => (
                      <InputMask
                         mask="9999"
@@ -73,11 +48,7 @@ export const PaperBookForm = ({
                         onChange={(e) => onChange(Number(e.target.value))}
                      >
                         {(inputProps) => (
-                           <FieldWithText
-                              innerText="гг"
-                              isDate
-                              {...inputProps}
-                           />
+                           <FieldWithText innerText="гг" {...inputProps} />
                         )}
                      </InputMask>
                   )}
@@ -88,10 +59,9 @@ export const PaperBookForm = ({
                <FieldWithText
                   innerText="стр."
                   type="number"
-                  value={numberOfPages}
                   {...register(
-                     'numberOfPages',
-                     optionsForFieldThatMustBeANumber(setNumberOfPages)
+                     'paperBook.numberOfPages',
+                     optionsForFieldsThatMustBeNumber
                   )}
                />
             </FieldContainer>
@@ -100,10 +70,9 @@ export const PaperBookForm = ({
                <FieldWithText
                   innerText="шт."
                   type="number"
-                  value={numberOfSelected}
                   {...register(
-                     'numberOfSelected',
-                     optionsForFieldThatMustBeANumber(setNumberOfSelected)
+                     'paperBook.numberOfSelected',
+                     optionsForFieldsThatMustBeNumber
                   )}
                />
             </FieldContainer>
@@ -112,11 +81,7 @@ export const PaperBookForm = ({
                <FieldWithText
                   innerText="сом"
                   type="number"
-                  value={price}
-                  {...register(
-                     'price',
-                     optionsForFieldThatMustBeANumber(setPrice)
-                  )}
+                  {...register('price', optionsForFieldsThatMustBeNumber)}
                />
             </FieldContainer>
             <FieldContainer>
@@ -126,8 +91,9 @@ export const PaperBookForm = ({
                <FieldWithText
                   innerText="%"
                   type="number"
+                  isDefaultValueMustBeEmpty
                   value={discount}
-                  {...register('discount', discountOptions)}
+                  {...register('discount', discountOptions(setDiscount))}
                />
             </FieldContainer>
             <FieldContainer>
@@ -139,7 +105,7 @@ export const PaperBookForm = ({
                </BestsellerContainer>
             </FieldContainer>
          </InnerRightSideContainer>
-         <SendButton onAdd={onAddHandler(addBookHandler)} />
+         <SendButton />
       </>
    )
 }
