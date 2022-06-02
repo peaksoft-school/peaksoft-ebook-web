@@ -197,7 +197,6 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          case TYPES_OF_BOOKS.PAPER.type: {
             return (
                <PaperBookForm
-                  images={imagesOfBook}
                   changeLanguage={changeLanguage}
                   language={language}
                   discount={discount}
@@ -208,7 +207,6 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          case TYPES_OF_BOOKS.AUDIO.type: {
             return (
                <AudioBookForm
-                  images={imagesOfBook}
                   changeLanguage={changeLanguage}
                   language={language}
                   audioFragment={audioFragment}
@@ -225,7 +223,6 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          case TYPES_OF_BOOKS.ELECTRONIC.type: {
             return (
                <ElectronicBookForm
-                  images={imagesOfBook}
                   changeLanguage={changeLanguage}
                   language={language}
                   onUploadEbookFile={uploadeBook}
@@ -238,7 +235,6 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          default: {
             return (
                <PaperBookForm
-                  images={imagesOfBook}
                   changeLanguage={changeLanguage}
                   language={language}
                   discount={discount}
