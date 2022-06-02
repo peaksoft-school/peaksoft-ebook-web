@@ -18,7 +18,7 @@ export const getAllGenres = createAsyncThunk(
 
 export const addBook = createAsyncThunk(
    'vendor/addBook',
-   async ({ data, files }, { dispatch }) => {
+   async ({ data, showErrorNotification, ...restData }, { dispatch }) => {
       try {
          const result = await appFetch({
             path: 'vendor/new-book',
@@ -27,33 +27,47 @@ export const addBook = createAsyncThunk(
          })
          if (result) {
             const { id } = result
-            dispatch(uploadImagesOfBook({ files, id }))
+            dispatch(
+               uploadImagesOfBook({
+                  id,
+                  ...restData,
+               })
+            )
          }
       } catch (error) {
-         console.log(error)
+         showErrorNotification('Не удалось загрузить книгу, попробуйте ещё раз')
       }
    }
 )
 
 export const uploadImagesOfBook = createAsyncThunk(
    'vendor/uploadImagesOfBook',
-   async ({ files, id }) => {
+   async ({
+      files,
+      id,
+      resetForm,
+      showSuccessNotification,
+      showErrorNotification,
+   }) => {
       try {
          const formData = new FormData()
-         const result = await Promise.all(
-            Object.values(files).map((image) => {
-               formData.set('fileInformation', image)
-               const result = fileFetch({
-                  path: `aws/upload-file/${id}`,
-                  method: 'POST',
-                  body: formData,
-               })
-               return console.log(result)
-            })
-         )
+         Object.keys(files).forEach((fileKey) => {
+            formData.set(fileKey, files[fileKey])
+         })
+         const result = fileFetch({
+            path: `aws/upload-file/${id}`,
+            method: 'POST',
+            body: formData,
+         })
+         if (result) {
+            resetForm()
+            showSuccessNotification()
+         }
          return result
       } catch (error) {
-         return console.log(error)
+         return showErrorNotification(
+            'Не удалось загрузить книгу, попробуйте ещё раз'
+         )
       }
    }
 )

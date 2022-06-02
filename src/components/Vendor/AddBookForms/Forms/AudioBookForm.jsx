@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { Controller, useFormContext } from 'react-hook-form'
 import InputMask from 'react-input-mask'
@@ -10,13 +10,24 @@ import { FileUploader } from '../../../UI/FileUploader/FileUploader'
 import { SendButton } from '../SendButton/SendButton'
 import { useSelectLanguage } from '../../../../hooks/useSelectLanguage'
 import { optionsForFieldsThatMustBeNumber } from '../../../../utils/constants/general'
-import { discountOptions } from '../../../../utils/helpers/general'
+import {
+   discountOptions,
+   timeFieldOptions,
+} from '../../../../utils/helpers/general'
 
-export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
+export const AudioBookForm = ({
+   onUploadAudioFile,
+   audioFragment,
+   onUploadAudioTape,
+   audioTape,
+   durationOfAudioBook,
+   onChangeDuration,
+   discount,
+   setDiscount,
+}) => {
    const { language, changeLanguage } = useSelectLanguage()
-   const { register, control } = useFormContext()
-   const [discount, setDiscount] = useState(0)
-
+   const { register, control, watch } = useFormContext()
+   const isBestsellerChecked = watch('isBestseller')
    return (
       <>
          <RightSideContainer>
@@ -35,7 +46,6 @@ export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
                            />
                         )
                      }}
-                     defaultValue={language.key}
                   />
                </FieldContainer>
                <FieldContainer>
@@ -44,11 +54,13 @@ export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
                      name="yearOfIssue"
                      control={control}
                      rules={{ required: true }}
-                     render={({ field: { onChange } }) => (
+                     defaultValue=""
+                     render={({ field: { onChange, value } }) => (
                         <InputMask
                            mask="9999"
                            maskChar=""
                            onChange={(e) => onChange(Number(e.target.value))}
+                           value={value}
                         >
                            {(inputProps) => (
                               <FieldWithText innerText="гг" {...inputProps} />
@@ -65,33 +77,51 @@ export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
                      innerText="ч"
                      width="118px"
                      type="number"
+                     value={durationOfAudioBook.hour}
+                     isDefaultValueMustBeEmpty
                      {...register(
                         'audioBook.hour',
-                        optionsForFieldsThatMustBeNumber
+                        timeFieldOptions(onChangeDuration)
                      )}
                   />
                   <FieldWithText
                      innerText="мин"
                      width="130px"
+                     value={durationOfAudioBook.minute}
                      type="number"
+                     isDefaultValueMustBeEmpty
                      {...register(
                         'audioBook.minute',
-                        optionsForFieldsThatMustBeNumber
+                        timeFieldOptions(onChangeDuration)
                      )}
                   />
                   <FieldWithText
                      innerText="сек"
                      width="125px"
+                     value={durationOfAudioBook.second}
                      type="number"
+                     isDefaultValueMustBeEmpty
                      {...register(
                         'audioBook.second',
-                        optionsForFieldsThatMustBeNumber
+                        timeFieldOptions(onChangeDuration)
                      )}
                   />
                </DurationContainer>
             </FieldContainer>
             <BestsellerContainer>
-               <Checkbox {...register('isBestseller')} />
+               <Controller
+                  control={control}
+                  name="isBestseller"
+                  defaultValue=""
+                  render={({ field: { onChange } }) => {
+                     return (
+                        <Checkbox
+                           onChange={onChange}
+                           isChecked={isBestsellerChecked}
+                        />
+                     )
+                  }}
+               />
                <FieldName large withoutAsterisk>
                   Бестселлер
                </FieldName>
@@ -122,10 +152,10 @@ export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
                   <FieldName large>Загрузите фрагмент аудиозаписи </FieldName>
                   <InnerUploadAudioContainer>
                      <FileUploader
-                        name="fragment"
                         onGetFile={onUploadAudioFile}
-                        isLoading={audioFile.fragment.isLoading}
-                        isSuccess={audioFile.fragment.isSuccess}
+                        isLoading={audioFragment.isLoading}
+                        isSuccess={audioFragment.isSuccess}
+                        id="fragment"
                      />
                      <MaxSizeText>максимум 10 мин.</MaxSizeText>
                   </InnerUploadAudioContainer>
@@ -134,10 +164,10 @@ export const AudioBookForm = ({ onUploadAudioFile, audioFile }) => {
                   <FieldName large>Загрузите аудиозапись </FieldName>
                   <InnerUploadAudioContainer>
                      <FileUploader
-                        name="tape"
-                        onGetFile={onUploadAudioFile}
-                        isLoading={audioFile.tape.isLoading}
-                        isSuccess={audioFile.tape.isSuccess}
+                        onGetFile={onUploadAudioTape}
+                        isLoading={audioTape.isLoading}
+                        isSuccess={audioTape.isSuccess}
+                        id="tape"
                      />
                   </InnerUploadAudioContainer>
                </UploadAudioContainer>
@@ -168,7 +198,6 @@ const BestsellerContainer = styled.div`
    gap: 0 33px;
    width: 100%;
    position: relative;
-   margin-bottom: 30px;
 `
 const InnerRightSideContainer = styled.div`
    display: flex;

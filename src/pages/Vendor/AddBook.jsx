@@ -12,7 +12,7 @@ import { CurrentBookForm } from '../../components/Vendor/AddBookForms/Forms/Curr
 export const AddBook = () => {
    const typesOfBook = Object.values(TYPES_OF_BOOKS)
    const methodsOfForm = useForm()
-   const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.AUDIO.type)
+   const [selectedType, setSelectedType] = useState(TYPES_OF_BOOKS.PAPER.type)
    const changeTypeOfBookHandler = (type) => {
       setSelectedType(type)
    }
@@ -33,6 +33,14 @@ export const AddBook = () => {
             ...prevImages,
             [name]: image[0],
          }
+      })
+   }
+
+   const resetBookImages = () => {
+      setImageOfBook({
+         firstPhoto: null,
+         secondPhoto: null,
+         thirdPhoto: null,
       })
    }
 
@@ -128,14 +136,18 @@ export const AddBook = () => {
             </TypesContainer>
          </TypesOfUploadBookContainer>
          <FormProvider {...methodsOfForm}>
-            <CurrentBookForm type={selectedType} imagesOfBook={imageOfBook} />
+            <CurrentBookForm
+               type={selectedType}
+               imagesOfBook={imageOfBook}
+               resetImages={resetBookImages}
+            />
          </FormProvider>
       </AddBookContainer>
    )
 }
 
 const AddBookContainer = styled.div`
-   padding: 200px 80px 0 80px;
+   padding: 43px 80px 78px 80px;
    margin: 0 auto;
    width: inherit;
    font-family: 'Open Sans';

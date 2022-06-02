@@ -110,17 +110,14 @@ const ContainerOfIcons = styled.div`
    justify-content: space-around;
    position: relative;
 `
-const VendorHeaderContainer = styled.div`
+const VendorHeaderContainer = styled.header`
    display: flex;
    justify-content: center;
    flex-direction: column;
-   position: fixed;
-   right: 50%;
-   transform: translateX(50%);
    width: 100%;
    padding: 0 80px;
    background-color: #ffffff;
-   z-index: 99;
+   flex-shrink: 0;
 `
 const InnerContainer = styled.div`
    display: flex;

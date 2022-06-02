@@ -5,7 +5,7 @@ import { ReactComponent as Loading } from '../../../assets/icons/loading.svg'
 import { ReactComponent as Checkmark } from '../../../assets/icons/checkmark.svg'
 
 export const FileUploader = forwardRef(
-   ({ isLoading, isSuccess, onGetFile, type, name }, ref) => {
+   ({ isLoading, isSuccess, onGetFile, type, id }, ref) => {
       const currentFormatOfFile = type === 'pdf' ? 'application/pdf' : 'audio/*'
       const currentText = type === 'pdf' ? 'PDF' : 'аудиозапись'
       return (
@@ -13,14 +13,13 @@ export const FileUploader = forwardRef(
             {!isLoading && !isSuccess && (
                <StyledDiv color="#969696">
                   <input
-                     name={name}
                      type="file"
-                     id="file"
+                     id={id}
                      accept={currentFormatOfFile}
                      onChange={onGetFile}
                      ref={ref}
                   />
-                  <label htmlFor="file">
+                  <label htmlFor={id}>
                      <Download />
                      Загрузите {currentText}
                   </label>

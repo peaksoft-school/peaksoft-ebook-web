@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 import { optionsForFieldsThatMustBeNumber } from '../../../../utils/constants/general'
@@ -10,10 +10,14 @@ import { FieldWithText } from '../Fields/FieldWithText'
 import { LanguageField } from '../Fields/LanguageField'
 import { SendButton } from '../SendButton/SendButton'
 
-export const PaperBookForm = ({ language, changeLanguage }) => {
-   const { register, control } = useFormContext()
-
-   const [discount, setDiscount] = useState(0)
+export const PaperBookForm = ({
+   language,
+   changeLanguage,
+   discount,
+   setDiscount,
+}) => {
+   const { register, control, watch } = useFormContext()
+   const isBestsellerChecked = watch('isBestseller')
 
    return (
       <>
@@ -32,7 +36,6 @@ export const PaperBookForm = ({ language, changeLanguage }) => {
                         />
                      )
                   }}
-                  defaultValue={language.key}
                />
             </FieldContainer>
             <FieldContainer>
@@ -41,11 +44,13 @@ export const PaperBookForm = ({ language, changeLanguage }) => {
                   name="yearOfIssue"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { onChange } }) => (
+                  defaultValue=""
+                  render={({ field: { onChange, value } }) => (
                      <InputMask
                         mask="9999"
                         maskChar=""
                         onChange={(e) => onChange(Number(e.target.value))}
+                        value={value}
                      >
                         {(inputProps) => (
                            <FieldWithText innerText="гг" {...inputProps} />
@@ -98,7 +103,19 @@ export const PaperBookForm = ({ language, changeLanguage }) => {
             </FieldContainer>
             <FieldContainer>
                <BestsellerContainer>
-                  <Checkbox {...register('isBestSeller')} />
+                  <Controller
+                     control={control}
+                     name="isBestseller"
+                     defaultValue=""
+                     render={({ field: { onChange } }) => {
+                        return (
+                           <Checkbox
+                              onChange={onChange}
+                              isChecked={isBestsellerChecked}
+                           />
+                        )
+                     }}
+                  />
                   <FieldName large withoutAsterisk>
                      Бестселлер
                   </FieldName>

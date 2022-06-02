@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 import { useSelectLanguage } from '../../../../hooks/useSelectLanguage'
@@ -12,10 +12,16 @@ import { FieldWithText } from '../Fields/FieldWithText'
 import { LanguageField } from '../Fields/LanguageField'
 import { SendButton } from '../SendButton/SendButton'
 
-export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
+export const ElectronicBookForm = ({
+   onUploadEbookFile,
+   eBookFile,
+   discount,
+   setDiscount,
+}) => {
    const { language, changeLanguage } = useSelectLanguage()
-   const { register, control } = useFormContext()
-   const [discount, setDiscount] = useState(0)
+   const { register, control, watch } = useFormContext()
+   const isBestsellerChecked = watch('isBestseller')
+
    return (
       <>
          <RightSideContainer>
@@ -35,7 +41,6 @@ export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
                               />
                            )
                         }}
-                        defaultValue={language.key}
                      />
                   </FieldContainer>
                   <FieldContainer>
@@ -44,11 +49,12 @@ export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
                         name="yearOfIssue"
                         control={control}
                         rules={{ required: true }}
-                        render={({ field: { onChange } }) => (
+                        render={({ field: { onChange, value } }) => (
                            <InputMask
                               mask="9999"
                               maskChar=""
                               onChange={(e) => onChange(Number(e.target.value))}
+                              value={value}
                            >
                               {(inputProps) => (
                                  <FieldWithText
@@ -73,7 +79,19 @@ export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
                   </FieldContainer>
                   <BestsellerContainer>
                      <BestsellerInnerContainer>
-                        <Checkbox {...register('isBestseller')} />
+                        <Controller
+                           control={control}
+                           name="isBestseller"
+                           defaultValue=""
+                           render={({ field: { onChange } }) => {
+                              return (
+                                 <Checkbox
+                                    onChange={onChange}
+                                    isChecked={isBestsellerChecked}
+                                 />
+                              )
+                           }}
+                        />
                         <FieldName large withoutAsterisk>
                            Бестселлер
                         </FieldName>
@@ -104,9 +122,10 @@ export const ElectronicBookForm = ({ onUploadEbookFile, ebookFile }) => {
                   <UploadFileInnerContainer>
                      <FileUploader
                         type="pdf"
+                        id="eBook"
                         onGetFile={onUploadEbookFile}
-                        isLoading={ebookFile.isLoading}
-                        isSuccess={ebookFile.isSuccess}
+                        isLoading={eBookFile.isLoading}
+                        isSuccess={eBookFile.isSuccess}
                      />
                   </UploadFileInnerContainer>
                </UploadFileContainer>

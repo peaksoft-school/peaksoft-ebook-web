@@ -4,12 +4,12 @@ import { Modal } from './Modal'
 import styled from '@emotion/styled'
 import success from '../../../assets/icons/success.svg'
 
-export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, props }) => {
+export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, title }) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
          <ConfirmConteiner>
             <SuccessIcon src={success} />
-            <SuccessTitle>{props.title}</SuccessTitle>
+            <SuccessTitle>{title}</SuccessTitle>
          </ConfirmConteiner>
       </Modal>
    )

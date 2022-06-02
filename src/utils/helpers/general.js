@@ -53,3 +53,26 @@ export const discountOptions = (setDiscount) => {
       setValueAs: (v) => Number(v),
    }
 }
+export const timeFieldOptions = (setValue) => {
+   return {
+      onChange: ({ target: { value, name } }) => {
+         const currentName = name.split('.').at(-1)
+         if (value < 60 && value.length <= 2 && value >= 0) {
+            setValue((prevDuration) => {
+               return {
+                  ...prevDuration,
+                  [currentName]: value,
+               }
+            })
+         } else {
+            setValue((prevDuration) => {
+               return {
+                  ...prevDuration,
+                  [currentName]: 59,
+               }
+            })
+         }
+      },
+      setValueAs: (v) => Number(v),
+   }
+}
