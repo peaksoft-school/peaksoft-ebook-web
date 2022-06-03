@@ -42,7 +42,6 @@ export const VendorDetails = () => {
 }
 
 const VendorProfileContainer = styled.div`
-   width: 1147px;
    height: 456px;
    padding-top: 50px;
    .MuiBreadcrumbs-root {
@@ -61,13 +60,16 @@ const VendorProfileContainer = styled.div`
 const ContainerOfLinks = styled.div`
    margin: 0 auto;
    display: flex;
-   justify-content: space-between;
+   justify-content: center;
    padding: 89px 400px 60px 400px;
    ul {
       list-style: none;
       width: 100%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+   }
+   li {
+      padding-right: 50px;
    }
    a {
       color: black;

@@ -166,7 +166,7 @@ const VenderCardMain = styled.div`
       height: 297px;
    }
    p {
-      margin-top: ${({ marginTop }) => marginTop || '8px'}
+      margin-top: ${({ marginTop }) => marginTop || '8px'};
       font-family: 'Open Sans';
       font-style: normal;
       font-weight: 600;

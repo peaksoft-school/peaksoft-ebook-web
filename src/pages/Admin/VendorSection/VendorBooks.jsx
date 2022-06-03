@@ -1,11 +1,13 @@
 import styled from '@emotion/styled/macro'
+// import { cleanup } from '@testing-library/react'
+// import { cleanup } from '@testing-library/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
-import { VendorBookCard } from '../../../components/UI/Card/VendorBookCard'
+import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
@@ -33,7 +35,8 @@ export const VendorBooks = ({ countOfBooks }) => {
 
    const { id } = useParams()
    useEffect(() => {
-      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
+      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 3 }))
+      // return () => null
    }, [])
 
    useEffect(() => {
@@ -105,17 +108,18 @@ export const VendorBooks = ({ countOfBooks }) => {
             </HeadContainer>
             <ContentContainer>
                {books.map((vendorBooks) => (
-                  <VendorBookCard
+                  <AdminBookCard
                      minWidth="269px"
                      maxHeight="412px"
                      minHeight="408px"
                      padding="10px 10px 76px 35px"
                      marginTop="15px"
-                     key={vendorBooks.id}
-                     vendorImageUrl={vendorBooks.img}
-                     like={vendorBooks.like}
-                     date={vendorBooks.date}
-                     name={vendorBooks.name}
+                     key={vendorBooks.bookId}
+                     vendorImageUrl={vendorBooks.firstPhoto}
+                     like={vendorBooks.likes}
+                     amount={vendorBooks.baskets}
+                     date={vendorBooks.yearOfIssue}
+                     name={vendorBooks.title}
                      price={vendorBooks.price}
                   />
                ))}
@@ -167,17 +171,19 @@ export const VendorBooks = ({ countOfBooks }) => {
 }
 
 const StyledButton = styled.div`
-   padding: 20px 10px 0 930px;
+   padding-top: 20px;
+   padding-right: 30px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
 `
 
 const ContentContainer = styled.div`
    padding-top: 30px;
    display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   grid-template-rows: repeat(1, 1fr);
-   grid-column-gap: 20px;
-   grid-row-gap: 20px;
-   max-width: 100%;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   grid-gap: 2rem;
+   padding-bottom: 70px;
 `
 
 const BooksAmount = styled.span`

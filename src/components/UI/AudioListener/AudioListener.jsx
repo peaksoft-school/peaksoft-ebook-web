@@ -53,7 +53,7 @@ export const AudioListener = ({ audio }) => {
          setTimeOfAudio(Math.floor(waveform.getDuration()))
       })
       return () => waveform.destroy()
-   }, [])
+   }, [audioRef])
 
    const timeUp = useCallback(() => {
       if (wave && timeOfAudio === 0) {

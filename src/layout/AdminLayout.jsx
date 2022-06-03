@@ -30,5 +30,5 @@ const ContentContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
-   padding: 70px 0 0 270px;
+   padding: 70px 40px 0 270px;
 `
