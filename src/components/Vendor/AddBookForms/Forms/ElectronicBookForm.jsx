@@ -19,9 +19,7 @@ export const ElectronicBookForm = ({
    setDiscount,
 }) => {
    const { language, changeLanguage } = useSelectLanguage()
-   const { register, control, watch } = useFormContext()
-   const isBestsellerChecked = watch('isBestseller')
-
+   const { register, control } = useFormContext()
    return (
       <>
          <RightSideContainer>
@@ -82,12 +80,12 @@ export const ElectronicBookForm = ({
                         <Controller
                            control={control}
                            name="isBestseller"
-                           defaultValue=""
-                           render={({ field: { onChange } }) => {
+                           defaultValue={false}
+                           render={({ field: { onChange, value } }) => {
                               return (
                                  <Checkbox
                                     onChange={onChange}
-                                    isChecked={isBestsellerChecked}
+                                    isChecked={!!value}
                                  />
                               )
                            }}

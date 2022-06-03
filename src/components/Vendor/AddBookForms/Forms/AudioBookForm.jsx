@@ -26,8 +26,7 @@ export const AudioBookForm = ({
    setDiscount,
 }) => {
    const { language, changeLanguage } = useSelectLanguage()
-   const { register, control, watch } = useFormContext()
-   const isBestsellerChecked = watch('isBestseller')
+   const { register, control } = useFormContext()
    return (
       <>
          <RightSideContainer>
@@ -112,14 +111,9 @@ export const AudioBookForm = ({
                <Controller
                   control={control}
                   name="isBestseller"
-                  defaultValue=""
-                  render={({ field: { onChange } }) => {
-                     return (
-                        <Checkbox
-                           onChange={onChange}
-                           isChecked={isBestsellerChecked}
-                        />
-                     )
+                  defaultValue={false}
+                  render={({ field: { onChange, value } }) => {
+                     return <Checkbox onChange={onChange} isChecked={!!value} />
                   }}
                />
                <FieldName large withoutAsterisk>

@@ -5,20 +5,17 @@ export const fileFetch = async (options) => {
    const token = getJwt()
    try {
       const { path, body, method } = options
+
       const requestOptions = {
          method: method || 'POST',
          headers: {
             Authorization: `Bearer ${token}`,
          },
-      }
-      if (method !== 'DELETE') {
-         requestOptions.body = body || {}
+         body: body || {},
       }
       const response = await fetch(`${SERVER_BASE_URL}/${path}`, requestOptions)
 
-      const result =
-         method === 'DELETE' ? await response.text() : await response.json()
-
+      const result = await response.json()
       if (!response.ok) {
          let errorMessage = 'Some thing went wrong'
          if (result && result.message) {

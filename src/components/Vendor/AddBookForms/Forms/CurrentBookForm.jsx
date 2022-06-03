@@ -2,8 +2,7 @@ import styled from '@emotion/styled'
 import { useCallback, useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
-import { flushSync } from 'react-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSelectLanguage } from '../../../../hooks/useSelectLanguage'
 import { LANGUAGES, TYPES_OF_BOOKS } from '../../../../utils/constants/general'
 import { Notification } from '../../../UI/Notification/Notification'
@@ -14,8 +13,12 @@ import { PaperBookForm } from './PaperBookForm'
 import { addBook } from '../../../../store/vendor-slice'
 import { useUploadFile } from '../../../../hooks/useUploadFile'
 import { SuccessConfirmModal } from '../../../UI/Modals/SuccessConfirmModal'
+import { LargeLoadingSpinner } from '../../../UI/LoadingSpinner/LargeLoadingSpinner'
 
 export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
+   const { isLoading, isShowSuccessModal } = useSelector(
+      (state) => state.vendor
+   )
    const dispatch = useDispatch()
 
    const { handleSubmit, reset } = useFormContext()
@@ -37,21 +40,10 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
       second: 0,
    })
    const [discount, setDiscount] = useState(0)
-   const [isShowSuccessModal, setIsShowSuccessModal] = useState(false)
 
    const showErrorNotification = (message) =>
       toast(<Notification title="Ошибка" message={message} />)
 
-   const showSuccessNotification = () => {
-      flushSync(() => {
-         setIsShowSuccessModal(true)
-      })
-      setTimeout(() => {
-         flushSync(() => {
-            setIsShowSuccessModal(false)
-         })
-      }, 1000)
-   }
    const getCurrentTypeKey = () => {
       switch (type) {
          case TYPES_OF_BOOKS.PAPER.type:
@@ -77,6 +69,7 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          language: LANGUAGES.RUSSIAN.key,
          price: '',
          discount: '',
+         isBestseller: '',
       }
       if (type === TYPES_OF_BOOKS.AUDIO.type) {
          defaultValues.audioBook = setDurationOfAudioBook({
@@ -110,7 +103,6 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
 
    const actionsAfterUploadBook = {
       resetForm: onResetForm,
-      showSuccessNotification,
       showErrorNotification,
    }
    const uploadAudioBook = (data) => {
@@ -264,6 +256,7 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
             isOpen={isShowSuccessModal}
             title="Ваш запрос был успешно отправлен!"
          />
+         {isLoading && <LargeLoadingSpinner />}
       </>
    )
 }

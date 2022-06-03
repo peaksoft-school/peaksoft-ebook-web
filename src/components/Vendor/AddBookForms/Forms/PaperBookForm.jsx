@@ -16,8 +16,7 @@ export const PaperBookForm = ({
    discount,
    setDiscount,
 }) => {
-   const { register, control, watch } = useFormContext()
-   const isBestsellerChecked = watch('isBestseller')
+   const { register, control } = useFormContext()
 
    return (
       <>
@@ -107,12 +106,9 @@ export const PaperBookForm = ({
                      control={control}
                      name="isBestseller"
                      defaultValue=""
-                     render={({ field: { onChange } }) => {
+                     render={({ field: { onChange, value } }) => {
                         return (
-                           <Checkbox
-                              onChange={onChange}
-                              isChecked={isBestsellerChecked}
-                           />
+                           <Checkbox onChange={onChange} isChecked={!!value} />
                         )
                      }}
                   />

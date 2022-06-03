@@ -19,6 +19,7 @@ export const getAllGenres = createAsyncThunk(
 export const addBook = createAsyncThunk(
    'vendor/addBook',
    async ({ data, showErrorNotification, ...restData }, { dispatch }) => {
+      dispatch(vendorActions.setIsLoading(true))
       try {
          const result = await appFetch({
             path: 'vendor/new-book',
@@ -30,6 +31,7 @@ export const addBook = createAsyncThunk(
             dispatch(
                uploadImagesOfBook({
                   id,
+                  showErrorNotification,
                   ...restData,
                })
             )
@@ -42,27 +44,23 @@ export const addBook = createAsyncThunk(
 
 export const uploadImagesOfBook = createAsyncThunk(
    'vendor/uploadImagesOfBook',
-   async ({
-      files,
-      id,
-      resetForm,
-      showSuccessNotification,
-      showErrorNotification,
-   }) => {
+   async ({ files, id, resetForm, showErrorNotification }) => {
       try {
          const formData = new FormData()
          Object.keys(files).forEach((fileKey) => {
             formData.set(fileKey, files[fileKey])
          })
-         const result = fileFetch({
+         const result = await fileFetch({
             path: `aws/upload-file/${id}`,
             method: 'POST',
             body: formData,
          })
-         if (result) {
-            resetForm()
-            showSuccessNotification()
+         if (!result) {
+            return showErrorNotification(
+               'Не удалось загрузить книгу, попробуйте ещё раз'
+            )
          }
+         resetForm()
          return result
       } catch (error) {
          return showErrorNotification(
@@ -76,15 +74,31 @@ const initialState = {
    genres: {
       genresList: [],
    },
+   isLoading: false,
+   isShowSuccessModal: false,
 }
 
 export const vendorSlice = createSlice({
    name: 'vendor',
    initialState,
-   reducers: {},
+   reducers: {
+      setIsLoading: (state, { payload }) => {
+         state.isLoading = payload
+      },
+   },
    extraReducers: {
       [getAllGenres.fulfilled]: (state, { payload }) => {
          state.genres.genresList = payload
+      },
+      [uploadImagesOfBook.fulfilled]: (state) => {
+         state.isLoading = false
+         state.isShowSuccessModal = true
+      },
+      [uploadImagesOfBook.rejected]: (state) => {
+         state.isLoading = false
+      },
+      [addBook.rejected]: (state) => {
+         state.isLoading = false
       },
    },
 })
