@@ -1,21 +1,15 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import errorXIcon from '../../../assets/icons/errorX.svg'
 
-export const Notification = ({ isOpen, title, message, type, onClose }) => {
+export const Notification = ({ title, message, type }) => {
    return (
-      isOpen && (
-         <NotificationContainer>
-            <NotificationTextContainer>
-               <VerticalLine type={type} />
-               <StyledText>
-                  <h3>{title}</h3>
-                  <p>{message}</p>
-               </StyledText>
-            </NotificationTextContainer>
-            <img src={errorXIcon} alt="x-icon" onClick={onClose} />
-         </NotificationContainer>
-      )
+      <NotificationTextContainer>
+         <VerticalLine type={type} />
+         <StyledText>
+            <h3>{title}</h3>
+            <p>{message}</p>
+         </StyledText>
+      </NotificationTextContainer>
    )
 }
 
@@ -45,29 +39,7 @@ const StyledText = styled.div`
       text-overflow: ellipsis;
    }
 `
-const NotificationContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
-   background-color: white;
-   align-items: center;
-   width: 420px;
-   position: absolute;
-   top: 100px;
-   right: 0;
-   transform: translateY(-50%);
-   animation: 1s slide-left;
-   @keyframes slide-left {
-      from {
-         width: 0;
-      }
-      to {
-         width: 420px;
-      }
-   }
-   img {
-      padding: 35px;
-   }
-`
+
 const NotificationTextContainer = styled.div`
    display: flex;
    align-items: center;

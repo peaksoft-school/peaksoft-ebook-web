@@ -1,20 +1,37 @@
-/* eslint-disable import/order */
-import React from 'react'
-import { Modal } from './Modal'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import { flushSync } from 'react-dom'
+import { Modal } from './Modal'
 import success from '../../../assets/icons/success.svg'
 
-export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, props }) => {
+export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, title }) => {
+   const [isVisible, setIsVisible] = useState(false)
+
+   useEffect(() => {
+      if (!isOpen) return () => null
+      flushSync(() => {
+         setIsVisible(true)
+      })
+      const timerId = setTimeout(() => {
+         flushSync(() => {
+            setIsVisible(false)
+         })
+      }, 2000)
+      return () => clearTimeout(timerId)
+   }, [isOpen])
+
    return (
-      <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
-         <ConfirmConteiner>
-            <SuccessIcon src={success} />
-            <SuccessTitle>{props.title}</SuccessTitle>
-         </ConfirmConteiner>
-      </Modal>
+      isVisible && (
+         <Modal onCloseBackDrop={onCloseBackDrop} isOpen>
+            <ConfirmContainer>
+               <SuccessIcon src={success} />
+               <SuccessTitle>{title}</SuccessTitle>
+            </ConfirmContainer>
+         </Modal>
+      )
    )
 }
-const ConfirmConteiner = styled.div`
+const ConfirmContainer = styled.div`
    width: 460px;
    padding: 20px 29px 20px;
 `

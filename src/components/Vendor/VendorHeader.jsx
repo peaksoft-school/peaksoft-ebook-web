@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
@@ -9,8 +10,10 @@ import { ReactComponent as Plus } from '../../assets/icons/plus.svg'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
+import { VENDOR_ROUTES } from '../../utils/constants/routes'
 
 export const VendorHeader = () => {
+   const navigate = useNavigate()
    const [isShowOptions, setIsShowOptions] = useState(false)
 
    const showPopUp = () => {
@@ -25,6 +28,7 @@ export const VendorHeader = () => {
       },
    ]
    const booksList = []
+
    return (
       <VendorHeaderContainer>
          <SearchHeaderContainer>
@@ -55,8 +59,9 @@ export const VendorHeader = () => {
                bgColor={theme.secondary.orange}
                fontSize="16px"
                lHeight="21.79px"
-               bgColorHover={theme.secondary.orange}
-               bgColorActive={theme.secondary.orange}
+               bgColorHover="#FE6F33"
+               bgColorActive="#E54400"
+               onClick={() => navigate(VENDOR_ROUTES.ADD_BOOK.PATH)}
             >
                <Plus style={{ marginRight: '15px' }} />
                Добавить книгу
@@ -92,7 +97,7 @@ const ButtonsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 40px 0;
+   padding: 40px 0 10px 0;
 `
 const StyledBellIcon = styled(BellIcon)`
    cursor: pointer;
@@ -105,13 +110,14 @@ const ContainerOfIcons = styled.div`
    justify-content: space-around;
    position: relative;
 `
-const VendorHeaderContainer = styled.div`
+const VendorHeaderContainer = styled.header`
    display: flex;
    justify-content: center;
    flex-direction: column;
-   position: fixed;
-   right: 50%;
-   transform: translateX(50%);
+   width: 100%;
+   padding: 0 80px;
+   background-color: #ffffff;
+   flex-shrink: 0;
 `
 const InnerContainer = styled.div`
    display: flex;
