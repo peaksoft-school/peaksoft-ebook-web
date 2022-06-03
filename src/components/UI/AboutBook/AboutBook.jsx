@@ -146,7 +146,7 @@ const InformationTextContainer = styled.div`
 `
 const AudioListenerContainer = styled.div`
    position: absolute;
-   right: -47%;
+   right: -35%;
    top: 52%;
    transform: translate(-50%, -50%);
 `

@@ -1,6 +1,4 @@
 import styled from '@emotion/styled/macro'
-// import { cleanup } from '@testing-library/react'
-// import { cleanup } from '@testing-library/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'

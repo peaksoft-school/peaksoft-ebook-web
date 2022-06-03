@@ -6,11 +6,11 @@ import { ReactComponent as LikeIcon } from '../../../assets/icons/like-icon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/edit-icon.svg'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.svg'
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
-import { SuccessConfirmModal } from '../Modals/SuccessConfirmModal'
 import { Modal } from '../Modals/Modal'
 import { Button } from '../Buttons/Button'
 import { Input } from '../Inputs/Input'
 import { acceptBook, refuseBook } from '../../../store/admin-slice'
+import { SuccessConfirmModalForAdmin } from '../Modals/SuccessConfirmModalForAdmin'
 
 export const AdminBookCard = ({
    like,
@@ -130,7 +130,7 @@ export const AdminBookCard = ({
             }}
          >
             {showSuccess && (
-               <SuccessConfirmModal
+               <SuccessConfirmModalForAdmin
                   isOpen={showSuccess}
                   onCloseBackDrop={(e) => {
                      e.stopPropagation()

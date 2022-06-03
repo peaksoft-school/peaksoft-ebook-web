@@ -7,6 +7,7 @@ import { getTimeAsString } from '../../../utils/helpers/general'
 import Audio from './Audio'
 
 export const AudioListener = ({ audio }) => {
+   // console.log(audio)
    const [wave, setWave] = useState(null)
 
    const [audioDuration, setAudioDuration] = useState(0)
@@ -53,7 +54,7 @@ export const AudioListener = ({ audio }) => {
          setTimeOfAudio(Math.floor(waveform.getDuration()))
       })
       return () => waveform.destroy()
-   }, [audioRef])
+   }, [])
 
    const timeUp = useCallback(() => {
       if (wave && timeOfAudio === 0) {

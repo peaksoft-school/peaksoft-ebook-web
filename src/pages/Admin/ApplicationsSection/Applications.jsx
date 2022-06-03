@@ -44,11 +44,6 @@ export const Applications = () => {
          <ContentContainer>
             {applications?.map((application) => (
                <AdminBookCard
-                  // minWidth="269px"
-                  // maxHeight="412px"
-                  // minHeight="408px"
-                  // padding="10px 0 0 35px"
-                  // marginTop="15px"
                   key={application.bookId}
                   id={application.bookId}
                   vendorImageUrl={application.fileInformation?.firstPhoto}

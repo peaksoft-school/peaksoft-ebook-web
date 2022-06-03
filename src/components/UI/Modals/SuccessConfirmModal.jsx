@@ -5,15 +5,30 @@ import { Modal } from './Modal'
 import success from '../../../assets/icons/success.svg'
 
 export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, title }) => {
+   const [isVisible, setIsVisible] = useState(false)
+
+   useEffect(() => {
+      if (!isOpen) return () => null
+      flushSync(() => {
+         setIsVisible(true)
+      })
+      const timerId = setTimeout(() => {
+         flushSync(() => {
+            setIsVisible(false)
+         })
+      }, 2000)
+      return () => clearTimeout(timerId)
+   }, [isOpen])
+
    return (
-      <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
-         <ConfirmConteiner onClick={(e) => e.stopPropagation()}>
-            <SuccessIcon src={success} />
-            <SuccessTitle>
-               <b>{title}</b> был успешно принят!
-            </SuccessTitle>
-         </ConfirmConteiner>
-      </Modal>
+      isVisible && (
+         <Modal onCloseBackDrop={onCloseBackDrop} isOpen>
+            <ConfirmContainer>
+               <SuccessIcon src={success} />
+               <SuccessTitle>{title}</SuccessTitle>
+            </ConfirmContainer>
+         </Modal>
+      )
    )
 }
 const ConfirmContainer = styled.div`

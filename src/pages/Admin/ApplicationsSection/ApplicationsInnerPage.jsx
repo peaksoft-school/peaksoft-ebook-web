@@ -7,11 +7,11 @@ import { theme } from '../../../utils/constants/theme'
 import { OutlookOfBooks } from '../../../components/UI/AboutBook/OutlookOfBooks/OutlookOfBooks'
 import { AboutBook } from '../../../components/UI/AboutBook/AboutBook'
 import { DescriptionOfBook } from '../../../components/UI/AboutBook/DescriptionOfBook/DescriptionOfBook'
-import { SuccessConfirmModal } from '../../../components/UI/Modals/SuccessConfirmModal'
 import { Input } from '../../../components/UI/Inputs/Input'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { acceptBook, getBook, refuseBook } from '../../../store/admin-slice'
+import { SuccessConfirmModalForAdmin } from '../../../components/UI/Modals/SuccessConfirmModalForAdmin'
 
 export const ApplicationsInnerPage = () => {
    const [showSuccess, setShowSuccess] = useState(false)
@@ -103,7 +103,7 @@ export const ApplicationsInnerPage = () => {
             </SecondLineContainer>
          </Container>
          {showSuccess && (
-            <SuccessConfirmModal
+            <SuccessConfirmModalForAdmin
                isOpen={showSuccess}
                onCloseBackDrop={() => setShowSuccess(false)}
                title={`"${specificBook?.title}" `}
