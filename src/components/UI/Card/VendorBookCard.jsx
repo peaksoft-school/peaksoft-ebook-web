@@ -39,13 +39,12 @@ export const VendorBookCard = ({
          <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
-                  {like && (
-                     <>
-                        <LikeIcon />
-                        <p>({like})</p>
-                     </>
-                  )}
-                  {amount && <p> В корзине ({amount})</p>}
+                  <>
+                     <LikeIcon />
+                     <p>({like})</p>
+                  </>
+
+                  <p> В корзине ({amount})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
@@ -68,13 +67,11 @@ export const VendorBookCard = ({
       <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
             <WrapperForLike>
-               {like && (
-                  <>
-                     <LikeIcon />
-                     <p>({like})</p>
-                  </>
-               )}
-               {amount && <p> В корзине ({amount})</p>}
+               <>
+                  <LikeIcon />
+                  <p>({like})</p>
+               </>
+               <p> В корзине ({amount})</p>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />

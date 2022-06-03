@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
-import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
+import { VendorBookCard } from '../../../components/UI/Card/VendorBookCard'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
@@ -34,7 +34,6 @@ export const VendorBooks = ({ countOfBooks }) => {
    const { id } = useParams()
    useEffect(() => {
       dispatch(getListOfVendorBooks({ data: 'books', id, offset: 3 }))
-      // return () => null
    }, [])
 
    useEffect(() => {
@@ -106,17 +105,17 @@ export const VendorBooks = ({ countOfBooks }) => {
             </HeadContainer>
             <ContentContainer>
                {books.map((vendorBooks) => (
-                  <AdminBookCard
+                  <VendorBookCard
                      minWidth="269px"
                      maxHeight="412px"
                      minHeight="408px"
                      padding="10px 10px 76px 35px"
                      marginTop="15px"
                      key={vendorBooks.bookId}
-                     vendorImageUrl={vendorBooks.firstPhoto}
+                     vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
                      like={vendorBooks.likes}
                      amount={vendorBooks.baskets}
-                     date={vendorBooks.yearOfIssue}
+                     date={vendorBooks.dateOfRegister}
                      name={vendorBooks.title}
                      price={vendorBooks.price}
                   />
