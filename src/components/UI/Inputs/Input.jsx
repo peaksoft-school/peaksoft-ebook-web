@@ -22,6 +22,8 @@ const StyledInput = styled.input`
    }
    &:focus {
       background-color: ${({ error }) => (error ? '#FFF5F5' : '#ffffff')};
+      border: ${({ borderActive }) =>
+         borderActive ? '1px solid #F10000' : '1px solid #c4c4c4'};
    }
    &::placeholder {
       color: #969696;

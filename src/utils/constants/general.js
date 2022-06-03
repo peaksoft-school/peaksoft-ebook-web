@@ -45,3 +45,44 @@ export const VALIDATION_PARAMS_FOR_PASSWORD = {
       message: 'Пароль должен содержать одну заглавную букву и одну цифру',
    },
 }
+
+export const TYPES_OF_BOOKS = {
+   PAPER: {
+      type: 'PAPERBOOK',
+      title: 'Бумажная',
+      key: 'paperBook',
+   },
+   AUDIO: {
+      type: 'AUDIOBOOK',
+      title: 'Аудиокнига',
+      key: 'audioBook',
+   },
+   ELECTRONIC: {
+      type: 'EBOOK',
+      title: 'Электронная книга',
+      key: 'electronicBook',
+   },
+}
+
+export const LANGUAGES = {
+   RUSSIAN: {
+      title: 'Русский',
+      key: 'RUSSIAN',
+   },
+   KYRGYZ: {
+      title: 'Кыргызский',
+      key: 'KYRGYZ',
+   },
+   ENGLISH: {
+      title: 'Английский',
+      key: 'ENGLISH',
+   },
+}
+
+export const optionsForFieldsThatMustBeNumber = {
+   required: true,
+   valueAsNumber: true,
+   validate: {
+      valueBelowZero: (v) => v >= 0 || 'Must be more than 0',
+   },
+}

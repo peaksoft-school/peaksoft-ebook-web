@@ -1,7 +1,7 @@
-/* eslint-disable import/order */
-import React from 'react'
-import { Modal } from './Modal'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import { flushSync } from 'react-dom'
+import { Modal } from './Modal'
 import success from '../../../assets/icons/success.svg'
 
 export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, title }) => {
@@ -16,7 +16,7 @@ export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, title }) => {
       </Modal>
    )
 }
-const ConfirmConteiner = styled.div`
+const ConfirmContainer = styled.div`
    width: 460px;
    padding: 20px 29px 20px;
 `

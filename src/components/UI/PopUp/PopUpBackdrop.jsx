@@ -18,4 +18,5 @@ const StyledBackdrop = styled.div`
    justify-content: center;
    align-items: center;
    z-index: 96;
+   /* background-color: red; */
 `
