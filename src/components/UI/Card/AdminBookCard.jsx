@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as MeatBallsIcon } from '../../../assets/icons/meatballs-icon.svg'
-import { ReactComponent as LikeIcon } from '../../../assets/icons/like-icon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/edit-icon.svg'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.svg'
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
@@ -79,17 +78,6 @@ export const AdminBookCard = ({
    return isRejected ? (
       <RejectedVendorCardContainer {...props}>
          <RejectedContent onClick={() => setShowOptions(false)}>
-            <RegectedVendorCardHeader>
-               <WrapperForLike>
-                  {like && (
-                     <>
-                        <LikeIcon />
-                        <p>({like})</p>
-                     </>
-                  )}
-                  {amount && <p> В корзине ({amount})</p>}
-               </WrapperForLike>
-            </RegectedVendorCardHeader>
             <VenderCardMain>
                {vendorImageUrl || <img src={vendorImageUrl} alt="book" />}
                <BookName>{name}</BookName>
@@ -109,15 +97,6 @@ export const AdminBookCard = ({
    ) : (
       <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
-            <WrapperForLike>
-               {like && (
-                  <>
-                     <LikeIcon />
-                     <p>({like})</p>
-                  </>
-               )}
-               {amount && <p> В корзине ({amount})</p>}
-            </WrapperForLike>
             <MeatBallsContainer onClick={showPopUp}>
                <MeatBallsIcon />
                {showOptions && <MeatballsPopUp options={options} id={id} />}
@@ -198,18 +177,6 @@ const RejectedVendorCardContainer = styled.div`
 const RejectedContent = styled.div`
    opacity: 0.4;
 `
-const RegectedVendorCardHeader = styled.div`
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 14px;
-   line-height: 130%;
-   color: #8a8a8a;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   position: relative;
-`
 const VendorCardContainer = styled.div`
    max-width: ${({ maxWidth }) => maxWidth || '305px'};
    min-height: ${({ minHeight }) => minHeight || '408px'};
@@ -241,15 +208,6 @@ const MeatBallsRejectedContainer = styled.div`
    top: 0;
    right: 0;
    cursor: pointer;
-`
-const WrapperForLike = styled.div`
-   width: 100%;
-   height: 19px;
-   display: flex;
-   align-items: center;
-   p {
-      margin-left: 10px;
-   }
 `
 const VenderCardHeader = styled.div`
    position: absolute;
