@@ -22,6 +22,10 @@ export const VENDOR_ROUTES = {
    VENDOR_ABOUT_BOOKS: {
       PATH: '/main-page/:id',
    },
+   ADD_BOOK: {
+      PATH: '/add-book',
+      LABEL: 'Добавить книгу',
+   },
 }
 
 export const ADMIN_ROUTES = {

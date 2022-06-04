@@ -3,19 +3,27 @@ import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import { ReactComponent as DropzoneIcon } from '../../../assets/icons/image-picker.svg'
 
-export const ImagePicker = ({ file, setFile, onDrop }) => {
+export const ImagePicker = ({ file, setFile, onDrop, name }) => {
    const { getRootProps, getInputProps, open } = useDropzone({
       onDrop,
       accept: 'image/*',
    })
+   const deleteImageHandler = () => {
+      setFile((prevFile) => {
+         return {
+            ...prevFile,
+            [name]: null,
+         }
+      })
+   }
    return (
       <ImagePickerContainer>
          {file ? (
             <DroppedFileContainer>
-               <img src={file} alt="chosen_book" />
+               <img src={URL.createObjectURL(file)} alt="chosen_book" />
                <DroppedFileChangingButtons>
                   <p onClick={open}>Заменить</p>
-                  <p onClick={() => setFile(null)}>Удалить</p>
+                  <p onClick={deleteImageHandler}>Удалить</p>
                </DroppedFileChangingButtons>
             </DroppedFileContainer>
          ) : (
@@ -77,6 +85,7 @@ const DroppedFileContainer = styled.div`
    & img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
    }
    &:hover ${DroppedFileChangingButtons} {
       display: flex;

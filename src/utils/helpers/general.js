@@ -42,3 +42,37 @@ export const localstorage = {
 export const getJwt = () => {
    return store.getState().auth.token
 }
+
+export const discountOptions = (setDiscount) => {
+   return {
+      onChange: ({ target: { value } }) => {
+         if (value <= 100 && value.length <= 6 && value >= 0) {
+            setDiscount(value)
+         }
+      },
+      setValueAs: (v) => Number(v),
+   }
+}
+export const timeFieldOptions = (setValue) => {
+   return {
+      onChange: ({ target: { value, name } }) => {
+         const currentName = name.split('.').at(-1)
+         if (value < 60 && value.length <= 2 && value >= 0) {
+            setValue((prevDuration) => {
+               return {
+                  ...prevDuration,
+                  [currentName]: value,
+               }
+            })
+         } else {
+            setValue((prevDuration) => {
+               return {
+                  ...prevDuration,
+                  [currentName]: 59,
+               }
+            })
+         }
+      },
+      setValueAs: (v) => Number(v),
+   }
+}

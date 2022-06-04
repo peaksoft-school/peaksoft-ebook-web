@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
 
-export const FieldName = ({ children }) => {
+export const FieldName = ({ children, withoutAsterisk, ...props }) => {
    return (
-      <StyledFieldName>
+      <StyledFieldName {...props}>
          {children}
-         <span>*</span>
+         {!withoutAsterisk && <span>*</span>}
       </StyledFieldName>
    )
 }
@@ -13,7 +13,7 @@ export const FieldName = ({ children }) => {
 const StyledFieldName = styled.label`
    font-family: 'Open Sans';
    font-weight: 400;
-   font-size: 14px;
+   font-size: ${({ large }) => (large ? '16px' : '14px ')};
    line-height: 130%;
    color: #1c1c1c;
    & span {

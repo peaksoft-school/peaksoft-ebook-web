@@ -1,6 +1,7 @@
-/* eslint-disable import/order */
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
 import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as BellIcon } from '../../assets/icons/bell-icon.svg'
@@ -11,16 +12,15 @@ import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { Promocode } from '../UI/Promocode/Promocode'
-import { useDispatch } from 'react-redux'
 import { authActions } from '../../store/auth-slice'
-import { useNavigate } from 'react-router-dom'
+import { VENDOR_ROUTES } from '../../utils/constants/routes'
 
 export const VendorHeader = () => {
+   const navigate = useNavigate()
    const [isShowOptions, setIsShowOptions] = useState(false)
    const [isShown, setIsShown] = useState(false)
    const [isOpenPromoCode, setIsOpenPromoCode] = useState(false)
    const dispatch = useDispatch()
-   const navigate = useNavigate()
 
    const showPopUp = () => {
       setIsShowOptions((isShowOptions) => !isShowOptions)
@@ -98,8 +98,9 @@ export const VendorHeader = () => {
                bgColor={theme.secondary.orange}
                fontSize="16px"
                lHeight="21.79px"
-               bgColorHover={theme.secondary.orange}
-               bgColorActive={theme.secondary.orange}
+               bgColorHover="#FE6F33"
+               bgColorActive="#E54400"
+               onClick={() => navigate(VENDOR_ROUTES.ADD_BOOK.PATH)}
             >
                <Plus style={{ marginRight: '15px' }} />
                Добавить книгу
@@ -135,7 +136,7 @@ const ButtonsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 40px 0;
+   padding: 40px 0 10px 0;
 `
 const StyledBellIcon = styled(BellIcon)`
    cursor: pointer;
@@ -187,16 +188,14 @@ const ContainerOfIcons = styled.div`
    justify-content: space-around;
    position: relative;
 `
-const VendorHeaderContainer = styled.div`
-   width: 1280px;
+const VendorHeaderContainer = styled.header`
    display: flex;
    justify-content: center;
    flex-direction: column;
-   position: fixed;
-   right: 50%;
-   transform: translateX(50%);
-   background: white;
-   z-index: 99;
+   width: 100%;
+   padding: 0 80px;
+   background-color: #ffffff;
+   flex-shrink: 0;
 `
 const InnerContainer = styled.div`
    display: flex;
