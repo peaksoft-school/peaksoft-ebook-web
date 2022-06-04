@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { theme } from '../../utils/constants/theme'
@@ -9,22 +10,48 @@ import { ReactComponent as Plus } from '../../assets/icons/plus.svg'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
+import { Promocode } from '../UI/Promocode/Promocode'
+import { useDispatch } from 'react-redux'
+import { authActions } from '../../store/auth-slice'
+import { useNavigate } from 'react-router-dom'
 
 export const VendorHeader = () => {
    const [isShowOptions, setIsShowOptions] = useState(false)
+   const [isShown, setIsShown] = useState(false)
+   const [isOpenPromoCode, setIsOpenPromoCode] = useState(false)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
 
    const showPopUp = () => {
       setIsShowOptions((isShowOptions) => !isShowOptions)
    }
+
+   const showPromoCode = () => {
+      setIsOpenPromoCode((isOpenPromoCode) => !isOpenPromoCode)
+   }
+
+   const logoutHandler = () => {
+      dispatch(authActions.logout())
+      localStorage.removeItem('eBook-user-key-json')
+   }
+   const navigateToProfile = () => {
+      navigate(`/profile`)
+   }
+
    const options = [
       {
+         id: 1,
          title: 'Профиль',
+         action: () => navigateToProfile(),
       },
       {
+         id: 2,
          title: 'Выйти',
+         action: () => logoutHandler(),
       },
    ]
    const booksList = []
+
    return (
       <VendorHeaderContainer>
          <SearchHeaderContainer>
@@ -45,11 +72,27 @@ export const VendorHeader = () => {
                   fontSize="16px"
                   color="#FF4C00"
                   border="1px solid #FF4C00"
+                  onClick={showPromoCode}
                >
                   Создать промокод
                </Button>
-               <InfoIcon />
+               <Promocode
+                  isPromocodeModalOpen={isOpenPromoCode}
+                  onClosePromocodeModal={() => setIsOpenPromoCode(false)}
+               />
+               <InfoIcon
+                  onMouseEnter={() => setIsShown(true)}
+                  onMouseLeave={() => setIsShown(false)}
+               />
             </StyledContainer>
+            {isShown && (
+               <HowerMessage>
+                  <Message>
+                     Промокод применяется ко всем вашим книгам за исключением
+                     книг со скидками.
+                  </Message>
+               </HowerMessage>
+            )}
             <Button
                padding="10px 24px"
                bgColor={theme.secondary.orange}
@@ -98,7 +141,46 @@ const StyledBellIcon = styled(BellIcon)`
    cursor: pointer;
    margin-right: 40px;
 `
-
+const HowerMessage = styled.div`
+   position: absolute;
+   left: 205px;
+   bottom: 40px;
+   width: 100%;
+`
+const Message = styled.span`
+   position: absolute;
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-size: 12px;
+   line-height: 130%;
+   color: #969696;
+   width: 353px;
+   position: absolute;
+   padding: 10px;
+   background-color: #ffffff;
+   font: 400 0.9em 'Open Sans', sans-serif;
+   border: 0.5px solid #c4c4c4;
+   &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-bottom: 10px solid #ffffff;
+      border-right: 15px solid transparent;
+      top: -10px;
+      left: 20px;
+   }
+   &:before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-bottom: 11px solid #c4c4c4;
+      border-right: 16px solid transparent;
+      top: -12px;
+      left: 19px;
+   }
+`
 const ContainerOfIcons = styled.div`
    display: flex;
    align-items: center;
@@ -106,12 +188,15 @@ const ContainerOfIcons = styled.div`
    position: relative;
 `
 const VendorHeaderContainer = styled.div`
+   width: 1280px;
    display: flex;
    justify-content: center;
    flex-direction: column;
    position: fixed;
    right: 50%;
    transform: translateX(50%);
+   background: white;
+   z-index: 99;
 `
 const InnerContainer = styled.div`
    display: flex;

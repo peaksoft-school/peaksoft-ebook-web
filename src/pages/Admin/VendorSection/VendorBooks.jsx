@@ -10,9 +10,10 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
    removeVendor,
-   getListOfVendorBooks,
+   // getListOfVendorBooks,
    getSingleVendor,
 } from '../../../store/admin-slice'
+import { getCardOfVendorBooks } from '../../../store/vendor-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {
    const books = useSelector((state) => state.adminVendors.listOfVendorBooks)
@@ -33,7 +34,7 @@ export const VendorBooks = ({ countOfBooks }) => {
 
    const { id } = useParams()
    useEffect(() => {
-      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
+      dispatch(getCardOfVendorBooks({ data: 'books', id, offset: 1 }))
    }, [])
 
    useEffect(() => {
@@ -46,42 +47,42 @@ export const VendorBooks = ({ countOfBooks }) => {
          value: 'books',
          id: 's1',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В избранном',
          value: 'favorite-books',
          id: 's2',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В корзине',
          value: 'basket-books',
          id: 's3',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'Со скидками',
          value: 'books-discount',
          id: 's9',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'В обработке',
          value: 'books-in-process',
          id: 's5',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
       {
          title: 'Отклоненные',
          value: 'books-refused',
          id: 's6',
          action: (data) =>
-            dispatch(getListOfVendorBooks({ data, id, offset: 1 })),
+            dispatch(getCardOfVendorBooks({ data, id, offset: 1 })),
       },
    ]
    return (

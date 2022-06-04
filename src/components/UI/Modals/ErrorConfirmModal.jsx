@@ -5,11 +5,18 @@ import { Modal } from './Modal'
 import styled from '@emotion/styled'
 import { theme } from '../../../utils/constants/theme'
 
-export const ErrorConfirmModal = ({ onCloseBackDrop, isOpen, exit, props }) => {
+export const ErrorConfirmModal = ({
+   onCloseBackDrop,
+   isOpen,
+   exit,
+   title,
+   onCencelButton,
+   onExitButton,
+}) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
          <ConfirmModal>
-            <p>{props.title}</p>
+            <p>{title}</p>
             <ConfirmSubmit>
                <Button
                   padding="10px 24px 10px 24px"
@@ -18,7 +25,8 @@ export const ErrorConfirmModal = ({ onCloseBackDrop, isOpen, exit, props }) => {
                   fontSize="16px"
                   ling-height="21.79px"
                   bgColorActive="#FF4C00"
-                  bgColorHover="#484848"
+                  bgColorHover="rgb(72, 72, 72)"
+                  onClick={onCencelButton}
                >
                   Отменить
                </Button>
@@ -30,6 +38,7 @@ export const ErrorConfirmModal = ({ onCloseBackDrop, isOpen, exit, props }) => {
                      ling-height="21.79px"
                      bgColorHover="#484848"
                      bgColorActive={theme.secondary.orange}
+                     onClick={onCencelButton}
                   >
                      Выйти
                   </Button>
@@ -41,6 +50,7 @@ export const ErrorConfirmModal = ({ onCloseBackDrop, isOpen, exit, props }) => {
                      ling-height="21.79px"
                      bgColorHover="#484848"
                      bgColorActive={theme.secondary.orange}
+                     onClick={onExitButton}
                   >
                      Удалить
                   </Button>

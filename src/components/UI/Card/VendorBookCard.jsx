@@ -1,10 +1,14 @@
+/* eslint-disable import/no-useless-path-segments */
 import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import { ReactComponent as MeatBallsIcon } from '../../../assets/icons/meatballs-icon.svg'
 import { ReactComponent as LikeIcon } from '../../../assets/icons/like-icon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/edit-icon.svg'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.svg'
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
+import { ErrorConfirmModal } from '../../UI/Modals/ErrorConfirmModal'
+import { removeVendorBook } from '../../../store/vendor-slice'
 
 export const VendorBookCard = ({
    like,
@@ -16,12 +20,24 @@ export const VendorBookCard = ({
    isRejected,
    onClickToBook,
    vendorImageUrl,
+   id,
+   key,
    ...props
 }) => {
    const [isPopUpVisisble, setIsPopUpVisisble] = useState(false)
+   const [showRemoveModal, setRemoveModal] = useState(false)
+
+   const dispatch = useDispatch()
+
+   const showDeleteModal = () => {
+      setRemoveModal(true)
+   }
 
    const changeVisiblePopUpHandler = () => {
       setIsPopUpVisisble((prevState) => !prevState)
+   }
+   const deleteVendorBook = () => {
+      dispatch(removeVendorBook({ id }))
    }
    const options = [
       {
@@ -31,6 +47,7 @@ export const VendorBookCard = ({
       {
          icon: <DeleteIcon />,
          title: 'Удалить',
+         action: () => showDeleteModal(),
       },
    ]
 
@@ -68,13 +85,12 @@ export const VendorBookCard = ({
       <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
             <WrapperForLike>
-               {like && (
-                  <>
-                     <LikeIcon />
-                     <p>({like})</p>
-                  </>
-               )}
-               {amount && <p> В корзине ({amount})</p>}
+               <>
+                  <LikeIcon />
+                  <p>({like})</p>
+               </>
+
+               <Amount> В корзине ({amount})</Amount>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />
@@ -87,8 +103,25 @@ export const VendorBookCard = ({
                onClickToBook()
             }}
          >
+            {showRemoveModal && (
+               <ErrorConfirmModal
+                  isOpen={showRemoveModal}
+                  onExitButton={deleteVendorBook}
+                  onCencelButton={(e) => {
+                     e.stopPropagation()
+                     setRemoveModal(false)
+                  }}
+                  onCloseBackDrop={(e) => {
+                     e.stopPropagation()
+                     setRemoveModal(false)
+                  }}
+                  title={`Вы уверены, что хотите удалить 
+                "${name}"`}
+               />
+            )}
             <img src={vendorImageUrl} alt="book" />
             <p>{name}</p>
+
             <VenderCardFooter>
                <span>{date}</span>
                <h3>{price}c</h3>
@@ -166,7 +199,7 @@ const VenderCardMain = styled.div`
       height: 297px;
    }
    p {
-      margin-top: ${({ marginTop }) => marginTop || '8px'}
+      margin-top: ${({ marginTop }) => marginTop || '8px'};
       font-family: 'Open Sans';
       font-style: normal;
       font-weight: 600;
@@ -175,6 +208,9 @@ const VenderCardMain = styled.div`
       text-transform: uppercase;
       color: #222222;
    }
+`
+const Amount = styled.div`
+   padding: 20px;
 `
 const MeatBallsContainer = styled.div`
    cursor: pointer;
