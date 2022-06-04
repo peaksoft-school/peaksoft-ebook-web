@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { IconButton, TableCell, TableRow } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -23,11 +23,6 @@ export const VendorsTableItem = ({
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
    const [showSuccess, setShowSuccess] = useState(false)
    const closeModalHandler = () => setIsOpenDeleteUserModal(false)
-
-   useEffect(() => {
-      setTimeout(() => setShowSuccess(true), 2000)
-      return () => clearTimeout(setShowSuccess())
-   }, [showSuccess])
 
    const successModalAfterDelete = () => {
       setShowSuccess(true)
