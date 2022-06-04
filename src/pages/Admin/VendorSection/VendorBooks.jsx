@@ -114,7 +114,7 @@ export const VendorBooks = ({ countOfBooks }) => {
                      key={vendorBooks.bookId}
                      vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
                      like={vendorBooks.likes}
-                     amount={vendorBooks.baskets}
+                     baskets={vendorBooks.baskets}
                      date={vendorBooks.dateOfRegister}
                      name={vendorBooks.title}
                      price={vendorBooks.price}

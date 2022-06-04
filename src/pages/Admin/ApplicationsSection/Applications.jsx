@@ -47,7 +47,7 @@ export const Applications = () => {
                   key={application.bookId}
                   id={application.bookId}
                   vendorImageUrl={application.fileInformation?.firstPhoto}
-                  date={application.yearOfIssue}
+                  date={application.dateOfRegister}
                   name={application.title}
                   price={application.price}
                   isInProccess={application.adminWatch === false}

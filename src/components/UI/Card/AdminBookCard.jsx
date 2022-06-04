@@ -108,52 +108,49 @@ export const AdminBookCard = ({
                onClickToBook()
             }}
          >
-            {showSuccess && (
-               <SuccessConfirmModalForAdmin
-                  isOpen={showSuccess}
-                  onCloseBackDrop={(e) => {
-                     e.stopPropagation()
-                     setShowSuccess(false)
-                  }}
-                  title={`"${name}" `}
-               />
-            )}
-            {showModal && (
-               <Modal
-                  isOpen={showModal}
-                  onCloseBackDrop={(e) => {
-                     e.stopPropagation()
-                     setShowModal(false)
-                  }}
+            <SuccessConfirmModalForAdmin
+               isOpen={showSuccess}
+               onCloseBackDrop={(e) => {
+                  e.stopPropagation()
+                  setShowSuccess(false)
+               }}
+               title={`"${name}" был успешно принят!`}
+            />
+
+            <Modal
+               isOpen={showModal}
+               onCloseBackDrop={(e) => {
+                  e.stopPropagation()
+                  setShowModal(false)
+               }}
+            >
+               <StyledModal
+                  onClick={(e) => e.stopPropagation()}
+                  onSubmit={(e) => refusedBook(e, id)}
+                  onChange={(e) => setMessage(e.target.value)}
                >
-                  <StyledModal
-                     onClick={(e) => e.stopPropagation()}
-                     onSubmit={(e) => refusedBook(e, id)}
-                     onChange={(e) => setMessage(e.target.value)}
-                  >
-                     <div>
-                        <p>Причина вашего отклонения</p>
-                        <Input
-                           type="text"
-                           placeholder="Напишите причину отклонения..."
-                           value={message}
-                        />
-                     </div>
-                     <div>
-                        <Button
-                           fontSize="16px"
-                           bgColor="#222222"
-                           color="white"
-                           bgColorHover="#484848"
-                           bgColorActive="#F34901"
-                           type="submit"
-                        >
-                           Отправить
-                        </Button>
-                     </div>
-                  </StyledModal>
-               </Modal>
-            )}
+                  <div>
+                     <p>Причина вашего отклонения</p>
+                     <Input
+                        type="text"
+                        placeholder="Напишите причину отклонения..."
+                        value={message}
+                     />
+                  </div>
+                  <div>
+                     <Button
+                        fontSize="16px"
+                        bgColor="#222222"
+                        color="white"
+                        bgColorHover="#484848"
+                        bgColorActive="#F34901"
+                        type="submit"
+                     >
+                        Отправить
+                     </Button>
+                  </div>
+               </StyledModal>
+            </Modal>
             <img src={vendorImageUrl} alt="book" />
             <StyledDescription>
                <BookName>{name}</BookName>

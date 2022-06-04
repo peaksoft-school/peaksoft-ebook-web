@@ -12,9 +12,7 @@ export const SuccessConfirmModalForAdmin = ({
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
          <ConfirmContainer onClick={(e) => e.stopPropagation()}>
             <SuccessIcon src={success} />
-            <SuccessTitle>
-               <b>{title}</b> был успешно принят!
-            </SuccessTitle>
+            <SuccessTitle>{title}</SuccessTitle>
          </ConfirmContainer>
       </Modal>
    )

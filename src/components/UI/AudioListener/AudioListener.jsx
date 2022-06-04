@@ -7,7 +7,6 @@ import { getTimeAsString } from '../../../utils/helpers/general'
 import Audio from './Audio'
 
 export const AudioListener = ({ audio }) => {
-   // console.log(audio)
    const [wave, setWave] = useState(null)
 
    const [audioDuration, setAudioDuration] = useState(0)

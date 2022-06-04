@@ -5,6 +5,7 @@ import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/single-profile-icon.svg'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { authActions } from '../../store/auth-slice'
+import { LOCAL_STORAGE_USER_KEY } from '../../utils/constants/general'
 
 export const AdminHeader = () => {
    const [showOptions, setShowOptions] = useState(false)
@@ -14,7 +15,7 @@ export const AdminHeader = () => {
    }
    const logoutHandler = () => {
       dispatch(authActions.logout())
-      localStorage.removeItem('eBook-user-key-json')
+      localStorage.removeItem(LOCAL_STORAGE_USER_KEY)
    }
    const options = [
       {

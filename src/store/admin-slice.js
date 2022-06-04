@@ -48,17 +48,23 @@ export const getListOfVendorBooks = createAsyncThunk(
 
 export const removeVendor = createAsyncThunk(
    'admin_panel_vendors/removeVendor',
-   async ({ id, navigateAfterSuccessDelete }, { rejectWithValue }) => {
+   async (
+      { id, navigateAfterSuccessDelete, successModalAfterDelete },
+      { rejectWithValue }
+   ) => {
       try {
          const result = await appFetch(
             {
-               path: `admin/removeUser/${id}`,
+               path: `admin/user/${id}`,
                method: 'DELETE',
             },
             { asText: true }
          )
-         navigateAfterSuccessDelete()
-         return result
+         if (result) {
+            navigateAfterSuccessDelete()
+            successModalAfterDelete()
+         }
+         return
       } catch (error) {
          return rejectWithValue(error.message)
       }
@@ -170,7 +176,7 @@ const initialState = {
 }
 
 export const adminPanelVendorSlice = createSlice({
-   name: 'admin_panel_vendors',
+   name: 'admin_panel',
    initialState,
    reducers: {},
    extraReducers: {

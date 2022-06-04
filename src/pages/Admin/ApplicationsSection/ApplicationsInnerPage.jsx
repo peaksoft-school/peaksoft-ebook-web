@@ -28,6 +28,7 @@ export const ApplicationsInnerPage = () => {
 
    useEffect(() => {
       setTimeout(() => setShowSuccess(false), 2000)
+      return () => clearTimeout(setShowSuccess())
    }, [showSuccess])
 
    const showDeleteModal = () => {
@@ -50,8 +51,8 @@ export const ApplicationsInnerPage = () => {
          refuseBook({
             id,
             message,
-            showModal: () => showDeleteModal(false),
             navigate: () => navigate('/applications'),
+            showModal: () => showDeleteModal(true),
          })
       )
    }
@@ -102,48 +103,46 @@ export const ApplicationsInnerPage = () => {
                />
             </SecondLineContainer>
          </Container>
-         {showSuccess && (
-            <SuccessConfirmModalForAdmin
-               isOpen={showSuccess}
-               onCloseBackDrop={() => setShowSuccess(false)}
-               title={`"${specificBook?.title}" `}
-            />
-         )}
-         {showModal && (
-            <Modal
-               isOpen={showModal}
-               onCloseBackDrop={(e) => {
-                  e.stopPropagation()
-                  setShowModal(false)
-               }}
+
+         <SuccessConfirmModalForAdmin
+            isOpen={showSuccess}
+            onCloseBackDrop={() => setShowSuccess(false)}
+            title={`"${specificBook?.title}" `}
+         />
+
+         <Modal
+            isOpen={showModal}
+            onCloseBackDrop={(e) => {
+               e.stopPropagation()
+               setShowModal(false)
+            }}
+         >
+            <StyledModal
+               onSubmit={(e) => refusedBook(e, id)}
+               onChange={(e) => setMessage(e.target.value)}
             >
-               <StyledModal
-                  onSubmit={(e) => refusedBook(e, id)}
-                  onChange={(e) => setMessage(e.target.value)}
-               >
-                  <div>
-                     <p>Причина вашего отклонения</p>
-                     <Input
-                        type="text"
-                        placeholder="Напишите причину отклонения..."
-                        value={message}
-                     />
-                  </div>
-                  <div>
-                     <Button
-                        fontSize="16px"
-                        bgColor="#222222"
-                        color="white"
-                        bgColorHover="#484848"
-                        bgColorActive="#F34901"
-                        type="submit"
-                     >
-                        Отправить
-                     </Button>
-                  </div>
-               </StyledModal>
-            </Modal>
-         )}
+               <div>
+                  <p>Причина вашего отклонения</p>
+                  <Input
+                     type="text"
+                     placeholder="Напишите причину отклонения..."
+                     value={message}
+                  />
+               </div>
+               <div>
+                  <Button
+                     fontSize="16px"
+                     bgColor="#222222"
+                     color="white"
+                     bgColorHover="#484848"
+                     bgColorActive="#F34901"
+                     type="submit"
+                  >
+                     Отправить
+                  </Button>
+               </div>
+            </StyledModal>
+         </Modal>
       </>
    )
 }

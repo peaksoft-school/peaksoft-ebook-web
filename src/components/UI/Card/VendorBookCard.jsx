@@ -8,7 +8,7 @@ import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
 
 export const VendorBookCard = ({
    like,
-   amount,
+   baskets,
    name,
    date,
    price,
@@ -44,7 +44,7 @@ export const VendorBookCard = ({
                      <p>({like})</p>
                   </>
 
-                  <p> В корзине ({amount})</p>
+                  <p> В корзине ({baskets})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
@@ -71,7 +71,7 @@ export const VendorBookCard = ({
                   <LikeIcon />
                   <p>({like})</p>
                </>
-               <p> В корзине ({amount})</p>
+               <p> В корзине ({baskets})</p>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />

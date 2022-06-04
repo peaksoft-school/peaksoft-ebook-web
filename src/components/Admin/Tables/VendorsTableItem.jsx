@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IconButton, TableCell, TableRow } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -7,6 +7,7 @@ import { ReactComponent as Delete } from '../../../assets/icons/delete-icon.svg'
 import { Modal } from '../../UI/Modals/Modal'
 import { Button } from '../../UI/Buttons/Button'
 import { getAllVendors, removeVendor } from '../../../store/admin-slice'
+import { SuccessConfirmModalForAdmin } from '../../UI/Modals/SuccessConfirmModalForAdmin'
 
 export const VendorsTableItem = ({
    vendorId,
@@ -20,7 +21,17 @@ export const VendorsTableItem = ({
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
+   const [showSuccess, setShowSuccess] = useState(false)
    const closeModalHandler = () => setIsOpenDeleteUserModal(false)
+
+   useEffect(() => {
+      setTimeout(() => setShowSuccess(true), 2000)
+      return () => clearTimeout(setShowSuccess())
+   }, [showSuccess])
+
+   const successModalAfterDelete = () => {
+      setShowSuccess(true)
+   }
    const navigateAfterSuccessDelete = () => {
       dispatch(getAllVendors())
       closeModalHandler()
@@ -30,6 +41,7 @@ export const VendorsTableItem = ({
          removeVendor({
             id,
             navigateAfterSuccessDelete,
+            successModalAfterDelete,
          })
       )
    }
@@ -101,6 +113,14 @@ export const VendorsTableItem = ({
                </div>
             </StyledModal>
          </Modal>
+         <SuccessConfirmModalForAdmin
+            isOpen={showSuccess}
+            onCloseBackDrop={(e) => {
+               e.stopPropagation()
+               setShowSuccess(false)
+            }}
+            title={`Вы успешно удалили ${firstName} ${lastName}`}
+         />
       </>
    )
 }
