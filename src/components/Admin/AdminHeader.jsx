@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/single-profile-icon.svg'
 import { PopUp } from '../UI/PopUp/PopUp'
+import { authActions } from '../../store/auth-slice'
+import { LOCAL_STORAGE_USER_KEY } from '../../utils/constants/general'
 
 export const AdminHeader = () => {
    const [showOptions, setShowOptions] = useState(false)
+   const dispatch = useDispatch()
    const showPopUp = () => {
       setShowOptions(!showOptions)
+   }
+   const logoutHandler = () => {
+      dispatch(authActions.logout())
+      localStorage.removeItem(LOCAL_STORAGE_USER_KEY)
    }
    const options = [
       {
          id: 1,
          title: 'Выйти',
+         action: () => logoutHandler(),
       },
    ]
    const booksList = []
@@ -54,7 +63,7 @@ const AdminTextContainer = styled.div`
    width: max-content;
    justify-content: space-between;
    align-items: center;
-   padding-right: 30px;
+   padding-left: 35px;
    svg {
       cursor: pointer;
    }

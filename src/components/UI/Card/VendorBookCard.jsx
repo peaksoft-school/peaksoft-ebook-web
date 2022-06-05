@@ -7,8 +7,8 @@ import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
 
 export const VendorBookCard = ({
-   like,
-   amount,
+   amountOfLikes,
+   baskets,
    name,
    date,
    price,
@@ -39,13 +39,11 @@ export const VendorBookCard = ({
          <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
-                  {like && (
-                     <>
-                        <LikeIcon />
-                        <p>({like})</p>
-                     </>
-                  )}
-                  {amount && <p> В корзине ({amount})</p>}
+                  <>
+                     <LikeIcon />
+                     <p>({amountOfLikes})</p>
+                  </>
+                  <p> В корзине ({baskets})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
@@ -68,13 +66,11 @@ export const VendorBookCard = ({
       <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
             <WrapperForLike>
-               {like && (
-                  <>
-                     <LikeIcon />
-                     <p>({like})</p>
-                  </>
-               )}
-               {amount && <p> В корзине ({amount})</p>}
+               <>
+                  <LikeIcon />
+                  <p>({amountOfLikes})</p>
+               </>
+               <p> В корзине ({baskets})</p>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />
@@ -166,7 +162,7 @@ const VenderCardMain = styled.div`
       height: 297px;
    }
    p {
-      margin-top: ${({ marginTop }) => marginTop || '8px'}
+      margin-top: ${({ marginTop }) => marginTop || '8px'};
       font-family: 'Open Sans';
       font-style: normal;
       font-weight: 600;

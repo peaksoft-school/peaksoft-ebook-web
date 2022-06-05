@@ -85,6 +85,11 @@ export const authSlice = createSlice({
    name: 'auth',
    initialState,
    reducers: {
+      logout(state) {
+         state.token = null
+         state.role = null
+         state.userName = null
+      },
       setErrorMessageInAuthorization(state) {
          state.isLoading = false
          state.errorMessageInAuthorization =

@@ -33,7 +33,7 @@ export const VendorBooks = ({ countOfBooks }) => {
 
    const { id } = useParams()
    useEffect(() => {
-      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
+      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 3 }))
    }, [])
 
    useEffect(() => {
@@ -111,11 +111,12 @@ export const VendorBooks = ({ countOfBooks }) => {
                      minHeight="408px"
                      padding="10px 10px 76px 35px"
                      marginTop="15px"
-                     key={vendorBooks.id}
-                     vendorImageUrl={vendorBooks.img}
-                     like={vendorBooks.like}
-                     date={vendorBooks.date}
-                     name={vendorBooks.name}
+                     key={vendorBooks.bookId}
+                     vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
+                     amountOfLikes={vendorBooks.likes}
+                     baskets={vendorBooks.baskets}
+                     date={vendorBooks.dateOfRegister}
+                     name={vendorBooks.title}
                      price={vendorBooks.price}
                   />
                ))}
@@ -167,17 +168,19 @@ export const VendorBooks = ({ countOfBooks }) => {
 }
 
 const StyledButton = styled.div`
-   padding: 20px 10px 0 930px;
+   padding-top: 20px;
+   padding-right: 30px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
 `
 
 const ContentContainer = styled.div`
    padding-top: 30px;
    display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   grid-template-rows: repeat(1, 1fr);
-   grid-column-gap: 20px;
-   grid-row-gap: 20px;
-   max-width: 100%;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   grid-gap: 2rem;
+   padding-bottom: 70px;
 `
 
 const BooksAmount = styled.span`

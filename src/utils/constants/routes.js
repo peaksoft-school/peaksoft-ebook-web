@@ -22,6 +22,10 @@ export const ADMIN_ROUTES = {
       PATH: '/applications',
       LABEL: 'Заявки',
    },
+   APPLICTAIONS_INNER_PAGE: {
+      PATH: '/applications/:id',
+      LABEL: 'Книга',
+   },
    VENDORS: {
       PATH: '/vendors',
       LABEL: 'Продавцы',

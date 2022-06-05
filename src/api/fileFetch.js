@@ -17,7 +17,7 @@ export const fileFetch = async (options) => {
 
       const result = await response.json()
       if (!response.ok) {
-         let errorMessage = 'Some thing went wrong'
+         let errorMessage = 'Something went wrong'
          if (result && result.message) {
             errorMessage = result.message
          }
