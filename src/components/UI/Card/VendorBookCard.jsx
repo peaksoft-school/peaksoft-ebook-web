@@ -7,7 +7,7 @@ import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
 
 export const VendorBookCard = ({
-   like,
+   amountOfLikes,
    baskets,
    name,
    date,
@@ -41,9 +41,8 @@ export const VendorBookCard = ({
                <WrapperForLike>
                   <>
                      <LikeIcon />
-                     <p>({like})</p>
+                     <p>({amountOfLikes})</p>
                   </>
-
                   <p> В корзине ({baskets})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
@@ -69,7 +68,7 @@ export const VendorBookCard = ({
             <WrapperForLike>
                <>
                   <LikeIcon />
-                  <p>({like})</p>
+                  <p>({amountOfLikes})</p>
                </>
                <p> В корзине ({baskets})</p>
             </WrapperForLike>

@@ -24,7 +24,6 @@ export const appFetch = async (options, responseOption) => {
          const path = `${path}?${queryParamsStringValue}`
       }
       const response = await fetch(`${SERVER_BASE_URL}/${path}`, requestOptions)
-      console.log(responseOption)
       const result = responseOption?.asText
          ? await response.text()
          : await response.json()

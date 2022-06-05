@@ -27,8 +27,11 @@ export const ApplicationsInnerPage = () => {
    }, [])
 
    useEffect(() => {
-      setTimeout(() => setShowSuccess(false), 2000)
-      return () => clearTimeout(setShowSuccess())
+      const timeout = setTimeout(() => setShowSuccess(false), 2000)
+
+      return () => {
+         clearTimeout(timeout)
+      }
    }, [showSuccess])
 
    const showDeleteModal = () => {

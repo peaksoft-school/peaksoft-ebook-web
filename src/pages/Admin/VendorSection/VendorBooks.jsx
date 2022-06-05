@@ -113,7 +113,7 @@ export const VendorBooks = ({ countOfBooks }) => {
                      marginTop="15px"
                      key={vendorBooks.bookId}
                      vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
-                     like={vendorBooks.likes}
+                     amountOfLikes={vendorBooks.likes}
                      baskets={vendorBooks.baskets}
                      date={vendorBooks.dateOfRegister}
                      name={vendorBooks.title}
