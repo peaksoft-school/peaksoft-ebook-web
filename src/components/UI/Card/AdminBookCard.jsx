@@ -31,7 +31,11 @@ export const AdminBookCard = ({
    const [message, setMessage] = useState('')
    const dispatch = useDispatch()
    useEffect(() => {
-      setTimeout(() => setShowSuccess(false), 2000)
+      const timeout = setTimeout(() => setShowSuccess(false), 2000)
+
+      return () => {
+         clearTimeout(timeout)
+      }
    }, [showSuccess])
 
    const showSuccessModal = () => {
