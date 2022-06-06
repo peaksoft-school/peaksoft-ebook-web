@@ -8,27 +8,26 @@ export const Modal = ({ isOpen, onCloseBackDrop, children, top }) => {
       isOpen && (
          <>
             <Backdrop onClose={onCloseBackDrop} />
-            <Div>
+            <ModalContainer>
                {ReactDOM.createPortal(
                   <StyledModalWindow top={top}>{children}</StyledModalWindow>,
                   document.getElementById('modal')
                )}
-            </Div>
+            </ModalContainer>
          </>
       )
    )
 }
-const Div = styled.div`
+const ModalContainer = styled.div`
    display: flex;
    align-items: center;
 `
 const StyledModalWindow = styled.div`
    position: fixed;
    background: #ffffff;
-   position: fixed;
-   text-align: center;
    top: ${({ top }) => top || '50%'};
    left: 50%;
    transform: translate(-50%, -50%);
    z-index: 999;
+   text-align: center;
 `

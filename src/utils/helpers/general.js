@@ -55,6 +55,7 @@ export const discountOptions = (setDiscount) => {
 }
 export const timeFieldOptions = (setValue) => {
    return {
+      required: true,
       onChange: ({ target: { value, name } }) => {
          const currentName = name.split('.').at(-1)
          if (value < 60 && value.length <= 2 && value >= 0) {

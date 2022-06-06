@@ -78,10 +78,12 @@ export const AudioBookForm = ({
                      type="number"
                      value={durationOfAudioBook.hour}
                      isDefaultValueMustBeEmpty
-                     {...register(
-                        'audioBook.hour',
-                        timeFieldOptions(onChangeDuration)
-                     )}
+                     {...register('audioBook.hour', {
+                        ...timeFieldOptions(onChangeDuration),
+                        validate: {
+                           positive: (v) => Number(v) > 0,
+                        },
+                     })}
                   />
                   <FieldWithText
                      innerText="мин"
