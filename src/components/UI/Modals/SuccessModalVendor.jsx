@@ -4,8 +4,13 @@ import { ReactComponent as SuccessIcon } from '../../../assets/icons/success.svg
 import { AnimatedModal } from './AnimatedModal'
 import { useMountModal } from '../../../hooks/useMountModal'
 
-export const SuccessModalVendor = ({ onCloseModal, isOpen, title, delay }) => {
-   const isVisible = useMountModal(isOpen, onCloseModal, delay)
+export const SuccessModalVendor = ({
+   title,
+   isMounted,
+   onCloseModal,
+   delay,
+}) => {
+   const isVisible = useMountModal(isMounted, onCloseModal, delay)
    return (
       <AnimatedModal onCloseModal={onCloseModal} isMounted={isVisible}>
          <ModalInnerContainer>

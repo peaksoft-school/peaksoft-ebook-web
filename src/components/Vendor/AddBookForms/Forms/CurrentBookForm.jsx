@@ -255,7 +255,7 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
             <RightSideContainer>{renderCurrentForm()}</RightSideContainer>
          </CurrentBookFormContainer>
          <SuccessModalVendor
-            isOpen={isShowSuccessModal}
+            isMounted={isShowSuccessModal}
             title="Ваш запрос был успешно отправлен!"
             onCloseModal={closeSuccessModalHandler}
             delay={2000}
