@@ -19,28 +19,18 @@ import {
    ErrorMessage,
    ErrorMessageForExactField,
 } from '../../../assets/styles/styles'
+import { localstorage } from '../../../utils/helpers/general'
+import { LOCAL_STORAGE_USER_KEY } from '../../../utils/constants/general'
 
 export const VendorProfile = () => {
-   const dispatch = useDispatch()
-   const navigate = useNavigate()
-   const [showRemoveModal, setRemoveModal] = useState(false)
-   const { vendorProfileEdit, errorMessagePassword } = useSelector(
+   const { vendorSettings, errorMessagePassword } = useSelector(
       (state) => state.vendor
    )
-   const navigateAfterSuccessDelete = () => {
-      navigate('/')
-   }
+   const dispatch = useDispatch()
+
    const { id } = useParams()
-   const onSubmitHandler = (editVendordata) =>
-      dispatch(editVendorProfile(editVendordata))
 
-   useEffect(() => {
-      dispatch(getVendorProfile())
-   }, [])
-   const showDeleteModal = () => {
-      setRemoveModal(true)
-   }
-
+   const navigate = useNavigate()
    const {
       register,
       handleSubmit,
@@ -55,26 +45,41 @@ export const VendorProfile = () => {
          email: '',
       },
    })
-   useEffect(() => {
-      if (vendorProfileEdit) {
-         setValue('firstName', vendorProfileEdit.firstName)
-         setValue('lastName', vendorProfileEdit.lastName)
-         setValue('email', vendorProfileEdit.email)
-         setValue('number', vendorProfileEdit.number)
-         setValue('oldPassword', vendorProfileEdit.oldPassword)
-      }
-   }, [vendorProfileEdit])
 
+   const [showRemoveModal, setRemoveModal] = useState(false)
+
+   useEffect(() => {
+      dispatch(getVendorProfile())
+   }, [])
+
+   useEffect(() => {
+      if (vendorSettings) {
+         setValue('firstName', vendorSettings.firstName)
+         setValue('lastName', vendorSettings.lastName)
+         setValue('email', vendorSettings.email)
+         setValue('number', vendorSettings.number)
+         setValue('oldPassword', vendorSettings.oldPassword)
+      }
+   }, [vendorSettings])
+
+   const onSubmitHandler = (vendorData) =>
+      dispatch(editVendorProfile(vendorData))
+
+   const showDeleteModal = () => {
+      setRemoveModal(true)
+   }
+   const navigateAfterSuccessDelete = () => {
+      localstorage.remove(LOCAL_STORAGE_USER_KEY)
+      dispatch(vendorActions.logout())
+      navigate('/')
+   }
+   const deleteVendorProfile = () => {
+      dispatch(removeVendorProfile({ id, navigateAfterSuccessDelete }))
+   }
    const errorForPasswordField =
       errorMessagePassword === 'Введенные пароли не совпадают'
    const errorForNewPasswordField =
       errorMessagePassword === 'Ваш новый пароль не совпадают'
-
-   const deleteVendorProfile = () => {
-      dispatch(removeVendorProfile({ id, navigateAfterSuccessDelete }))
-      dispatch(vendorActions.logout())
-      localStorage.removeItem('eBook-user-key-json')
-   }
 
    return (
       <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>

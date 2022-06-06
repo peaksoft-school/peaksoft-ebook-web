@@ -192,11 +192,9 @@ export const uploadImagesOfBook = createAsyncThunk(
 
 const initialState = {
    cardOfVendorBooks: [],
-   basketVendorBooks: [],
    countOfVendorBooks: [],
    allVendorBooks: [],
-   vendorProfileEdit: [],
-   editProfile: null,
+   vendorSettings: null,
    genres: {
       genresList: [],
    },
@@ -230,16 +228,13 @@ export const vendorSlice = createSlice({
          state.cardOfVendorBooks = payload
       },
       [getAllVendorsBooks.fulfilled]: (state, { payload }) => {
-         console.log(payload)
          state.allVendorBooks = payload
       },
 
       [getVendorProfile.fulfilled]: (state, { payload }) => {
-         state.vendorProfileEdit = payload
+         state.vendorSettings = payload
       },
-      [editVendorProfile.fulfilled]: (state, { payload }) => {
-         state.editProfile = payload
-      },
+
       [getCountOfVendorsBooks.fulfilled]: (state, { payload }) => {
          state.countOfVendorBooks = payload
       },
