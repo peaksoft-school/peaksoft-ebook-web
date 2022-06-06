@@ -11,6 +11,7 @@ import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { VENDOR_ROUTES } from '../../utils/constants/routes'
+import { logout } from '../../store/auth-slice'
 
 export const VendorHeader = () => {
    const navigate = useNavigate()
@@ -22,9 +23,12 @@ export const VendorHeader = () => {
    const options = [
       {
          title: 'Профиль',
+         id: 'e1',
       },
       {
          title: 'Выйти',
+         id: 'e2',
+         action: () => logout(navigate),
       },
    ]
    const booksList = []
@@ -109,6 +113,12 @@ const ContainerOfIcons = styled.div`
    align-items: center;
    justify-content: space-around;
    position: relative;
+   svg {
+      cursor: pointer;
+      &:hover {
+         opacity: 0.9;
+      }
+   }
 `
 const VendorHeaderContainer = styled.header`
    display: flex;

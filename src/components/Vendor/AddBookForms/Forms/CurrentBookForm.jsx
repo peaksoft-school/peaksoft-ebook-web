@@ -10,10 +10,10 @@ import { AboutBookFields } from '../Fields/AboutBookFields'
 import { AudioBookForm } from './AudioBookForm'
 import { ElectronicBookForm } from './ElectronicBookForm'
 import { PaperBookForm } from './PaperBookForm'
-import { addBook } from '../../../../store/vendor-slice'
+import { addBook, vendorActions } from '../../../../store/vendor-slice'
 import { useUploadFile } from '../../../../hooks/useUploadFile'
-import { SuccessConfirmModal } from '../../../UI/Modals/SuccessConfirmModal'
 import { LargeLoadingSpinner } from '../../../UI/LoadingSpinner/LargeLoadingSpinner'
+import { SuccessModalVendor } from '../../../UI/Modals/SuccessModalVendor'
 
 export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
    const { isLoading, isShowSuccessModal } = useSelector(
@@ -96,13 +96,13 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
       resetAudioTape()
       reseteBook()
       setDiscount(0)
-      resetImages()
       setSelectedGenre('')
       resetLanguage()
    }, [type])
 
    const actionsAfterUploadBook = {
       resetForm: onResetForm,
+      resetImages,
       showErrorNotification,
    }
    const uploadAudioBook = (data) => {
@@ -236,7 +236,9 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
          }
       }
    }
-
+   const closeSuccessModalHandler = () => {
+      dispatch(vendorActions.setIsShowSuccessModal(false))
+   }
    return (
       <>
          <CurrentBookFormContainer
@@ -252,9 +254,11 @@ export const CurrentBookForm = ({ type, imagesOfBook, resetImages }) => {
             </LeftSideContainer>
             <RightSideContainer>{renderCurrentForm()}</RightSideContainer>
          </CurrentBookFormContainer>
-         <SuccessConfirmModal
+         <SuccessModalVendor
             isOpen={isShowSuccessModal}
             title="Ваш запрос был успешно отправлен!"
+            onCloseModal={closeSuccessModalHandler}
+            delay={2000}
          />
          {isLoading && <LargeLoadingSpinner />}
       </>

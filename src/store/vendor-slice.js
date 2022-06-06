@@ -18,7 +18,10 @@ export const getAllGenres = createAsyncThunk(
 
 export const addBook = createAsyncThunk(
    'vendor/addBook',
-   async ({ data, showErrorNotification, ...restData }, { dispatch }) => {
+   async (
+      { data, files, showErrorNotification, resetForm, resetImages },
+      { dispatch }
+   ) => {
       dispatch(vendorActions.setIsLoading(true))
       try {
          const result = await appFetch({
@@ -28,23 +31,31 @@ export const addBook = createAsyncThunk(
          })
          if (result) {
             const { id } = result
-            dispatch(
+            return dispatch(
                uploadImagesOfBook({
                   id,
                   showErrorNotification,
-                  ...restData,
+                  files,
+                  resetForm,
+                  resetImages,
                })
             )
          }
+         return result
       } catch (error) {
-         showErrorNotification('Не удалось загрузить книгу, попробуйте ещё раз')
+         return showErrorNotification(
+            'Не удалось загрузить книгу, попробуйте ещё раз'
+         )
       }
    }
 )
 
 export const uploadImagesOfBook = createAsyncThunk(
    'vendor/uploadImagesOfBook',
-   async ({ files, id, resetForm, showErrorNotification }) => {
+   async (
+      { files, id, resetForm, showErrorNotification, resetImages },
+      { dispatch }
+   ) => {
       try {
          const formData = new FormData()
          Object.keys(files).forEach((fileKey) => {
@@ -55,12 +66,17 @@ export const uploadImagesOfBook = createAsyncThunk(
             method: 'POST',
             body: formData,
          })
+         if (result && result['file information Id ']) {
+            resetForm()
+            resetImages()
+            dispatch(vendorActions.setIsShowSuccessModal(true))
+            return result
+         }
          if (!result) {
-            return showErrorNotification(
-               'Не удалось загрузить книгу, попробуйте ещё раз'
+            showErrorNotification(
+               'Не удалось загрузить книгу, попробуйте ещё раз test'
             )
          }
-         resetForm()
          return result
       } catch (error) {
          return showErrorNotification(
@@ -85,6 +101,9 @@ export const vendorSlice = createSlice({
       setIsLoading: (state, { payload }) => {
          state.isLoading = payload
       },
+      setIsShowSuccessModal: (state, { payload }) => {
+         state.isShowSuccessModal = payload
+      },
    },
    extraReducers: {
       [getAllGenres.fulfilled]: (state, { payload }) => {
@@ -92,7 +111,6 @@ export const vendorSlice = createSlice({
       },
       [uploadImagesOfBook.fulfilled]: (state) => {
          state.isLoading = false
-         state.isShowSuccessModal = true
       },
       [uploadImagesOfBook.rejected]: (state) => {
          state.isLoading = false
