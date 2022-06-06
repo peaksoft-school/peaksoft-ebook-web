@@ -15,7 +15,7 @@ import {
 } from '../../../store/admin-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {
-   const books = useSelector((state) => state.adminVendors.listOfVendorBooks)
+   const books = useSelector((state) => state.admin.listOfVendorBooks)
    const [showOptions, setShowOptions] = useState(false)
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
    const dispatch = useDispatch()

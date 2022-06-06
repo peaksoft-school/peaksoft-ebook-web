@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { appFetch } from '../api/appFetch'
 
 export const getAllVendors = createAsyncThunk(
-   'admin_panel_vendors/getAllVendors',
+   'admin/getAllVendors',
    async (_, { fulfillWithValue }) => {
       try {
          const result = await appFetch({
@@ -18,7 +18,7 @@ export const getAllVendors = createAsyncThunk(
 )
 
 export const getSingleVendor = createAsyncThunk(
-   'admin_panel_vendors/getSingleVendor',
+   'admin/getSingleVendor',
    async (id, { rejectWithValue }) => {
       try {
          const result = await appFetch({
@@ -32,7 +32,7 @@ export const getSingleVendor = createAsyncThunk(
    }
 )
 export const getListOfVendorBooks = createAsyncThunk(
-   'admin_panel_vendors/getListOfVendorBooks',
+   'admin/getListOfVendorBooks',
    async ({ data, id, offset }, { rejectWithValue }) => {
       try {
          const result = await appFetch({
@@ -47,7 +47,7 @@ export const getListOfVendorBooks = createAsyncThunk(
 )
 
 export const removeVendor = createAsyncThunk(
-   'admin_panel_vendors/removeVendor',
+   'admin/removeVendor',
    async (
       { id, navigateAfterSuccessDelete, successModalAfterDelete },
       { rejectWithValue }
@@ -71,7 +71,7 @@ export const removeVendor = createAsyncThunk(
    }
 )
 export const getListOfApplications = createAsyncThunk(
-   'admin_panel_applications/getListOfApplications',
+   'admin/getListOfApplications',
    async ({ offset }, { rejectWithValue }) => {
       try {
          const response = await appFetch({
@@ -88,8 +88,8 @@ export const getListOfApplications = createAsyncThunk(
       }
    }
 )
-export const getBook = createAsyncThunk(
-   'admin_panel_applications/getBook',
+export const getBookById = createAsyncThunk(
+   'admin/getBookById',
    async (id, { rejectWithValue }) => {
       try {
          const result = await appFetch({
@@ -104,7 +104,7 @@ export const getBook = createAsyncThunk(
 )
 
 export const getCountOfBooksInProgress = createAsyncThunk(
-   'admin_panel_applications/getCountOfBooksInProgress',
+   'admin/getCountOfBooksInProgress',
    async (_, { fulfillWithValue }) => {
       try {
          const result = await appFetch({
@@ -118,7 +118,7 @@ export const getCountOfBooksInProgress = createAsyncThunk(
    }
 )
 export const acceptBook = createAsyncThunk(
-   'admin_panel_applications/acceptBook',
+   'admin/acceptBook',
    async ({ id, showModal, navigate }, { dispatch }) => {
       try {
          const result = await appFetch(
@@ -142,7 +142,7 @@ export const acceptBook = createAsyncThunk(
    }
 )
 export const refuseBook = createAsyncThunk(
-   'admin_panel_applications/refuseBook',
+   'admin/refuseBook',
    async ({ id, message, showModal, navigate }, { dispatch }) => {
       try {
          const result = await appFetch(
@@ -175,8 +175,8 @@ const initialState = {
    book: null,
 }
 
-export const adminPanelVendorSlice = createSlice({
-   name: 'admin_panel',
+export const adminSlice = createSlice({
+   name: 'admin',
    initialState,
    reducers: {},
    extraReducers: {
@@ -192,7 +192,7 @@ export const adminPanelVendorSlice = createSlice({
       [getListOfVendorBooks.fulfilled]: (state, { payload }) => {
          state.listOfVendorBooks = payload
       },
-      [getBook.fulfilled]: (state, { payload }) => {
+      [getBookById.fulfilled]: (state, { payload }) => {
          state.book = payload
       },
       [getCountOfBooksInProgress.fulfilled]: (state, { payload }) => {
@@ -208,4 +208,4 @@ export const adminPanelVendorSlice = createSlice({
    },
 })
 
-export const adminPanelVendorActions = adminPanelVendorSlice.actions
+export const adminActions = adminSlice.actions

@@ -18,11 +18,9 @@ export const Applications = () => {
    const navigateToBook = (bookId) => {
       navigate(`${bookId}`)
    }
-   const applications = useSelector(
-      (state) => state.adminVendors.listOfApplications
-   )
+   const applications = useSelector((state) => state.admin.listOfApplications)
    const countOfApplications = useSelector(
-      (state) => state.adminVendors.countOfBooksInProgress
+      (state) => state.admin.countOfBooksInProgress
    )
 
    useEffect(() => {

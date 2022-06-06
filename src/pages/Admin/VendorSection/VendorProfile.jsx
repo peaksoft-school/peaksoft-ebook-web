@@ -8,7 +8,7 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 import { getSingleVendor, removeVendor } from '../../../store/admin-slice'
 
 export const VendorProfile = () => {
-   const seller = useSelector((state) => state.adminVendors.singleVendor)
+   const seller = useSelector((state) => state.admin.singleVendor)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { id } = useParams()
