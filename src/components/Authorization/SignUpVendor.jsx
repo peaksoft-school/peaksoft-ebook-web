@@ -136,6 +136,7 @@ export const SignUpVendor = ({ onSubmit }) => {
                      <FieldName>Номер вашего телефона</FieldName>
                      <InputMask
                         mask={INPUT_MASK_NUMBER}
+                        maskChar={false}
                         {...register('number', { required: true })}
                      >
                         {(inputProps) => (
