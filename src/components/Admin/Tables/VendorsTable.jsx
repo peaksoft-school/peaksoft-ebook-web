@@ -52,7 +52,6 @@ const StyledTableCell = styled(TableCell)`
 const StyledTableContainer = styled(TableContainer)`
    padding-top: 97px;
    box-shadow: none;
-   width: 1130px;
    .MuiTableRow-root td {
       word-break: break-word;
       max-width: 200px;

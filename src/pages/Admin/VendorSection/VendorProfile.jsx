@@ -95,7 +95,11 @@ export const VendorProfile = () => {
    )
 }
 const StyledButton = styled.div`
-   padding: 20px 10px 0 930px;
+   padding-top: 20px;
+   padding-right: 30px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
 `
 const ProfileContainer = styled.div`
    display: flex;
@@ -116,7 +120,7 @@ const ContainerOfFirstLine = styled.div`
    width: 100%;
    padding-bottom: 30px;
    div {
-      width: 250px;
+      width: 260px;
    }
 `
 
@@ -124,7 +128,7 @@ const ContainerOfSecondLine = styled.div`
    display: flex;
    width: 100%;
    div {
-      width: 250px;
+      width: 260px;
    }
 `
 

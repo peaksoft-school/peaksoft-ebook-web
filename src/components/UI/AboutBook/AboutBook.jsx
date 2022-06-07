@@ -95,7 +95,6 @@ const AboutBookContainer = styled.div`
    font-family: 'Open Sans';
    line-height: 130%;
    color: #222222;
-   max-width: 468px;
 `
 const TitleOfBook = styled.h1`
    font-weight: 600;
@@ -147,7 +146,7 @@ const InformationTextContainer = styled.div`
 `
 const AudioListenerContainer = styled.div`
    position: absolute;
-   right: -47%;
+   right: -35%;
    top: 52%;
    transform: translate(-50%, -50%);
 `

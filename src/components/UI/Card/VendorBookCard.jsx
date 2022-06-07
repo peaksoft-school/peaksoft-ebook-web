@@ -11,8 +11,8 @@ import { ErrorConfirmModal } from '../../UI/Modals/ErrorConfirmModal'
 import { removeVendorBook } from '../../../store/vendor-slice'
 
 export const VendorBookCard = ({
-   like,
-   amount,
+   amountOfLikes,
+   baskets,
    name,
    date,
    price,
@@ -56,13 +56,11 @@ export const VendorBookCard = ({
          <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
-                  {like && (
-                     <>
-                        <LikeIcon />
-                        <p>({like})</p>
-                     </>
-                  )}
-                  {amount && <p> В корзине ({amount})</p>}
+                  <>
+                     <LikeIcon />
+                     <p>({amountOfLikes})</p>
+                  </>
+                  <p> В корзине ({baskets})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
@@ -87,10 +85,9 @@ export const VendorBookCard = ({
             <WrapperForLike>
                <>
                   <LikeIcon />
-                  <p>({like})</p>
+                  <p>({amountOfLikes})</p>
                </>
-
-               <Amount> В корзине ({amount})</Amount>
+               <p> В корзине ({baskets})</p>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />
@@ -209,9 +206,7 @@ const VenderCardMain = styled.div`
       color: #222222;
    }
 `
-const Amount = styled.div`
-   padding: 20px;
-`
+
 const MeatBallsContainer = styled.div`
    cursor: pointer;
 `

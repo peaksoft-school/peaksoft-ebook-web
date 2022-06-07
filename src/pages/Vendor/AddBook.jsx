@@ -147,10 +147,10 @@ export const AddBook = () => {
 }
 
 const AddBookContainer = styled.div`
-   padding: 43px 80px 78px 80px;
    margin: 0 auto;
    width: inherit;
    font-family: 'Open Sans';
+   margin-bottom: 28px;
 `
 const NameOfPageContainer = styled.div`
    font-weight: 400;

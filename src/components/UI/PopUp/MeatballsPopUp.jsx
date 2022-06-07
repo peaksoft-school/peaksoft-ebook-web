@@ -1,16 +1,23 @@
 import styled from '@emotion/styled/macro'
+import { PopUpBackdrop } from './PopUpBackdrop'
 
-export const MeatballsPopUp = ({ options, ...props }) => {
+export const MeatballsPopUp = ({ options, onCloseBackDrop, id, ...props }) => {
    return (
-      <MenuContainer {...props}>
-         {options &&
-            options.map((option) => (
-               <MenuItem key={option.title} onClick={option.action}>
-                  {option.icon}
-                  <span>{option.title}</span>
-               </MenuItem>
-            ))}
-      </MenuContainer>
+      <>
+         <PopUpBackdrop onClose={onCloseBackDrop} />
+         <MenuContainer {...props}>
+            {options &&
+               options.map((option) => (
+                  <MenuItem
+                     key={option.title}
+                     onClick={() => option.action(id)}
+                  >
+                     {option.icon}
+                     <span>{option.title}</span>
+                  </MenuItem>
+               ))}
+         </MenuContainer>
+      </>
    )
 }
 
@@ -50,4 +57,5 @@ const MenuContainer = styled.div`
    justify-content: space-between;
    flex-direction: column;
    background-color: white;
+   z-index: 99;
 `

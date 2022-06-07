@@ -32,7 +32,7 @@ export const SearchInput = ({
 }
 
 const SearchInputWrapper = styled.div`
-   width: 895px;
+   width: 100%;
 `
 
 const Input = styled.input`

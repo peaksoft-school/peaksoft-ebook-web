@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { useDispatch } from 'react-redux'
 import { theme } from '../../utils/constants/theme'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as BellIcon } from '../../assets/icons/bell-icon.svg'
@@ -12,7 +11,7 @@ import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { Promocode } from '../UI/Promocode/Promocode'
-import { authActions } from '../../store/auth-slice'
+import { logout } from '../../store/auth-slice'
 import { VENDOR_ROUTES } from '../../utils/constants/routes'
 
 export const VendorHeader = () => {
@@ -20,7 +19,6 @@ export const VendorHeader = () => {
    const [isShowOptions, setIsShowOptions] = useState(false)
    const [isShown, setIsShown] = useState(false)
    const [isOpenPromoCode, setIsOpenPromoCode] = useState(false)
-   const dispatch = useDispatch()
 
    const showPopUp = () => {
       setIsShowOptions((isShowOptions) => !isShowOptions)
@@ -30,10 +28,6 @@ export const VendorHeader = () => {
       setIsOpenPromoCode((isOpenPromoCode) => !isOpenPromoCode)
    }
 
-   const logoutHandler = () => {
-      dispatch(authActions.logout())
-      localStorage.removeItem('eBook-user-key-json')
-   }
    const navigateToProfile = () => {
       navigate(`/profile`)
    }
@@ -47,7 +41,7 @@ export const VendorHeader = () => {
       {
          id: 2,
          title: 'Выйти',
-         action: () => logoutHandler(),
+         action: () => logout(navigate),
       },
    ]
    const booksList = []
@@ -187,6 +181,12 @@ const ContainerOfIcons = styled.div`
    align-items: center;
    justify-content: space-around;
    position: relative;
+   svg {
+      cursor: pointer;
+      &:hover {
+         opacity: 0.9;
+      }
+   }
 `
 const VendorHeaderContainer = styled.header`
    display: flex;
