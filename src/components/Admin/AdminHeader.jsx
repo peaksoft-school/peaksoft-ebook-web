@@ -1,27 +1,23 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/single-profile-icon.svg'
 import { PopUp } from '../UI/PopUp/PopUp'
-import { authActions } from '../../store/auth-slice'
-import { LOCAL_STORAGE_USER_KEY } from '../../utils/constants/general'
+import { logout } from '../../store/auth-slice'
 
 export const AdminHeader = () => {
    const [showOptions, setShowOptions] = useState(false)
-   const dispatch = useDispatch()
+   const navigate = useNavigate()
    const showPopUp = () => {
       setShowOptions(!showOptions)
    }
-   const logoutHandler = () => {
-      dispatch(authActions.logout())
-      localStorage.removeItem(LOCAL_STORAGE_USER_KEY)
-   }
+
    const options = [
       {
          id: 1,
          title: 'Выйти',
-         action: () => logoutHandler(),
+         action: () => logout(navigate),
       },
    ]
    const booksList = []

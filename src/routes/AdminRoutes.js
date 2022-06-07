@@ -8,6 +8,7 @@ import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
 import { Vendors } from '../pages/Admin/VendorSection/Vendors'
 import { Applications } from '../pages/Admin/ApplicationsSection/Applications'
 import { ApplicationsInnerPage } from '../pages/Admin/ApplicationsSection/ApplicationsInnerPage'
+import { Books } from '../pages/Admin/BooksSection/Books'
 
 export const AdminRoutes = () => {
    return (
@@ -47,7 +48,7 @@ export const AdminRoutes = () => {
                path={ADMIN_ROUTES.USERS.PATH}
                element={<div>Пользователи</div>}
             />
-            <Route path={ADMIN_ROUTES.BOOKS.PATH} element={<div>Книги</div>} />
+            <Route path={ADMIN_ROUTES.BOOKS.PATH} element={<Books />} />
             <Route
                path={DEFAULT_ROUTES.NOT_FOUND.PATH}
                element={<div>Страница не найдена</div>}

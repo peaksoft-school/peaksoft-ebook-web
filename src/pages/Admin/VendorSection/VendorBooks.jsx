@@ -33,7 +33,7 @@ export const VendorBooks = ({ countOfBooks }) => {
 
    const { id } = useParams()
    useEffect(() => {
-      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 3 }))
+      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
    }, [])
 
    useEffect(() => {

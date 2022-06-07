@@ -166,6 +166,85 @@ export const refuseBook = createAsyncThunk(
    }
 )
 
+export const getAcceptedBooks = createAsyncThunk(
+   'admin_panel_books/getAcceptedBooks',
+   async ({ offset }, { rejectWithValue }) => {
+      try {
+         const response = await appFetch({
+            path: `admin/books-accepted/${offset}`,
+            method: 'GET',
+         })
+         const result = {
+            response,
+            offset,
+         }
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getBooksByType = createAsyncThunk(
+   'admin_panel_books/getBookByType',
+   async ({ data }, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/booksByType/${data}`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getGenres = createAsyncThunk(
+   'admin_panel_books/getGenre',
+   async (_, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/genre_count`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getBooksByGenre = createAsyncThunk(
+   'admin_panel_books/getBooksByGenre',
+   async (genre, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/booksByGenre/${genre}`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getBooksByBoth = createAsyncThunk(
+   'admin_panel_books/getBooksByBoth',
+   async ({ genreId, type }, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/booksByBoth/${genreId}/${type}`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
 const initialState = {
    listOfVendors: [],
    singleVendor: null,
@@ -173,6 +252,8 @@ const initialState = {
    listOfApplications: [],
    countOfBooksInProgress: [],
    book: null,
+   acceptedBooks: [],
+   listOfGenres: [],
 }
 
 export const adminPanelVendorSlice = createSlice({
@@ -204,6 +285,25 @@ export const adminPanelVendorSlice = createSlice({
          } else {
             state.listOfApplications.push(...payload.response)
          }
+      },
+      [getAcceptedBooks.fulfilled]: (state, { payload }) => {
+         if (payload.offset === 1) {
+            state.acceptedBooks = payload.response
+         } else {
+            state.acceptedBooks.push(...payload.response)
+         }
+      },
+      [getBooksByType.fulfilled]: (state, { payload }) => {
+         state.acceptedBooks = payload
+      },
+      [getGenres.fulfilled]: (state, { payload }) => {
+         state.listOfGenres = payload
+      },
+      [getBooksByGenre.fulfilled]: (state, { payload }) => {
+         state.acceptedBooks = payload
+      },
+      [getBooksByBoth.fulfilled]: (state, { payload }) => {
+         state.acceptedBooks = payload
       },
    },
 })

@@ -7,8 +7,9 @@ export const GenreMenu = ({ genres, onGenreItem }) => {
       <GenreMenuContainer>
          {genres.map((genre) => (
             <GenreItem
-               key={genre.genre}
-               genre={genre.genre}
+               key={genre.genreId}
+               genre={genre.genreName}
+               id={genre.genreId}
                count={genre.count}
                onGenreItem={onGenreItem}
             />
@@ -30,6 +31,7 @@ const GenreMenuContainer = styled.div`
    top: 50px;
    left: 0;
    animation: GENRES 0.3s;
+   z-index: 2;
    @keyframes GENRES {
       from {
          top: -150px;
