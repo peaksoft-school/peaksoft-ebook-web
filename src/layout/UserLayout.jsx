@@ -1,22 +1,30 @@
 import styled from '@emotion/styled/macro'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { UserFooter } from '../components/User/UserFooter'
 import { UserHeader } from '../components/User/UserHeader'
 
 export const UserLayout = () => {
    return (
-      <>
+      <Layout>
          <UserHeader countOfItems={0} />
-         <ContentContainer>
+         <Content>
             <Outlet />
-         </ContentContainer>
-      </>
+         </Content>
+         <UserFooter />
+      </Layout>
    )
 }
+const Layout = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   width: 100%;
+`
 
-const ContentContainer = styled.div`
+const Content = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
-   padding: 170px 0 0 95px;
+   min-height: 100vh;
 `

@@ -56,7 +56,11 @@ export const SignIn = ({ onSubmit }) => {
       onSubmit({ data, closeSignInModal })
    }
    return (
-      <Modal isOpen={isOpenSignInModal} onCloseBackDrop={closeSignInModal}>
+      <Modal
+         isOpen={isOpenSignInModal}
+         onCloseBackDrop={closeSignInModal}
+         withAnimation
+      >
          <AuthorizationContainer>
             <AuthLinksContainer>
                <AuthLink isActive={isOpenSignInModal}>Войти</AuthLink>

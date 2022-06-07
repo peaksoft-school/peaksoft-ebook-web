@@ -5,14 +5,16 @@ import { GenreItem } from './GenreItem'
 export const GenreMenu = ({ genres, onGenreItem }) => {
    return (
       <GenreMenuContainer>
-         {genres.map((genre) => (
-            <GenreItem
-               key={genre.genre}
-               genre={genre.genre}
-               count={genre.count}
-               onGenreItem={onGenreItem}
-            />
-         ))}
+         {genres.length > 0 &&
+            genres.map((genre) => (
+               <GenreItem
+                  key={genre.genreId}
+                  genre={genre.genreName}
+                  count={genre.count}
+                  onGenreItem={onGenreItem}
+               />
+            ))}
+         {genres.length === 0 && <p>Not Found</p>}
       </GenreMenuContainer>
    )
 }
@@ -25,17 +27,19 @@ const GenreMenuContainer = styled.div`
    grid-column-gap: 108px;
    padding: 31px 30px;
    min-width: 1280px;
-   min-height: 445px;
+   height: 445px;
    position: absolute;
-   top: 50px;
-   left: 0;
+   top: 100%;
+   left: 50%;
+   transform: translate(-50%, -0%);
+   z-index: 97;
    animation: GENRES 0.3s;
    @keyframes GENRES {
       from {
-         top: -150px;
+         top: 0%;
       }
       to {
-         top: 50px;
+         top: 100%;
       }
    }
 `

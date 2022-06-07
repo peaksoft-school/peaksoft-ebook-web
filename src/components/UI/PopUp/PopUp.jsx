@@ -39,6 +39,7 @@ const MenuItem = styled.div`
    font-size: 14px;
    font-weight: 400;
    width: 100%;
+   text-align: start;
    &:last-child {
       border-bottom: none;
    }
@@ -48,7 +49,7 @@ const MenuContainer = styled.div`
    top: ${({ top }) => top || '50px'};
    right: ${({ right }) => right || '-5px'};
    width: ${({ width }) => width || '140px'};
-   box-shadow: 0 5px 10px 3px rgba(226, 219, 219, 0.5);
+   box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.1);
    padding: 5px 20px;
    min-width: 140px;
    display: flex;
