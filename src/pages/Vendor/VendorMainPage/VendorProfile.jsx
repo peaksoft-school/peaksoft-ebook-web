@@ -1,36 +1,54 @@
 import styled from '@emotion/styled'
 import { Breadcrumbs, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import InputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { TextButton } from '../../../components/UI/Buttons/TextButton'
 import { Input } from '../../../components/UI/Inputs/Input'
 import { theme } from '../../../utils/constants/theme'
 import { ErrorConfirmModal } from '../../../components/UI/Modals/ErrorConfirmModal'
+import { logout } from '../../../store/auth-slice'
+import { INPUT_MASK_NUMBER } from '../../../utils/constants/general'
 import {
    editVendorProfile,
    getVendorProfile,
    removeVendorProfile,
-   vendorActions,
 } from '../../../store/vendor-slice'
 import {
    ErrorMessage,
    ErrorMessageForExactField,
 } from '../../../assets/styles/styles'
-import { localstorage } from '../../../utils/helpers/general'
-import { LOCAL_STORAGE_USER_KEY } from '../../../utils/constants/general'
+import { InputForPassword } from '../../../components/UI/Inputs/InputForPassword'
 
 export const VendorProfile = () => {
    const { vendorSettings, errorMessagePassword } = useSelector(
       (state) => state.vendor
    )
+   const [showRemoveModal, setRemoveModal] = useState(false)
+
    const dispatch = useDispatch()
 
-   const { id } = useParams()
-
    const navigate = useNavigate()
+
+   useEffect(() => {
+      dispatch(getVendorProfile())
+   }, [])
+   const onSubmitHandler = (vendorData) =>
+      dispatch(editVendorProfile(vendorData))
+
+   const showDeleteModal = () => {
+      setRemoveModal(true)
+   }
+   const navigateAfterSuccessDelete = () => {
+      logout(navigate)
+   }
+   const deleteVendorProfile = () => {
+      dispatch(removeVendorProfile({ navigateAfterSuccessDelete }))
+   }
+
    const {
       register,
       handleSubmit,
@@ -46,12 +64,6 @@ export const VendorProfile = () => {
       },
    })
 
-   const [showRemoveModal, setRemoveModal] = useState(false)
-
-   useEffect(() => {
-      dispatch(getVendorProfile())
-   }, [])
-
    useEffect(() => {
       if (vendorSettings) {
          setValue('firstName', vendorSettings.firstName)
@@ -62,22 +74,8 @@ export const VendorProfile = () => {
       }
    }, [vendorSettings])
 
-   const onSubmitHandler = (vendorData) =>
-      dispatch(editVendorProfile(vendorData))
-
-   const showDeleteModal = () => {
-      setRemoveModal(true)
-   }
-   const navigateAfterSuccessDelete = () => {
-      localstorage.remove(LOCAL_STORAGE_USER_KEY)
-      dispatch(vendorActions.logout())
-      navigate('/')
-   }
-   const deleteVendorProfile = () => {
-      dispatch(removeVendorProfile({ id, navigateAfterSuccessDelete }))
-   }
    const errorForPasswordField =
-      errorMessagePassword === 'Введенные пароли не совпадают'
+      errorMessagePassword === 'Текущий пароль не совпадают'
    const errorForNewPasswordField =
       errorMessagePassword === 'Ваш новый пароль не совпадают'
 
@@ -115,13 +113,21 @@ export const VendorProfile = () => {
                      rules={{
                         required: true,
                      }}
-                     render={({ field }) => (
-                        <Input
-                           type="text"
-                           placeholder="+996 (___) __ __ __"
-                           {...register('number', { required: true })}
-                           value={field.value}
-                        />
+                     defaultValue=""
+                     render={({ field: { onChange, value } }) => (
+                        <InputMask
+                           mask={INPUT_MASK_NUMBER}
+                           maskChar=""
+                           onChange={(e) => onChange(e.target.value)}
+                           value={value}
+                        >
+                           {(inputProps) => (
+                              <Input
+                                 placeholder="+996 (___) __ __ __"
+                                 {...inputProps}
+                              />
+                           )}
+                        </InputMask>
                      )}
                   />
                </PersonalInformation>
@@ -136,10 +142,9 @@ export const VendorProfile = () => {
             </PersonalInformationContainer>
             <PersonalInformationContainer>
                <Private>Изменить пароль</Private>
-               <div>
+               <PasswordContainer>
                   <p>Текущий пароль</p>
-                  <Input
-                     type="password"
+                  <InputForPassword
                      placeholder="Напишите текущий пароль"
                      {...register('oldPassword', { required: true })}
                      error={errorForPasswordField}
@@ -149,11 +154,11 @@ export const VendorProfile = () => {
                         {errors.password.message}
                      </ErrorMessageForExactField>
                   )}
-               </div>
+               </PasswordContainer>
 
-               <div>
+               <PasswordContainer>
                   <p>Новый пароль</p>
-                  <Input
+                  <InputForPassword
                      type="password"
                      placeholder="Напишите ваш новый пароль"
                      {...register('newPassword', { required: true })}
@@ -164,15 +169,15 @@ export const VendorProfile = () => {
                         {errors.password.message}
                      </ErrorMessageForExactField>
                   )}
-               </div>
-               <div>
+               </PasswordContainer>
+               <PasswordContainer>
                   <p>Подтвердите пароль</p>
-                  <Input
+                  <InputForPassword
                      type="password"
                      placeholder="Подтвердите пароль"
                      {...register('confirmNewPassword', { required: true })}
                   />
-               </div>
+               </PasswordContainer>
                {Object.values(errors).some(
                   (error) => error.type === 'required' && !errorMessagePassword
                ) && <ErrorMessage>Пожалуйста заполните все поля</ErrorMessage>}
@@ -182,7 +187,7 @@ export const VendorProfile = () => {
             </PersonalInformationContainer>
          </ProfileContainer>
          <RemoveProfile>
-            <TextButton color="red" onClick={showDeleteModal}>
+            <TextButton color="red" onClick={showDeleteModal} type="button">
                Удалить профиль?
             </TextButton>
             {showRemoveModal && (
@@ -202,6 +207,7 @@ export const VendorProfile = () => {
          <SubmitProfile>
             <Link to="/main-page">
                <Button
+                  type="button"
                   padding="10px 24px 10px 24px"
                   bgColor="#FFFFFF"
                   color="#A3A3A3"
@@ -232,7 +238,7 @@ export const VendorProfile = () => {
 const StyledForm = styled.form`
    position: relative;
    margin: 0 auto;
-   width: 1270px;
+   padding: 0px 0px 100px 0px;
    .MuiBreadcrumbs-root {
       font-size: 14px;
       font-weight: 400px;
@@ -245,6 +251,9 @@ const StyledForm = styled.form`
       font-size: 14px;
       font-weight: 400px;
    }
+`
+const PasswordContainer = styled.div`
+   width: 514px;
 `
 
 const ProfileContainer = styled.div`

@@ -22,10 +22,11 @@ export const getCardOfVendorBooks = createAsyncThunk(
    'vendor/getCardOfVendorBooks',
    async ({ offset }, { rejectWithValue }) => {
       try {
-         const result = await appFetch({
+         const response = await appFetch({
             path: `vendor/books/${offset}`,
             method: 'GET',
          })
+         const result = { response, offset }
          return result
       } catch (error) {
          return rejectWithValue(error.message)
@@ -96,11 +97,16 @@ export const removeVendorProfile = createAsyncThunk(
    'vendor/removeVendorProfile',
    async ({ navigateAfterSuccessDelete }, { rejectWithValue }) => {
       try {
-         const result = await appFetch({
-            path: `vendor/profile`,
-            method: 'DELETE',
-         })
-         navigateAfterSuccessDelete()
+         const result = await appFetch(
+            {
+               path: `vendor/profile`,
+               method: 'DELETE',
+            },
+            { asText: true }
+         )
+         if (result) {
+            navigateAfterSuccessDelete()
+         }
          return result
       } catch (error) {
          return rejectWithValue(error.message)
@@ -109,16 +115,19 @@ export const removeVendorProfile = createAsyncThunk(
 )
 export const removeVendorBook = createAsyncThunk(
    'vendor/removeVendorBook',
-   async (bookId, { rejectWithValue }) => {
+   async ({ id }, { dispatch }) => {
       try {
          const result = await appFetch({
-            path: `vendor/remove/${bookId}`,
+            path: `vendor/remove/${id}`,
             method: 'DELETE',
          })
-
+         if (result) {
+            dispatch(getCardOfVendorBooks({ offset: 1 }))
+            dispatch(getCountOfVendorsBooks())
+         }
          return result
       } catch (error) {
-         return rejectWithValue(error.message)
+         return error.message
       }
    }
 )
@@ -226,6 +235,7 @@ export const vendorSlice = createSlice({
          state.token = null
          state.role = null
          state.userName = null
+         state.isAuthorized = false
       },
       setErrorMessagePassword(state, { payload }) {
          if (payload === 'You wrote wrong old password!') {
@@ -244,7 +254,11 @@ export const vendorSlice = createSlice({
    },
    extraReducers: {
       [getCardOfVendorBooks.fulfilled]: (state, { payload }) => {
-         state.cardOfVendorBooks = payload
+         if (payload.offset === 1) {
+            state.cardOfVendorBooks = payload.response
+         } else {
+            state.cardOfVendorBooks.push(...payload.response)
+         }
       },
       [getAllVendorsBooks.fulfilled]: (state, { payload }) => {
          state.allVendorBooks = payload

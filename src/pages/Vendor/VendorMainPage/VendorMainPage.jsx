@@ -1,10 +1,7 @@
-/* eslint-disable no-undef */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-unused-vars */
 import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { VendorBookCard } from '../../../components/UI/Card/VendorBookCard'
@@ -19,7 +16,6 @@ import { theme } from '../../../utils/constants/theme'
 export const VendorMainPage = () => {
    const [showOptions, setShowOptions] = useState(false)
    const [offset, setOffset] = useState(1)
-   const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { cardOfVendorBooks } = useSelector((state) => state.vendor)
@@ -34,10 +30,12 @@ export const VendorMainPage = () => {
    useEffect(() => {
       dispatch(getCountOfVendorsBooks())
    }, [])
-
    useEffect(() => {
       dispatch(getCardOfVendorBooks({ offset }))
    }, [offset])
+   const navigateToInnerBook = (bookId) => {
+      navigate(`${bookId}`)
+   }
 
    const options = [
       {
@@ -76,9 +74,7 @@ export const VendorMainPage = () => {
          action: (data) => dispatch(getAllVendorsBooks({ data, offset: 1 })),
       },
    ]
-   const navigateToInnerBook = (id) => {
-      navigate('id')
-   }
+
    return (
       <VendorMainPageContainer>
          <HeadContainer>
@@ -104,8 +100,8 @@ export const VendorMainPage = () => {
                <VendorBookCard
                   minWidth="305px"
                   maxHeight="427px"
-                  key={book?.id}
-                  id={book.id}
+                  key={book?.bookId}
+                  id={book.bookId}
                   amount={book.baskets}
                   vendorImageUrl={book.fileInformation?.firstPhoto}
                   like={book?.likes}
@@ -114,23 +110,27 @@ export const VendorMainPage = () => {
                   price={book?.price}
                   isInProccess={book?.adminWatch === false}
                   isRejected={book?.isRejected}
-                  onClickToBook={() => navigateToInnerBook(book?.id)}
+                  onClickToBook={() => navigateToInnerBook(book?.bookId)}
                />
             ))}
          </VendorBookCardContainer>
          <SubmitSeeMore>
-            <Button
-               padding="10px 580px 10px 580px"
-               lHeight="18px"
-               bgColor={theme.secondary.whiteBackground}
-               color={theme.secondary.placeholderGray}
-               border="1px solid #C4C4C4"
-               bgColorHover={theme.secondary.orange}
-               colorHover={theme.primary.white}
-               onClick={() => setToggle(!toggle)}
-            >
-               Смотреть больше
-            </Button>
+            {getCountOfVendorsBooks.countOfPages > offset && (
+               <Button
+                  padding="10px 580px 10px 580px"
+                  lHeight="18px"
+                  bgColor={theme.secondary.whiteBackground}
+                  color={theme.secondary.placeholderGray}
+                  border="1px solid #C4C4C4"
+                  bgColorHover={theme.secondary.orange}
+                  colorHover={theme.primary.white}
+                  onClick={() => {
+                     setOffset((prevOffset) => prevOffset + 1)
+                  }}
+               >
+                  Смотреть больше
+               </Button>
+            )}
          </SubmitSeeMore>
       </VendorMainPageContainer>
    )
@@ -173,11 +173,11 @@ const VendorBookCardContainer = styled.div`
    margin: 0 auto;
    padding-top: 30px;
    display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   grid-template-rows: repeat(1, 1fr);
    grid-column-gap: 20px;
    grid-row-gap: 20px;
-   max-width: 1280px;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   grid-gap: 2rem;
+   padding-bottom: 70px;
 `
 const SubmitSeeMore = styled.div`
    margin: 0 auto;

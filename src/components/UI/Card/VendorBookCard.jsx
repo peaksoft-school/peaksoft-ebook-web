@@ -21,23 +21,27 @@ export const VendorBookCard = ({
    onClickToBook,
    vendorImageUrl,
    id,
-   key,
    ...props
 }) => {
-   const [isPopUpVisisble, setIsPopUpVisisble] = useState(false)
+   const [isPopUpVisible, setIsPopUpVisible] = useState(false)
    const [showRemoveModal, setRemoveModal] = useState(false)
-
    const dispatch = useDispatch()
 
+   const changeVisiblePopUpHandler = () => {
+      setIsPopUpVisible(!isPopUpVisible)
+   }
    const showDeleteModal = () => {
       setRemoveModal(true)
    }
 
-   const changeVisiblePopUpHandler = () => {
-      setIsPopUpVisisble((prevState) => !prevState)
-   }
-   const deleteVendorBook = () => {
-      dispatch(removeVendorBook({ id }))
+   const deleteVendorBook = (e, id) => {
+      e.preventDefault()
+      dispatch(
+         removeVendorBook({
+            id,
+            showRemoveModal: () => showDeleteModal(false),
+         })
+      )
    }
    const options = [
       {
@@ -47,13 +51,13 @@ export const VendorBookCard = ({
       {
          icon: <DeleteIcon />,
          title: 'Удалить',
-         action: () => showDeleteModal(),
+         action: (id) => showDeleteModal(id),
       },
    ]
 
    return isRejected ? (
       <RejectedVendorCardContainer {...props}>
-         <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
+         <RejectedContent onClick={() => setIsPopUpVisible(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
                   <>
@@ -74,10 +78,10 @@ export const VendorBookCard = ({
          </RejectedContent>
          <MeatBallsRejectedContainer onClick={changeVisiblePopUpHandler}>
             <MeatBallsIcon />
+            {isPopUpVisible && (
+               <MeatballsPopUp options={options} isRejected={isRejected} />
+            )}
          </MeatBallsRejectedContainer>
-         {isPopUpVisisble && (
-            <MeatballsPopUp options={options} isRejected={isRejected} />
-         )}
       </RejectedVendorCardContainer>
    ) : (
       <VendorCardContainer {...props} isInProccess={isInProccess}>
@@ -91,31 +95,15 @@ export const VendorBookCard = ({
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />
+               {isPopUpVisible && <MeatballsPopUp options={options} id={id} />}
             </MeatBallsContainer>
-            {isPopUpVisisble && <MeatballsPopUp options={options} />}
          </VenderCardHeader>
          <VenderCardMain
             onClick={() => {
-               setIsPopUpVisisble(false)
+               setIsPopUpVisible(false)
                onClickToBook()
             }}
          >
-            {showRemoveModal && (
-               <ErrorConfirmModal
-                  isOpen={showRemoveModal}
-                  onExitButton={deleteVendorBook}
-                  onCencelButton={(e) => {
-                     e.stopPropagation()
-                     setRemoveModal(false)
-                  }}
-                  onCloseBackDrop={(e) => {
-                     e.stopPropagation()
-                     setRemoveModal(false)
-                  }}
-                  title={`Вы уверены, что хотите удалить 
-                "${name}"`}
-               />
-            )}
             <img src={vendorImageUrl} alt="book" />
             <p>{name}</p>
 
@@ -124,6 +112,22 @@ export const VendorBookCard = ({
                <h3>{price}c</h3>
             </VenderCardFooter>
          </VenderCardMain>
+         {showRemoveModal && (
+            <ErrorConfirmModal
+               isOpen={showRemoveModal}
+               onExitButton={(e) => deleteVendorBook(e, id)}
+               onCencelButton={(e) => {
+                  e.stopPropagation()
+                  setRemoveModal(false)
+               }}
+               onCloseBackDrop={(e) => {
+                  e.stopPropagation()
+                  setRemoveModal(false)
+               }}
+               title={`Вы уверены, что хотите удалить 
+                "${name}"`}
+            />
+         )}
       </VendorCardContainer>
    )
 }

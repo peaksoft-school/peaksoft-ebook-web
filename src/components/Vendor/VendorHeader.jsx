@@ -138,8 +138,8 @@ const StyledBellIcon = styled(BellIcon)`
 `
 const HowerMessage = styled.div`
    position: absolute;
-   left: 205px;
-   bottom: 40px;
+   left: 285px;
+   top: 170px;
    width: 100%;
 `
 const Message = styled.span`
@@ -201,5 +201,5 @@ const InnerContainer = styled.div`
    display: flex;
    align-items: center;
    justify-content: center;
-   padding-left: 44px;
+   padding-left: 74px;
 `
