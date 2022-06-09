@@ -10,8 +10,8 @@ export const ErrorConfirmModal = ({
    isOpen,
    exit,
    title,
-   onCencelButton,
-   onExitButton,
+   onCencel,
+   onExit,
 }) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
@@ -26,7 +26,7 @@ export const ErrorConfirmModal = ({
                   ling-height="21.79px"
                   bgColorActive="#FF4C00"
                   bgColorHover="rgb(72, 72, 72)"
-                  onClick={onCencelButton}
+                  onClick={onCencel}
                >
                   Отменить
                </Button>
@@ -38,7 +38,7 @@ export const ErrorConfirmModal = ({
                      ling-height="21.79px"
                      bgColorHover="#484848"
                      bgColorActive={theme.secondary.orange}
-                     onClick={onCencelButton}
+                     onClick={onCencel}
                   >
                      Выйти
                   </Button>
@@ -50,7 +50,7 @@ export const ErrorConfirmModal = ({
                      ling-height="21.79px"
                      bgColorHover="#484848"
                      bgColorActive={theme.secondary.orange}
-                     onClick={onExitButton}
+                     onClick={onExit}
                   >
                      Удалить
                   </Button>

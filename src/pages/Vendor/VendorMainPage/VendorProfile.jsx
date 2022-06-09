@@ -193,8 +193,8 @@ export const VendorProfile = () => {
             {showRemoveModal && (
                <ErrorConfirmModal
                   isOpen={showRemoveModal}
-                  onCencelButton={() => setRemoveModal(false)}
-                  onExitButton={deleteVendorProfile}
+                  onCencel={() => setRemoveModal(false)}
+                  onExit={deleteVendorProfile}
                   onCloseBackDrop={(e) => {
                      e.stopPropagation()
                      setRemoveModal(false)

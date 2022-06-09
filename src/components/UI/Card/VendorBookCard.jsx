@@ -43,6 +43,7 @@ export const VendorBookCard = ({
          })
       )
    }
+
    const options = [
       {
          icon: <EditIcon />,
@@ -115,8 +116,8 @@ export const VendorBookCard = ({
          {showRemoveModal && (
             <ErrorConfirmModal
                isOpen={showRemoveModal}
-               onExitButton={(e) => deleteVendorBook(e, id)}
-               onCencelButton={(e) => {
+               onExit={(e) => deleteVendorBook(e, id)}
+               onCencel={(e) => {
                   e.stopPropagation()
                   setRemoveModal(false)
                }}
