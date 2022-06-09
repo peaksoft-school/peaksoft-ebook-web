@@ -56,7 +56,7 @@ export const Applications = () => {
                />
             ))}
          </ContentContainer>
-         {countOfApplications.countOfPages > offset && (
+         {countOfApplications.all > 8 && (
             <Button
                padding="0.5% 47% 0.5% 48%"
                lHeight="18px"

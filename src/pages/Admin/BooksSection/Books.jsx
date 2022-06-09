@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
-import { GenreMenu } from '../../../components/UI/GenreMenu/GenreMenu'
+import { GenreMenuForAdmin } from '../../../components/UI/GenreMenu/GenreMenuForAdmin'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
    getAcceptedBooks,
@@ -20,7 +20,7 @@ export const Books = () => {
    const [showOptions, setShowOptions] = useState(false)
    const [offset, setOffset] = useState(1)
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
-   const [filterByBoth, setFilterByBoth] = useState({
+   const [filters, setFilters] = useState({
       type: '',
       genreId: '',
    })
@@ -28,7 +28,7 @@ export const Books = () => {
    const listOfBooks = useSelector((state) => state.adminVendors.acceptedBooks)
    const genres = useSelector((state) => state.adminVendors.listOfGenres)
 
-   const isFilterByBoth = filterByBoth.type !== '' && filterByBoth.genre !== ''
+   const isFilterByBoth = filters.type !== '' && filters.genre !== ''
    const countOfPages = Math.ceil(listOfBooks?.length / 8)
 
    const changeVisibleGenreMenu = () => {
@@ -38,12 +38,12 @@ export const Books = () => {
       setShowOptions(!showOptions)
    }
    const getTypeOfBooks = (data) => {
-      setFilterByBoth({ ...filterByBoth, type: data })
+      setFilters({ ...filters, type: data })
       if (!isFilterByBoth) dispatch(getBooksByType({ data }))
    }
 
    const selectGenre = (genre, id) => {
-      setFilterByBoth({ ...filterByBoth, genreId: id })
+      setFilters({ ...filters, genreId: id })
       if (!isFilterByBoth) dispatch(getBooksByGenre(genre))
    }
 
@@ -51,12 +51,12 @@ export const Books = () => {
       if (isFilterByBoth) {
          dispatch(
             getBooksByBoth({
-               type: filterByBoth.type,
-               genreId: filterByBoth.genreId,
+               type: filters.type,
+               genreId: filters.genreId,
             })
          )
       }
-   }, [filterByBoth])
+   }, [filters])
 
    useEffect(() => {
       dispatch(getAcceptedBooks({ offset }))
@@ -72,7 +72,7 @@ export const Books = () => {
          id: 's13',
          action: () => {
             dispatch(getAcceptedBooks({ offset }))
-            setFilterByBoth({ ...filterByBoth, type: '' })
+            setFilters({ ...filters, type: '' })
          },
       },
       {
@@ -109,7 +109,10 @@ export const Books = () => {
                <span>Все</span>
                <ArrowDownIcon />
                {isVisibleGenreMenu && (
-                  <GenreMenu onGenreItem={selectGenre} genres={genres} />
+                  <GenreMenuForAdmin
+                     onGenreItem={selectGenre}
+                     genres={genres}
+                  />
                )}
             </ContainerOfGenre>
             <ContainerOfGenre onClick={showPopUp}>
@@ -122,6 +125,7 @@ export const Books = () => {
                      top="29px"
                      right="-105px"
                      padding="10px 10px"
+                     boxShadow="0 5px 10px 3px rgba(226, 219, 219, 0.5)"
                      options={options}
                   />
                )}

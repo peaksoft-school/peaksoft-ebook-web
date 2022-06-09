@@ -34,6 +34,7 @@ export const AdminHeader = () => {
                      right="20"
                      top="40px"
                      options={options}
+                     boxShadow="0 5px 10px 3px rgba(226, 219, 219, 0.5)"
                   />
                )}
             </AdminTextContainer>
