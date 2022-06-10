@@ -8,14 +8,18 @@ export const PopUp = ({ options, onCloseBackDrop, ...props }) => {
          <MenuContainer {...props}>
             <StyledOptions {...props}>
                {options &&
-                  options.map((option) => (
-                     <MenuItem
-                        key={option.id}
-                        onClick={() => option.action(option.value)}
-                     >
-                        {option.title}
-                     </MenuItem>
-                  ))}
+                  options.map((option) => {
+                     return (
+                        <MenuItem
+                           key={option.id}
+                           onClick={() => {
+                              option.action(option.value)
+                           }}
+                        >
+                           {option.title}
+                        </MenuItem>
+                     )
+                  })}
             </StyledOptions>
          </MenuContainer>
       </>
@@ -26,7 +30,7 @@ const StyledOptions = styled.div`
    padding: ${({ padding }) => padding || ''};
 `
 
-const MenuItem = styled.p`
+const MenuItem = styled.div`
    padding: 10px 0px 10px 10px;
    background-color: white;
    border-bottom: 1px solid #d4d4d4;

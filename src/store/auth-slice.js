@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { store } from '.'
 import { appFetch } from '../api/appFetch'
 import { LOCAL_STORAGE_USER_KEY } from '../utils/constants/general'
+import { DEFAULT_ROUTES } from '../utils/constants/routes'
 import { localstorage } from '../utils/helpers/general'
 
 export const signInUser = createAsyncThunk(
@@ -68,6 +70,11 @@ export const signUpVendor = createAsyncThunk(
       }
    }
 )
+export const logout = (navigateToIndex) => {
+   store.dispatch(authActions.logout())
+   localstorage.remove(LOCAL_STORAGE_USER_KEY)
+   navigateToIndex(DEFAULT_ROUTES.INDEX.PATH)
+}
 
 const localData = localstorage.get(LOCAL_STORAGE_USER_KEY) || {}
 
@@ -85,6 +92,12 @@ export const authSlice = createSlice({
    name: 'auth',
    initialState,
    reducers: {
+      logout(state) {
+         state.token = null
+         state.role = null
+         state.userName = null
+         state.isAuthorized = false
+      },
       setErrorMessageInAuthorization(state) {
          state.isLoading = false
          state.errorMessageInAuthorization =

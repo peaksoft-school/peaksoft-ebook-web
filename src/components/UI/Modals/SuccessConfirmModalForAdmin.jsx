@@ -1,20 +1,23 @@
-/* eslint-disable import/order */
 import React from 'react'
-import { Modal } from './Modal'
 import styled from '@emotion/styled'
+import { Modal } from './Modal'
 import success from '../../../assets/icons/success.svg'
 
-export const SuccessConfirmModal = ({ onCloseBackDrop, isOpen, props }) => {
+export const SuccessConfirmModalForAdmin = ({
+   onCloseBackDrop,
+   isOpen,
+   title,
+}) => {
    return (
       <Modal onCloseBackDrop={onCloseBackDrop} isOpen={isOpen}>
-         <ConfirmConteiner>
+         <ConfirmContainer onClick={(e) => e.stopPropagation()}>
             <SuccessIcon src={success} />
-            <SuccessTitle>{props.title}</SuccessTitle>
-         </ConfirmConteiner>
+            <SuccessTitle>{title}</SuccessTitle>
+         </ConfirmContainer>
       </Modal>
    )
 }
-const ConfirmConteiner = styled.div`
+const ConfirmContainer = styled.div`
    width: 460px;
    padding: 20px 29px 20px;
 `

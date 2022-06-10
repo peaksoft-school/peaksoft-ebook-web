@@ -1,14 +1,18 @@
+/* eslint-disable import/no-useless-path-segments */
 import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import { ReactComponent as MeatBallsIcon } from '../../../assets/icons/meatballs-icon.svg'
 import { ReactComponent as LikeIcon } from '../../../assets/icons/like-icon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/edit-icon.svg'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.svg'
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
+import { ErrorConfirmModal } from '../../UI/Modals/ErrorConfirmModal'
+import { removeVendorBook } from '../../../store/vendor-slice'
 
 export const VendorBookCard = ({
-   like,
-   amount,
+   amountOfLikes,
+   baskets,
    name,
    date,
    price,
@@ -16,13 +20,30 @@ export const VendorBookCard = ({
    isRejected,
    onClickToBook,
    vendorImageUrl,
+   id,
    ...props
 }) => {
-   const [isPopUpVisisble, setIsPopUpVisisble] = useState(false)
+   const [isPopUpVisible, setIsPopUpVisible] = useState(false)
+   const [showRemoveModal, setRemoveModal] = useState(false)
+   const dispatch = useDispatch()
 
    const changeVisiblePopUpHandler = () => {
-      setIsPopUpVisisble((prevState) => !prevState)
+      setIsPopUpVisible(!isPopUpVisible)
    }
+   const showDeleteModal = () => {
+      setRemoveModal(true)
+   }
+
+   const deleteVendorBook = (e, id) => {
+      e.preventDefault()
+      dispatch(
+         removeVendorBook({
+            id,
+            showRemoveModal: () => showDeleteModal(false),
+         })
+      )
+   }
+
    const options = [
       {
          icon: <EditIcon />,
@@ -31,21 +52,20 @@ export const VendorBookCard = ({
       {
          icon: <DeleteIcon />,
          title: 'Удалить',
+         action: (id) => showDeleteModal(id),
       },
    ]
 
    return isRejected ? (
       <RejectedVendorCardContainer {...props}>
-         <RejectedContent onClick={() => setIsPopUpVisisble(false)}>
+         <RejectedContent onClick={() => setIsPopUpVisible(false)}>
             <RegectedVendorCardHeader>
                <WrapperForLike>
-                  {like && (
-                     <>
-                        <LikeIcon />
-                        <p>({like})</p>
-                     </>
-                  )}
-                  {amount && <p> В корзине ({amount})</p>}
+                  <>
+                     <LikeIcon />
+                     <p>({amountOfLikes})</p>
+                  </>
+                  <p> В корзине ({baskets})</p>
                </WrapperForLike>
             </RegectedVendorCardHeader>
             <VenderCardMain>
@@ -59,41 +79,56 @@ export const VendorBookCard = ({
          </RejectedContent>
          <MeatBallsRejectedContainer onClick={changeVisiblePopUpHandler}>
             <MeatBallsIcon />
+            {isPopUpVisible && (
+               <MeatballsPopUp options={options} isRejected={isRejected} />
+            )}
          </MeatBallsRejectedContainer>
-         {isPopUpVisisble && (
-            <MeatballsPopUp options={options} isRejected={isRejected} />
-         )}
       </RejectedVendorCardContainer>
    ) : (
       <VendorCardContainer {...props} isInProccess={isInProccess}>
          <VenderCardHeader>
             <WrapperForLike>
-               {like && (
-                  <>
-                     <LikeIcon />
-                     <p>({like})</p>
-                  </>
-               )}
-               {amount && <p> В корзине ({amount})</p>}
+               <>
+                  <LikeIcon />
+                  <p>({amountOfLikes})</p>
+               </>
+               <p> В корзине ({baskets})</p>
             </WrapperForLike>
             <MeatBallsContainer onClick={changeVisiblePopUpHandler}>
                <MeatBallsIcon />
+               {isPopUpVisible && <MeatballsPopUp options={options} id={id} />}
             </MeatBallsContainer>
-            {isPopUpVisisble && <MeatballsPopUp options={options} />}
          </VenderCardHeader>
          <VenderCardMain
             onClick={() => {
-               setIsPopUpVisisble(false)
+               setIsPopUpVisible(false)
                onClickToBook()
             }}
          >
             <img src={vendorImageUrl} alt="book" />
             <p>{name}</p>
+
             <VenderCardFooter>
                <span>{date}</span>
                <h3>{price}c</h3>
             </VenderCardFooter>
          </VenderCardMain>
+         {showRemoveModal && (
+            <ErrorConfirmModal
+               isOpen={showRemoveModal}
+               onExit={(e) => deleteVendorBook(e, id)}
+               onCencel={(e) => {
+                  e.stopPropagation()
+                  setRemoveModal(false)
+               }}
+               onCloseBackDrop={(e) => {
+                  e.stopPropagation()
+                  setRemoveModal(false)
+               }}
+               title={`Вы уверены, что хотите удалить 
+                "${name}"`}
+            />
+         )}
       </VendorCardContainer>
    )
 }
@@ -176,6 +211,7 @@ const VenderCardMain = styled.div`
       color: #222222;
    }
 `
+
 const MeatBallsContainer = styled.div`
    cursor: pointer;
 `

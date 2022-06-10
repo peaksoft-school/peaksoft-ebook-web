@@ -10,19 +10,32 @@ export const DEFAULT_ROUTES = {
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {}
-
-export const BECOME_VENDOR_ROUTES = {
-   BECOMEVENDOR: {
-      PATH: '/becomevendor',
-      LABEL: 'Начать продавать на eBook',
+export const VENDOR_ROUTES = {
+   VENDOR_MAIN_PAGE: {
+      PATH: '/main-page',
+      LABEL: 'Главная',
+   },
+   VENDOR_PROFILE: {
+      PATH: '/profile',
+      LABEL: 'Профиль',
+   },
+   VENDOR_ABOUT_BOOKS: {
+      PATH: '/main-page/:id',
+   },
+   ADD_BOOK: {
+      PATH: '/add-book',
+      LABEL: 'Добавить книгу',
    },
 }
-export const VENDOR_ROUTES = {}
 
 export const ADMIN_ROUTES = {
    APPLICATIONS: {
       PATH: '/applications',
       LABEL: 'Заявки',
+   },
+   APPLICTAIONS_INNER_PAGE: {
+      PATH: '/applications/:id',
+      LABEL: 'Книга',
    },
    VENDORS: {
       PATH: '/vendors',

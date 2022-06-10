@@ -6,6 +6,8 @@ import { VendorDetails } from '../pages/Admin/VendorSection/VendorDetails'
 import { VendorProfile } from '../pages/Admin/VendorSection/VendorProfile'
 import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
 import { Vendors } from '../pages/Admin/VendorSection/Vendors'
+import { Applications } from '../pages/Admin/ApplicationsSection/Applications'
+import { ApplicationsInnerPage } from '../pages/Admin/ApplicationsSection/ApplicationsInnerPage'
 
 export const AdminRoutes = () => {
    return (
@@ -17,7 +19,11 @@ export const AdminRoutes = () => {
             />
             <Route
                path={ADMIN_ROUTES.APPLICATIONS.PATH}
-               element={<div>Заявки</div>}
+               element={<Applications />}
+            />
+            <Route
+               path={ADMIN_ROUTES.APPLICTAIONS_INNER_PAGE.PATH}
+               element={<ApplicationsInnerPage />}
             />
             <Route path={ADMIN_ROUTES.VENDORS.PATH} element={<Vendors />} />
             <Route

@@ -1,7 +1,7 @@
 import { SERVER_BASE_URL } from '../utils/constants/general'
 import { getJwt } from '../utils/helpers/general'
 
-export const appFetch = async (options) => {
+export const appFetch = async (options, responseOption) => {
    const token = getJwt()
    try {
       const { path, body, method, params } = options
@@ -24,12 +24,12 @@ export const appFetch = async (options) => {
          const path = `${path}?${queryParamsStringValue}`
       }
       const response = await fetch(`${SERVER_BASE_URL}/${path}`, requestOptions)
-
-      const result =
-         method === 'DELETE' ? await response.text() : await response.json()
+      const result = responseOption?.asText
+         ? await response.text()
+         : await response.json()
 
       if (!response.ok) {
-         let errorMessage = 'Some thing went wrong'
+         let errorMessage = 'Something went wrong'
          if (result && result.message) {
             errorMessage = result.message
          }
