@@ -46,6 +46,10 @@ export const ADMIN_ROUTES = {
       PATH: '/users',
       LABEL: 'Пользователи',
    },
+   USERS_PROFILE: {
+      PATH: '/users/:id/profile',
+      LABEL: 'Профиль',
+   },
    BOOKS: {
       PATH: '/books',
       LABEL: 'Книги',

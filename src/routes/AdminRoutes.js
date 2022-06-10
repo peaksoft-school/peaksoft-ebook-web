@@ -8,6 +8,8 @@ import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
 import { Vendors } from '../pages/Admin/VendorSection/Vendors'
 import { Applications } from '../pages/Admin/ApplicationsSection/Applications'
 import { ApplicationsInnerPage } from '../pages/Admin/ApplicationsSection/ApplicationsInnerPage'
+import { Clients } from '../pages/Admin/ClientsSection/Clients'
+import { ClientsProfile } from '../pages/Admin/ClientsSection/ClientsProfile'
 
 export const AdminRoutes = () => {
    return (
@@ -43,9 +45,10 @@ export const AdminRoutes = () => {
                   element={<VendorBooks countOfBooks={0} />}
                />
             </Route>
+            <Route path={ADMIN_ROUTES.USERS.PATH} element={<Clients />} />
             <Route
-               path={ADMIN_ROUTES.USERS.PATH}
-               element={<div>Пользователи</div>}
+               path={ADMIN_ROUTES.USERS_PROFILE.PATH}
+               element={<ClientsProfile />}
             />
             <Route path={ADMIN_ROUTES.BOOKS.PATH} element={<div>Книги</div>} />
             <Route
