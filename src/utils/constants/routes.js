@@ -10,6 +10,13 @@ export const DEFAULT_ROUTES = {
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {}
+
+export const BECOME_VENDOR_ROUTES = {
+   BECOMEVENDOR: {
+      PATH: '/becomevendor',
+      LABEL: 'Начать продавать на eBook',
+   },
+}
 export const VENDOR_ROUTES = {}
 
 export const ADMIN_ROUTES = {
