@@ -8,11 +8,7 @@ import { Button } from '../../../components/UI/Buttons/Button'
 import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
 import { GenreMenuForAdmin } from '../../../components/UI/GenreMenu/GenreMenuForAdmin'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
-import {
-   getAcceptedBooks,
-   getBooksByBoth,
-   getGenres,
-} from '../../../store/admin-slice'
+import { getAcceptedBooks, getGenres } from '../../../store/admin-slice'
 import { theme } from '../../../utils/constants/theme'
 
 export const Books = () => {
@@ -37,29 +33,30 @@ export const Books = () => {
 
    const getSelectedGenre = (genre, id) => {
       setGenreId(id)
-      dispatch(getBooksByBoth({ genreId: id, bookType: 'PAPERBOOK' }))
+      dispatch(getAcceptedBooks({ offset, genreId: id, bookType: 'PAPERBOOK' }))
       setSearchParams({ genre, id })
    }
 
    const getSelectedType = (data) => {
       // console.log(bookType)
       setBookType(data)
-      dispatch(getBooksByBoth({ genreId, bookType: data }))
+      dispatch(getAcceptedBooks({ offset, genreId, bookType: data }))
    }
+
+   // useEffect(() => {
+   //    const genreid = searchParams.get('id')
+   //    // console.log(genreid)
+   //    dispatch(
+   //       getAcceptedBooks({
+   //          genreId: genreid,
+   //          bookType,
+   //       })
+   //    )
+   // }, [genreId, bookType])
 
    useEffect(() => {
       const genreid = searchParams.get('id')
-      // console.log(genreid)
-      dispatch(
-         getBooksByBoth({
-            genreId: genreid,
-            bookType,
-         })
-      )
-   }, [genreId, bookType])
-
-   useEffect(() => {
-      dispatch(getAcceptedBooks({ offset }))
+      dispatch(getAcceptedBooks({ offset, genreId: genreid, bookType }))
    }, [offset])
 
    useEffect(() => {

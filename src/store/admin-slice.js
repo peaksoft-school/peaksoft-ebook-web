@@ -166,25 +166,6 @@ export const refuseBook = createAsyncThunk(
    }
 )
 
-export const getAcceptedBooks = createAsyncThunk(
-   'admin_panel_books/getAcceptedBooks',
-   async ({ offset }, { rejectWithValue }) => {
-      try {
-         const response = await appFetch({
-            path: `admin/books-accepted/${offset}`,
-            method: 'GET',
-         })
-         const result = {
-            response,
-            offset,
-         }
-         return result
-      } catch (error) {
-         return rejectWithValue(error.message)
-      }
-   }
-)
-
 export const getGenres = createAsyncThunk(
    'admin_panel_books/getGenre',
    async (_, { rejectWithValue }) => {
@@ -199,25 +180,47 @@ export const getGenres = createAsyncThunk(
       }
    }
 )
-
-export const getBooksByBoth = createAsyncThunk(
-   'admin_panel_books/getBooksByBoth',
-   async ({ genreId, bookType }, { rejectWithValue }) => {
+export const getAcceptedBooks = createAsyncThunk(
+   'admin_panel_books/getAcceptedBooks',
+   async ({ genreId, bookType, offset }, { rejectWithValue }) => {
       try {
-         const result = await appFetch({
-            path: `admin/booksByBoth`,
+         const response = await appFetch({
+            path: `admin/books-accepted/${offset}`,
             method: 'GET',
             params: {
                genreId,
                bookType,
             },
          })
+         const result = {
+            response,
+            offset,
+         }
          return result
       } catch (error) {
          return rejectWithValue(error.message)
       }
    }
 )
+
+// export const getBooksByBoth = createAsyncThunk(
+//    'admin_panel_books/getBooksByBoth',
+//    async ({ genreId, bookType }, { rejectWithValue }) => {
+//       try {
+//          const result = await appFetch({
+//             path: `admin/booksByBoth`,
+//             method: 'GET',
+//             params: {
+//                genreId,
+//                bookType,
+//             },
+//          })
+//          return result
+//       } catch (error) {
+//          return rejectWithValue(error.message)
+//       }
+//    }
+// )
 
 const initialState = {
    listOfVendors: [],
@@ -269,9 +272,6 @@ export const adminPanelVendorSlice = createSlice({
       },
       [getGenres.fulfilled]: (state, { payload }) => {
          state.listOfGenres = payload
-      },
-      [getBooksByBoth.fulfilled]: (state, { payload }) => {
-         state.acceptedBooks = payload
       },
    },
 })
