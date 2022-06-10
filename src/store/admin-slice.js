@@ -224,7 +224,9 @@ export const getAcceptedBooks = createAsyncThunk(
 
 const initialState = {
    listOfVendors: [],
+   listOfClients: [],
    singleVendor: null,
+   singleClient: null,
    listOfVendorBooks: [],
    listOfApplications: [],
    countOfBooksInProgress: [],

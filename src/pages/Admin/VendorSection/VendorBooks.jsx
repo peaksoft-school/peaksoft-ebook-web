@@ -10,8 +10,8 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
    removeVendor,
-   getListOfVendorBooks,
    getSingleVendor,
+   getListOfVendorBooks,
 } from '../../../store/admin-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {
@@ -106,10 +106,6 @@ export const VendorBooks = ({ countOfBooks }) => {
             <ContentContainer>
                {books.map((vendorBooks) => (
                   <VendorBookCard
-                     minWidth="269px"
-                     maxHeight="412px"
-                     minHeight="408px"
-                     padding="10px 10px 76px 35px"
                      marginTop="15px"
                      key={vendorBooks.bookId}
                      vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
