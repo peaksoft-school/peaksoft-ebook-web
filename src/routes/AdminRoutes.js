@@ -8,12 +8,9 @@ import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
 import { Vendors } from '../pages/Admin/VendorSection/Vendors'
 import { Applications } from '../pages/Admin/ApplicationsSection/Applications'
 import { ApplicationsInnerPage } from '../pages/Admin/ApplicationsSection/ApplicationsInnerPage'
-<<<<<<< HEAD
-import { Books } from '../pages/Admin/BooksSection/Books'
-=======
 import { Clients } from '../pages/Admin/ClientsSection/Clients'
 import { ClientsProfile } from '../pages/Admin/ClientsSection/ClientsProfile'
->>>>>>> 4c1a936a3c58b192fbb13b12b035c2353ebda394
+import { Books } from '../pages/Admin/BooksSection/Books'
 
 export const AdminRoutes = () => {
    return (
