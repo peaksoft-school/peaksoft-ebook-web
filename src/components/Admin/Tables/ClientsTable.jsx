@@ -16,11 +16,11 @@ export const ClientsTable = ({ listOfClients }) => {
       <StyledTableContainer component={Paper}>
          <Table>
             <TableHead>
-               <TableRow sx={{ borderBottom: '1px solid #EDEDF6 ' }}>
+               <StyledTableRow>
                   <StyledTableCell>№</StyledTableCell>
                   <StyledTableCell>ФИО</StyledTableCell>
                   <StyledTableCell>Почта</StyledTableCell>
-               </TableRow>
+               </StyledTableRow>
             </TableHead>
             <TableBody>
                {listOfClients?.map((client) => (
@@ -37,6 +37,10 @@ export const ClientsTable = ({ listOfClients }) => {
       </StyledTableContainer>
    )
 }
+
+const StyledTableRow = styled(TableRow)`
+   border-bottom: 1px solid #ededf6;
+`
 
 const StyledTableCell = styled(TableCell)`
    font-size: 14px;

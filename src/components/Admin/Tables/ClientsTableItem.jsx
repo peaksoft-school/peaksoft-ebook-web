@@ -44,21 +44,16 @@ export const ClientsTableItem = ({ vendorId, firstName, email, id }) => {
             <TableCell>{firstName}</TableCell>
             <TableCell>{email}</TableCell>
             <TableCell>
-               <IconButton
+               <StyledIconButton
                   onClick={(e) => {
                      setIsOpenDeleteUserModal(true)
                      e.stopPropagation()
-                  }}
-                  sx={{
-                     '&:hover': {
-                        backgroundColor: ' rgba(255, 76, 0, 0.08)',
-                     },
                   }}
                   variant="outlined"
                   color="error"
                >
                   <Delete />
-               </IconButton>
+               </StyledIconButton>
             </TableCell>
          </StyledTableRow>
          <Modal
@@ -104,6 +99,12 @@ export const ClientsTableItem = ({ vendorId, firstName, email, id }) => {
       </>
    )
 }
+
+const StyledIconButton = styled(IconButton)`
+   &:hover {
+      background-color: rgba(255, 76, 0, 0.08);
+   }
+`
 
 const StyledTableRow = styled(TableRow)`
    .MuiTableRow-root td {
