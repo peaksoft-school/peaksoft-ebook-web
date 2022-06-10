@@ -10,8 +10,8 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
    removeVendor,
-   getListOfVendorBooks,
    getSingleVendor,
+   getListOfVendorBooks,
 } from '../../../store/admin-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {

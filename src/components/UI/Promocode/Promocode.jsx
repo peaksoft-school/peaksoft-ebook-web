@@ -1,16 +1,14 @@
 import styled from '@emotion/styled'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { publishPromocode } from '../../../store/vendor-slice'
 import { formatDate } from '../../../utils/helpers/general'
 import { DatePicker } from '../DatePicker/DatePicker'
 import { InputForDiscount } from '../Inputs/InputForDiscount'
 import { Modal } from '../Modals/Modal'
 
-export const Promocode = ({
-   onClosePromocodeModal,
-   isPromocodeModalOpen,
-   onSubmit,
-}) => {
+export const Promocode = ({ onClosePromocodeModal, isPromocodeModalOpen }) => {
    const {
       register,
       handleSubmit,
@@ -22,9 +20,18 @@ export const Promocode = ({
    const [endDate, setEndDate] = useState('')
 
    const [discount, setDiscount] = useState(0)
+   const dispatch = useDispatch()
 
    const submitHandler = (promocodeData) => {
-      onSubmit({ ...promocodeData, discount: Number(promocodeData.discount) })
+      const data = {
+         ...promocodeData,
+         discount: Number(promocodeData.discount),
+      }
+      dispatch(
+         publishPromocode({
+            promoData: data,
+         })
+      )
    }
    const startDateOptions = {
       required: true,
