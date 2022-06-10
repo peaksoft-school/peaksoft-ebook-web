@@ -185,21 +185,6 @@ export const getAcceptedBooks = createAsyncThunk(
    }
 )
 
-export const getBooksByType = createAsyncThunk(
-   'admin_panel_books/getBookByType',
-   async ({ data }, { rejectWithValue }) => {
-      try {
-         const result = await appFetch({
-            path: `admin/booksByType/${data}`,
-            method: 'GET',
-         })
-         return result
-      } catch (error) {
-         return rejectWithValue(error.message)
-      }
-   }
-)
-
 export const getGenres = createAsyncThunk(
    'admin_panel_books/getGenre',
    async (_, { rejectWithValue }) => {
@@ -215,28 +200,17 @@ export const getGenres = createAsyncThunk(
    }
 )
 
-export const getBooksByGenre = createAsyncThunk(
-   'admin_panel_books/getBooksByGenre',
-   async (genre, { rejectWithValue }) => {
-      try {
-         const result = await appFetch({
-            path: `admin/booksByGenre/${genre}`,
-            method: 'GET',
-         })
-         return result
-      } catch (error) {
-         return rejectWithValue(error.message)
-      }
-   }
-)
-
 export const getBooksByBoth = createAsyncThunk(
    'admin_panel_books/getBooksByBoth',
-   async ({ genreId, type }, { rejectWithValue }) => {
+   async ({ genreId, bookType }, { rejectWithValue }) => {
       try {
          const result = await appFetch({
-            path: `admin/booksByBoth/${genreId}/${type}`,
+            path: `admin/booksByBoth`,
             method: 'GET',
+            params: {
+               genreId,
+               bookType,
+            },
          })
          return result
       } catch (error) {
@@ -293,14 +267,8 @@ export const adminPanelVendorSlice = createSlice({
             state.acceptedBooks.push(...payload.response)
          }
       },
-      [getBooksByType.fulfilled]: (state, { payload }) => {
-         state.acceptedBooks = payload
-      },
       [getGenres.fulfilled]: (state, { payload }) => {
          state.listOfGenres = payload
-      },
-      [getBooksByGenre.fulfilled]: (state, { payload }) => {
-         state.acceptedBooks = payload
       },
       [getBooksByBoth.fulfilled]: (state, { payload }) => {
          state.acceptedBooks = payload

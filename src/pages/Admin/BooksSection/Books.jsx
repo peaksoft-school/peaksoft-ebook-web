@@ -2,6 +2,7 @@
 import styled from '@emotion/styled/macro'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
@@ -10,25 +11,21 @@ import { PopUp } from '../../../components/UI/PopUp/PopUp'
 import {
    getAcceptedBooks,
    getBooksByBoth,
-   getBooksByGenre,
-   getBooksByType,
    getGenres,
 } from '../../../store/admin-slice'
 import { theme } from '../../../utils/constants/theme'
 
 export const Books = () => {
+   const [searchParams, setSearchParams] = useSearchParams()
    const [showOptions, setShowOptions] = useState(false)
    const [offset, setOffset] = useState(1)
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
-   const [filters, setFilters] = useState({
-      type: '',
-      genreId: '',
-   })
+   const [genreId, setGenreId] = useState('')
+   const [bookType, setBookType] = useState('')
    const dispatch = useDispatch()
    const listOfBooks = useSelector((state) => state.adminVendors.acceptedBooks)
    const genres = useSelector((state) => state.adminVendors.listOfGenres)
 
-   const isFilterByBoth = filters.type !== '' && filters.genre !== ''
    const countOfPages = Math.ceil(listOfBooks?.length / 8)
 
    const changeVisibleGenreMenu = () => {
@@ -37,26 +34,29 @@ export const Books = () => {
    const showPopUp = () => {
       setShowOptions(!showOptions)
    }
-   const getTypeOfBooks = (data) => {
-      setFilters({ ...filters, type: data })
-      if (!isFilterByBoth) dispatch(getBooksByType({ data }))
+
+   const getSelectedGenre = (genre, id) => {
+      setGenreId(id)
+      dispatch(getBooksByBoth({ genreId: id, bookType: 'PAPERBOOK' }))
+      setSearchParams({ genre, id })
    }
 
-   const selectGenre = (genre, id) => {
-      setFilters({ ...filters, genreId: id })
-      if (!isFilterByBoth) dispatch(getBooksByGenre(genre))
+   const getSelectedType = (data) => {
+      // console.log(bookType)
+      setBookType(data)
+      dispatch(getBooksByBoth({ genreId, bookType: data }))
    }
 
    useEffect(() => {
-      if (isFilterByBoth) {
-         dispatch(
-            getBooksByBoth({
-               type: filters.type,
-               genreId: filters.genreId,
-            })
-         )
-      }
-   }, [filters])
+      const genreid = searchParams.get('id')
+      // console.log(genreid)
+      dispatch(
+         getBooksByBoth({
+            genreId: genreid,
+            bookType,
+         })
+      )
+   }, [genreId, bookType])
 
    useEffect(() => {
       dispatch(getAcceptedBooks({ offset }))
@@ -72,7 +72,6 @@ export const Books = () => {
          id: 's13',
          action: () => {
             dispatch(getAcceptedBooks({ offset }))
-            setFilters({ ...filters, type: '' })
          },
       },
       {
@@ -80,7 +79,7 @@ export const Books = () => {
          value: 'PAPERBOOK',
          id: 's14',
          action: (data) => {
-            getTypeOfBooks(data)
+            getSelectedType(data)
          },
       },
       {
@@ -88,7 +87,7 @@ export const Books = () => {
          value: 'AUDIOBOOK',
          id: 's15',
          action: (data) => {
-            getTypeOfBooks(data)
+            getSelectedType(data)
          },
       },
       {
@@ -96,7 +95,7 @@ export const Books = () => {
          value: 'EBOOK',
          id: 's16',
          action: (data) => {
-            getTypeOfBooks(data)
+            getSelectedType(data)
          },
       },
    ]
@@ -110,8 +109,9 @@ export const Books = () => {
                <ArrowDownIcon />
                {isVisibleGenreMenu && (
                   <GenreMenuForAdmin
-                     onGenreItem={selectGenre}
+                     onGenreItem={getSelectedGenre}
                      genres={genres}
+                     // onClick={getSelectedGenre}
                   />
                )}
             </ContainerOfGenre>
