@@ -29,14 +29,14 @@ export const Books = () => {
       setShowOptions(!showOptions)
    }
 
-   const getSelectedGenre = (id) => {
+   const getSelectedGenre = (genre, id) => {
       setGenreId(id)
-      dispatch(getAcceptedBooks({ offset, genreId: id, bookType: 'ALL' }))
+      dispatch(getAcceptedBooks({ offset, genreId: id, bookType }))
    }
 
    const getSelectedType = (data) => {
       setBookType(data)
-      dispatch(getAcceptedBooks({ offset, genreId: 28, bookType: data }))
+      dispatch(getAcceptedBooks({ offset, genreId, bookType: data }))
    }
 
    useEffect(() => {
