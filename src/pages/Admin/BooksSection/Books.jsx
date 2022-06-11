@@ -2,7 +2,6 @@
 import styled from '@emotion/styled/macro'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { AdminBookCard } from '../../../components/UI/Card/AdminBookCard'
@@ -12,12 +11,11 @@ import { getAcceptedBooks, getGenres } from '../../../store/admin-slice'
 import { theme } from '../../../utils/constants/theme'
 
 export const Books = () => {
-   const [searchParams, setSearchParams] = useSearchParams()
    const [showOptions, setShowOptions] = useState(false)
    const [offset, setOffset] = useState(1)
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
-   const [genreId, setGenreId] = useState(1)
-   const [bookType, setBookType] = useState('')
+   const [genreId, setGenreId] = useState(28)
+   const [bookType, setBookType] = useState('ALL')
    const dispatch = useDispatch()
    const listOfBooks = useSelector((state) => state.adminVendors.acceptedBooks)
    const genres = useSelector((state) => state.adminVendors.listOfGenres)
@@ -31,31 +29,18 @@ export const Books = () => {
       setShowOptions(!showOptions)
    }
 
-   const getSelectedGenre = (genre, id) => {
+   const getSelectedGenre = (id) => {
       setGenreId(id)
-      dispatch(getAcceptedBooks({ offset, genreId: id, bookType: 'PAPERBOOK' }))
-      setSearchParams({ genre, id })
+      dispatch(getAcceptedBooks({ offset, genreId: id, bookType: 'ALL' }))
    }
 
    const getSelectedType = (data) => {
       setBookType(data)
-      dispatch(getAcceptedBooks({ offset, genreId, bookType: data }))
+      dispatch(getAcceptedBooks({ offset, genreId: 28, bookType: data }))
    }
 
-   // useEffect(() => {
-   //    const genreid = searchParams.get('id')
-   //    // console.log(genreid)
-   //    dispatch(
-   //       getAcceptedBooks({
-   //          genreId: genreid,
-   //          bookType,
-   //       })
-   //    )
-   // }, [genreId, bookType])
-
    useEffect(() => {
-      const genreid = searchParams.get('id')
-      dispatch(getAcceptedBooks({ offset, genreId: genreid, bookType }))
+      dispatch(getAcceptedBooks({ offset, genreId, bookType }))
    }, [offset])
 
    useEffect(() => {
@@ -65,9 +50,10 @@ export const Books = () => {
    const options = [
       {
          title: 'Все',
+         value: 'ALL',
          id: 's13',
-         action: () => {
-            dispatch(getAcceptedBooks({ offset }))
+         action: (data) => {
+            getSelectedType(data)
          },
       },
       {
@@ -107,7 +93,6 @@ export const Books = () => {
                   <GenreMenuForAdmin
                      onGenreItem={getSelectedGenre}
                      genres={genres}
-                     // onClick={getSelectedGenre}
                   />
                )}
             </ContainerOfGenre>
