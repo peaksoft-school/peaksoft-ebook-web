@@ -16,7 +16,7 @@ export const Books = () => {
    const [showOptions, setShowOptions] = useState(false)
    const [offset, setOffset] = useState(1)
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
-   const [genreId, setGenreId] = useState('')
+   const [genreId, setGenreId] = useState(1)
    const [bookType, setBookType] = useState('')
    const dispatch = useDispatch()
    const listOfBooks = useSelector((state) => state.adminVendors.acceptedBooks)
@@ -38,7 +38,6 @@ export const Books = () => {
    }
 
    const getSelectedType = (data) => {
-      // console.log(bookType)
       setBookType(data)
       dispatch(getAcceptedBooks({ offset, genreId, bookType: data }))
    }

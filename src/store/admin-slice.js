@@ -203,24 +203,35 @@ export const getAcceptedBooks = createAsyncThunk(
    }
 )
 
-// export const getBooksByBoth = createAsyncThunk(
-//    'admin_panel_books/getBooksByBoth',
-//    async ({ genreId, bookType }, { rejectWithValue }) => {
-//       try {
-//          const result = await appFetch({
-//             path: `admin/booksByBoth`,
-//             method: 'GET',
-//             params: {
-//                genreId,
-//                bookType,
-//             },
-//          })
-//          return result
-//       } catch (error) {
-//          return rejectWithValue(error.message)
-//       }
-//    }
-// )
+export const getAllClients = createAsyncThunk(
+   'admin_panel_clients/getAllClients',
+   async (_, { fulfillWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: 'admin/clients',
+            method: 'GET',
+         })
+         return fulfillWithValue(result)
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const getSingleClient = createAsyncThunk(
+   'admin_panel_vendors/getSingleClient',
+   async (id, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/client/${id}`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
 
 const initialState = {
    listOfVendors: [],
@@ -274,6 +285,12 @@ export const adminPanelVendorSlice = createSlice({
       },
       [getGenres.fulfilled]: (state, { payload }) => {
          state.listOfGenres = payload
+      },
+      [getAllClients.fulfilled]: (state, { payload }) => {
+         state.listOfClients = payload
+      },
+      [getSingleClient.fulfilled]: (state, { payload }) => {
+         state.singleClient = payload
       },
    },
 })
