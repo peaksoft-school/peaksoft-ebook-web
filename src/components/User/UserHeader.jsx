@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
@@ -15,13 +15,16 @@ export const UserHeader = ({ countOfItems }) => {
    const changeVisibleGenreMenu = () => {
       setIsVisibleGenreMenu((prevState) => !prevState)
    }
+   const navigate = useNavigate()
    return (
       <VendorHeaderContainer>
          <InnerContainer>
             <StyledLogo />
             <SearchInput booksList={booksList} />
             <StyledFavoriteIcon />
-            <Basket>Корзина ({countOfItems})</Basket>
+            <Basket onClick={() => navigate('/basket')}>
+               Корзина ({countOfItems})
+            </Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>
@@ -138,6 +141,7 @@ const VendorHeaderContainer = styled.div`
    position: fixed;
    right: 50%;
    transform: translateX(50%);
+   background: white;
 `
 const InnerContainer = styled.div`
    display: flex;
