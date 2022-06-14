@@ -5,6 +5,7 @@ export const appFetch = async (options, responseOption) => {
    const token = getJwt()
    try {
       const { path, body, method, params } = options
+      let url = path
       const requestOptions = {
          method: method || 'GET',
          headers: token
@@ -21,9 +22,9 @@ export const appFetch = async (options, responseOption) => {
          const queryParamsStringValue = Object.keys(params)
             .map((paramKey) => `${paramKey}=${params[paramKey]}`)
             .join('&')
-         const path = `${path}?${queryParamsStringValue}`
+         url = `${path}?${queryParamsStringValue}`
       }
-      const response = await fetch(`${SERVER_BASE_URL}/${path}`, requestOptions)
+      const response = await fetch(`${SERVER_BASE_URL}/${url}`, requestOptions)
       const result = responseOption?.asText
          ? await response.text()
          : await response.json()

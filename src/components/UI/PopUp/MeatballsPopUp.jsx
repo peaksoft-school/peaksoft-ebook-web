@@ -46,6 +46,15 @@ const MenuItem = styled.p`
    }
 `
 const MenuContainer = styled.div`
+   animation: POPUP 0.05s;
+   @keyframes POPUP {
+      from {
+         height: 0;
+      }
+      to {
+         height: 100px;
+      }
+   }
    position: absolute;
    top: ${({ isRejected }) => (isRejected ? '53px' : '36px')};
    right: ${({ isRejected }) => (isRejected ? '24px' : '6px')};

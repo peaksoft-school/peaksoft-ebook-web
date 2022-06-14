@@ -11,6 +11,17 @@ export const DEFAULT_ROUTES = {
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {}
 export const VENDOR_ROUTES = {
+   VENDOR_MAIN_PAGE: {
+      PATH: '/main-page',
+      LABEL: 'Главная',
+   },
+   VENDOR_PROFILE: {
+      PATH: '/profile',
+      LABEL: 'Профиль',
+   },
+   VENDOR_ABOUT_BOOKS: {
+      PATH: '/main-page/:id',
+   },
    ADD_BOOK: {
       PATH: '/add-book',
       LABEL: 'Добавить книгу',
@@ -49,6 +60,10 @@ export const ADMIN_ROUTES = {
    USERS: {
       PATH: '/users',
       LABEL: 'Пользователи',
+   },
+   USERS_PROFILE: {
+      PATH: '/users/:id/profile',
+      LABEL: 'Профиль',
    },
    BOOKS: {
       PATH: '/books',
