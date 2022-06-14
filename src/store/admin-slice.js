@@ -249,7 +249,11 @@ const initialState = {
 export const adminSlice = createSlice({
    name: 'admin',
    initialState,
-   reducers: {},
+   reducers: {
+      resetBook(state) {
+         state.book = null
+      },
+   },
    extraReducers: {
       [getAllVendors.fulfilled]: (state, { payload }) => {
          state.listOfVendors = payload

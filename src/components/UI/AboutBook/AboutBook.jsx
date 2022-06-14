@@ -60,7 +60,7 @@ export const AboutBook = ({
          <ButtonsContainer>
             <div>
                <Button
-                  padding="10px 40px"
+                  padding="10px 30px"
                   bgColor="inherit"
                   ling-height="19px"
                   bgColorActive={theme.secondary.orange}
@@ -75,7 +75,7 @@ export const AboutBook = ({
             </div>
             <div>
                <Button
-                  padding="11px 40px"
+                  padding="11px 30px"
                   bgColor={theme.secondary.orange}
                   ling-height="19px"
                   bgColorHover="#FE6F33"
@@ -142,6 +142,7 @@ const InformationTextContainer = styled.div`
    & p {
       font-weight: 400;
       min-width: 200px;
+      text-transform: capitalize;
    }
 `
 const AudioListenerContainer = styled.div`

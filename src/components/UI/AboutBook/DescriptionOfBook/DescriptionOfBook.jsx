@@ -44,6 +44,7 @@ const DescriptionOfBookContainer = styled.div`
    display: flex;
    width: 100%;
    justify-content: space-between;
+   gap: 0 107px;
    font-family: 'Open Sans';
    color: #222222;
 `
