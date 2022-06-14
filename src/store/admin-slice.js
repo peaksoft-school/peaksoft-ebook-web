@@ -166,13 +166,84 @@ export const refuseBook = createAsyncThunk(
    }
 )
 
+export const getGenres = createAsyncThunk(
+   'admin_panel_books/getGenre',
+   async (_, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/genre_count`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+export const getAcceptedBooks = createAsyncThunk(
+   'admin_panel_books/getAcceptedBooks',
+   async ({ genreId, bookType, offset }, { rejectWithValue }) => {
+      try {
+         const response = await appFetch({
+            path: `admin/books-accepted/${offset}`,
+            method: 'GET',
+            params: {
+               genreId,
+               bookType,
+            },
+         })
+         const result = {
+            response,
+            offset,
+         }
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getAllClients = createAsyncThunk(
+   'admin_panel_clients/getAllClients',
+   async (_, { fulfillWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: 'admin/clients',
+            method: 'GET',
+         })
+         return fulfillWithValue(result)
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const getSingleClient = createAsyncThunk(
+   'admin_panel_vendors/getSingleClient',
+   async (id, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: `admin/client/${id}`,
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
 const initialState = {
    listOfVendors: [],
+   listOfClients: [],
    singleVendor: null,
+   singleClient: null,
    listOfVendorBooks: [],
    listOfApplications: [],
    countOfBooksInProgress: [],
    book: null,
+   acceptedBooks: [],
+   listOfGenres: [],
 }
 
 export const adminPanelVendorSlice = createSlice({
@@ -204,6 +275,22 @@ export const adminPanelVendorSlice = createSlice({
          } else {
             state.listOfApplications.push(...payload.response)
          }
+      },
+      [getAcceptedBooks.fulfilled]: (state, { payload }) => {
+         if (payload.offset === 1) {
+            state.acceptedBooks = payload.response
+         } else {
+            state.acceptedBooks.push(...payload.response)
+         }
+      },
+      [getGenres.fulfilled]: (state, { payload }) => {
+         state.listOfGenres = payload
+      },
+      [getAllClients.fulfilled]: (state, { payload }) => {
+         state.listOfClients = payload
+      },
+      [getSingleClient.fulfilled]: (state, { payload }) => {
+         state.singleClient = payload
       },
    },
 })

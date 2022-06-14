@@ -1,10 +1,9 @@
 import styled from '@emotion/styled/macro'
 import React from 'react'
 
-export const GenreItem = ({ genre, count, onGenreItem }) => {
-   console.log(genre)
+export const GenreItem = ({ genre, count, onGenreItem, id }) => {
    return (
-      <GenreItemContainer onClick={onGenreItem}>
+      <GenreItemContainer onClick={() => onGenreItem(genre, id)}>
          <StyledGenre>{genre}</StyledGenre>
          <StyledCount>{count}</StyledCount>
       </GenreItemContainer>

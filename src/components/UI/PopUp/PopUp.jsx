@@ -45,11 +45,20 @@ const MenuItem = styled.div`
    }
 `
 const MenuContainer = styled.div`
+   animation: POPUP 0.05s;
+   @keyframes POPUP {
+      from {
+         height: 0;
+      }
+      to {
+         height: 100px;
+      }
+   }
    position: absolute;
    top: ${({ top }) => top || '50px'};
    right: ${({ right }) => right || '-5px'};
    width: ${({ width }) => width || '140px'};
-   box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.1);
+   box-shadow: ${({ boxShadow }) => boxShadow || ''};
    padding: 5px 20px;
    min-width: 140px;
    display: flex;
