@@ -1,39 +1,31 @@
 import styled from '@emotion/styled'
 import { Breadcrumbs, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import InputMask from 'react-input-mask'
+import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button } from '../../../components/UI/Buttons/Button'
-import { TextButton } from '../../../components/UI/Buttons/TextButton'
-import { Input } from '../../../components/UI/Inputs/Input'
-import { theme } from '../../../utils/constants/theme'
-import { ErrorConfirmModal } from '../../../components/UI/Modals/ErrorConfirmModal'
-import { logout } from '../../../store/auth-slice'
-import { INPUT_MASK_NUMBER } from '../../../utils/constants/general'
-import { InputForPassword } from '../../../components/UI/Inputs/InputForPassword'
+import { theme } from '../../utils/constants/theme'
+import { Input } from '../UI/Inputs/Input'
+import { InputForPassword } from '../UI/Inputs/InputForPassword'
+import { TextButton } from '../UI/Buttons/TextButton'
+import { Button } from '../UI/Buttons/Button'
+import { ErrorConfirmModal } from '../UI/Modals/ErrorConfirmModal'
 import {
-   editVendorProfile,
-   getVendorProfile,
-   removeVendorProfile,
-} from '../../../store/vendor-slice'
+   editClientProfile,
+   getClientProfile,
+   removeClientProfile,
+} from '../../store/client-slice'
+
 import {
    ErrorMessage,
    ErrorMessageForExactField,
-} from '../../../assets/styles/styles'
-import { SuccessModal } from '../../../components/UI/Modals/SuccessModal'
+} from '../../assets/styles/styles'
+import { logout } from '../../store/auth-slice'
+import { SuccessModal } from '../UI/Modals/SuccessModal'
 
-export const VendorProfile = () => {
-   const { vendorSettings, errorMessagePassword } = useSelector(
-      (state) => state.vendor
-   )
-   const [showRemoveModal, setRemoveModal] = useState(false)
-
+export const ClientPersonalProfile = () => {
    const [showSuccess, setShowSuccess] = useState(false)
-
    const dispatch = useDispatch()
-
    const navigate = useNavigate()
    useEffect(() => {
       const timeout = setTimeout(() => setShowSuccess(false), 2000)
@@ -42,52 +34,43 @@ export const VendorProfile = () => {
          clearTimeout(timeout)
       }
    }, [showSuccess])
-
+   const { clientSettings, errorMessagePassword } = useSelector(
+      (state) => state.client
+   )
    useEffect(() => {
-      dispatch(getVendorProfile())
+      dispatch(getClientProfile())
    }, [])
-
-   const onSubmitHandler = (vendorData) =>
-      dispatch(
-         editVendorProfile(vendorData, {
-            showModal: () => setShowSuccess(true),
-         })
-      )
-
+   const [showRemoveModal, setRemoveModal] = useState(false)
    const showDeleteModal = () => {
       setRemoveModal(true)
    }
    const navigateAfterSuccessDelete = () => {
       logout(navigate)
    }
-   const deleteVendorProfile = () => {
-      dispatch(removeVendorProfile({ navigateAfterSuccessDelete }))
+   const deleteClientProfile = () => {
+      dispatch(removeClientProfile({ navigateAfterSuccessDelete }))
    }
 
+   const onSubmitHandler = (clientData) =>
+      dispatch(editClientProfile(clientData))
    const {
       register,
       handleSubmit,
       formState: { errors },
       setValue,
-      control,
    } = useForm({
       defaultValues: {
-         firstName: '',
-         lastName: '',
-         number: '',
+         name: '',
          email: '',
       },
    })
-
    useEffect(() => {
-      if (vendorSettings) {
-         setValue('firstName', vendorSettings.firstName)
-         setValue('lastName', vendorSettings.lastName)
-         setValue('email', vendorSettings.email)
-         setValue('number', vendorSettings.number)
-         setValue('oldPassword', vendorSettings.oldPassword)
+      if (clientSettings) {
+         setValue('firstName', clientSettings.firstName)
+         setValue('email', clientSettings.email)
+         setValue('oldPassword', clientSettings.oldPassword)
       }
-   }, [vendorSettings])
+   }, [clientSettings])
 
    const errorForPasswordField =
       errorMessagePassword === 'Текущий пароль не совпадают'
@@ -97,53 +80,17 @@ export const VendorProfile = () => {
    return (
       <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>
          <Breadcrumbs>
-            <Link to="/main-page">Главная</Link>
+            <Link to="/">Главная</Link>
             <Typography color={theme.primary.black}>Профиль</Typography>
          </Breadcrumbs>
          <ProfileContainer>
             <PersonalInformationContainer>
                <Private>Личная информация</Private>
                <PersonalInformation>
-                  <p>Ваше имя</p>
+                  <p>Мое имя</p>
                   <Input
-                     type="text"
-                     defaultValue=" defaultValues.firstName"
                      placeholder="Напишите ваше имя"
                      {...register('firstName', { required: true })}
-                  />
-               </PersonalInformation>
-               <PersonalInformation>
-                  <p>Ваша фамилие</p>
-                  <Input
-                     type="text"
-                     placeholder="Введите вашу фамилию"
-                     {...register('lastName', { required: true })}
-                  />
-               </PersonalInformation>
-               <PersonalInformation>
-                  <p>Номер телефона</p>
-                  <Controller
-                     name="number"
-                     control={control}
-                     rules={{
-                        required: true,
-                     }}
-                     defaultValue=""
-                     render={({ field: { onChange, value } }) => (
-                        <InputMask
-                           mask={INPUT_MASK_NUMBER}
-                           maskChar=""
-                           onChange={(e) => onChange(e.target.value)}
-                           value={value}
-                        >
-                           {(inputProps) => (
-                              <Input
-                                 placeholder="+996 (___) __ __ __"
-                                 {...inputProps}
-                              />
-                           )}
-                        </InputMask>
-                     )}
                   />
                </PersonalInformation>
                <PersonalInformation>
@@ -207,18 +154,18 @@ export const VendorProfile = () => {
                <ErrorConfirmModal
                   isOpen={showRemoveModal}
                   onCencel={() => setRemoveModal(false)}
-                  onExit={deleteVendorProfile}
+                  onExit={deleteClientProfile}
                   onCloseBackDrop={(e) => {
                      e.stopPropagation()
                      setRemoveModal(false)
                   }}
                   title={`Вы уверены, что хотите удалить профиль?
-                `}
+          `}
                />
             )}
          </RemoveProfile>
          <SubmitProfile>
-            <Link to="/main-page">
+            <Link to="/">
                <Button
                   type="button"
                   padding="10px 24px 10px 24px"
@@ -256,7 +203,9 @@ export const VendorProfile = () => {
 const StyledForm = styled.form`
    position: relative;
    margin: 0 auto;
-   padding: 0px 0px 100px 0px;
+   padding-top: 50px;
+   right: 90px;
+
    .MuiBreadcrumbs-root {
       font-size: 14px;
       font-weight: 400px;
@@ -278,6 +227,7 @@ const ProfileContainer = styled.div`
    display: flex;
    justify-content: space-between;
    width: 1180px;
+   margin: 0 auto;
    margin-top: 50px;
    input {
       width: 514px;
@@ -308,5 +258,5 @@ const SubmitProfile = styled.div`
    justify-content: space-between;
    width: 300px;
    right: 0;
-   padding: 50px 0 50px 0;
+   padding: 50px 0 0 120px;
 `
