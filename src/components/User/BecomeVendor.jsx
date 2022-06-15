@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Logo } from '../UI/Logo/Logo'
 import { Button } from '../UI/Buttons/Button'
 import { ReactComponent as PortalIcon } from '../../assets/icons/portal.svg'
@@ -17,11 +18,12 @@ import { logout } from '../../store/auth-slice'
 
 export const BecomeVendor = () => {
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const navigateToSignIn = () => {
       navigate('/?sign-up-vendor=true')
    }
    const navigateHandler = () => {
-      logout(navigateToSignIn)
+      dispatch(logout(navigateToSignIn))
    }
 
    return (
