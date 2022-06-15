@@ -172,6 +172,7 @@ export const ClientPersonalProfile = () => {
                   bgColor="#FFFFFF"
                   color="#A3A3A3"
                   fontSize="16px"
+                  colorHover="#FFFFFF"
                   ling-height="21.79px"
                   bgColorActive="#FF4C00"
                   bgColorHover="#484848"
@@ -253,10 +254,13 @@ const RemoveProfile = styled.div`
    margin-top: 50px;
 `
 const SubmitProfile = styled.div`
+   button {
+      margin: 20px;
+   }
    position: absolute;
    display: flex;
    justify-content: space-between;
-   width: 300px;
+   width: 355px;
    right: 0;
    padding: 50px 0 0 120px;
 `

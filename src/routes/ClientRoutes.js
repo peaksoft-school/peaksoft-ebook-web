@@ -2,7 +2,12 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ClientPersonalProfile } from '../components/User/ClientPersonalProfile'
 import { UserLayout } from '../layout/UserLayout'
-import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
+import { BecomeVendor } from '../components/User/BecomeVendor'
+import {
+   BECOME_VENDOR_ROUTES,
+   CLIENT_ROUTES,
+   DEFAULT_ROUTES,
+} from '../utils/constants/routes'
 
 export const ClientRoutes = () => {
    return (
@@ -13,6 +18,10 @@ export const ClientRoutes = () => {
                element={<ClientPersonalProfile />}
             />
          </Route>
+         <Route
+            path={BECOME_VENDOR_ROUTES.BECOME_VENDOR.PATH}
+            element={<BecomeVendor />}
+         />
          <Route
             path={DEFAULT_ROUTES.NOT_FOUND.PATH}
             element={<div>Страница не найдена</div>}
