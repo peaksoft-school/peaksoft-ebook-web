@@ -46,7 +46,7 @@ export const UserHeader = ({ countOfItems }) => {
                      </NavLink>
                   </li>
                   <li>
-                     <NavLink to="becomevendor" className="eBook">
+                     <NavLink to="/becomevendor" className="eBook">
                         Начать продавать на eBook
                      </NavLink>
                   </li>

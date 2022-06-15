@@ -10,6 +10,12 @@ export const DEFAULT_ROUTES = {
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {}
+
+export const BECOME_VENDOR_ROUTES = {
+   BECOME_VENDOR: {
+      PATH: '/becomevendor',
+   },
+}
 export const VENDOR_ROUTES = {
    VENDOR_MAIN_PAGE: {
       PATH: '/main-page',

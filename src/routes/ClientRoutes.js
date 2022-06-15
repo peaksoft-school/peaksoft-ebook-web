@@ -1,13 +1,23 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { DEFAULT_ROUTES } from '../utils/constants/routes'
+import { BECOME_VENDOR_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
+import { UserLayout } from '../layout/UserLayout'
+import { BecomeVendor } from '../components/User/BecomeVendor'
 
 export const ClientRoutes = () => {
    return (
       <Routes>
          <Route
             path={DEFAULT_ROUTES.INDEX.PATH}
-            element={<div>Главная Страница Клиента</div>}
+            element={
+               <div>
+                  <UserLayout />
+               </div>
+            }
+         />
+         <Route
+            path={BECOME_VENDOR_ROUTES.BECOME_VENDOR.PATH}
+            element={<BecomeVendor />}
          />
          <Route
             path={DEFAULT_ROUTES.NOT_FOUND.PATH}
