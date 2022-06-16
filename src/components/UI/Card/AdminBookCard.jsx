@@ -7,9 +7,9 @@ import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete-icon.
 import { MeatballsPopUp } from '../PopUp/MeatballsPopUp'
 import { Modal } from '../Modals/Modal'
 import { Button } from '../Buttons/Button'
-import { Input } from '../Inputs/Input'
 import { acceptBook, refuseBook } from '../../../store/admin-slice'
 import { SuccessConfirmModalForAdmin } from '../Modals/SuccessConfirmModalForAdmin'
+import { TextArea } from '../Inputs/TextArea'
 
 export const AdminBookCard = ({
    like,
@@ -135,7 +135,7 @@ export const AdminBookCard = ({
                >
                   <div>
                      <p>Причина вашего отклонения</p>
-                     <Input
+                     <TextArea
                         type="text"
                         placeholder="Напишите причину отклонения..."
                         value={message}
@@ -276,15 +276,8 @@ const StyledModal = styled.form`
    button {
       margin-left: 350px;
    }
-   input {
-      width: 483px;
-      height: 108px;
-      margin: 0px auto;
-      ::placeholder {
-         color: #969696;
-         font-size: 14px;
-         font-weight: 400;
-         position: absolute;
-      }
+   textarea {
+      vertical-align: text-top;
+      display: inline;
    }
 `
