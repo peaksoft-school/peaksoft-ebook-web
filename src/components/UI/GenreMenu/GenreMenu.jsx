@@ -33,7 +33,6 @@ const GenreMenuContainer = styled.div`
    transform: translate(-50%, -0%);
    z-index: 97;
    animation: GENRES 0.3s;
-   z-index: 2;
    @keyframes GENRES {
       from {
          top: 0%;

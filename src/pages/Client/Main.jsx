@@ -3,24 +3,26 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '../../components/UI/Buttons/Button'
 import { Input } from '../../components/UI/Inputs/Input'
-import { BookSlider } from '../../components/User/BookSlider'
 import { getBooksInMain } from '../../store/user-slice'
 import { theme } from '../../utils/constants/theme'
 import backLine from '../../assets/icons/back-line.svg'
+import { Top3Books } from '../../components/User/MainPage/Top3Books'
+import { Bestsellers } from '../../components/User/MainPage/Bestsellers'
 
 export const Main = () => {
    const { books } = useSelector((state) => state.user)
-   console.log(books)
    const dispatch = useDispatch()
 
    useEffect(() => {
       dispatch(getBooksInMain())
    }, [])
+
    return (
       <ParentContainer>
          <Top3BooksContainer>
-            <BookSlider books={books?.top3} />
+            <Top3Books books={books?.top3} />
          </Top3BooksContainer>
+         <Bestsellers bestsellers={books?.latestPublications} />
          <SubscribeToTheNewsletter>
             <h1>Подписаться на рассылку</h1>
             <div>
