@@ -169,13 +169,10 @@ const PopUpContainer = styled.div`
    z-index: 99;
 `
 const VendorBookCardContainer = styled.div`
-   margin: 0 auto;
-   padding-top: 30px;
+   padding-top: 20px;
    display: grid;
-   grid-column-gap: 20px;
-   grid-row-gap: 20px;
    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   grid-gap: 2rem;
+   grid-gap: 4rem;
    padding-bottom: 70px;
 `
 const SubmitSeeMore = styled.div`

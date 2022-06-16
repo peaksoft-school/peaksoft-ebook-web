@@ -11,11 +11,18 @@ import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 
 export const UserHeader = ({ countOfItems }) => {
    const booksList = []
+   const navigate = useNavigate()
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
    const changeVisibleGenreMenu = () => {
       setIsVisibleGenreMenu((prevState) => !prevState)
    }
-   const navigate = useNavigate()
+
+   const navigateToClientProfile = () => {
+      navigate(`/client-profile`)
+   }
+   const clientEnterSumbitHandler = () => {
+      navigateToClientProfile()
+   }
    return (
       <VendorHeaderContainer>
          <InnerContainer>
@@ -49,7 +56,7 @@ export const UserHeader = ({ countOfItems }) => {
                      </NavLink>
                   </li>
                   <li>
-                     <NavLink to="becomevendor" className="eBook">
+                     <NavLink to="/becomevendor" className="eBook">
                         Начать продавать на eBook
                      </NavLink>
                   </li>
@@ -62,6 +69,7 @@ export const UserHeader = ({ countOfItems }) => {
                ling-height="21.79px"
                bgColorHover="#484848"
                bgColorActive={theme.secondary.orange}
+               onClick={clientEnterSumbitHandler}
             >
                Войти
             </Button>
@@ -135,6 +143,7 @@ const Basket = styled.p`
 `
 const VendorHeaderContainer = styled.div`
    min-width: 1280px;
+   margin: 0 auto;
    display: flex;
    justify-content: center;
    flex-direction: column;
@@ -143,6 +152,7 @@ const VendorHeaderContainer = styled.div`
    transform: translateX(50%);
    background: white;
    z-index: 99;
+   flex-shrink: 0;
 `
 const InnerContainer = styled.div`
    display: flex;
