@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
@@ -11,9 +11,17 @@ import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 
 export const UserHeader = ({ countOfItems }) => {
    const booksList = []
+   const navigate = useNavigate()
    const [isVisibleGenreMenu, setIsVisibleGenreMenu] = useState(false)
    const changeVisibleGenreMenu = () => {
       setIsVisibleGenreMenu((prevState) => !prevState)
+   }
+
+   const navigateToClientProfile = () => {
+      navigate(`/client-profile`)
+   }
+   const clientEnterSumbitHandler = () => {
+      navigateToClientProfile()
    }
    return (
       <VendorHeaderContainer>
@@ -46,7 +54,7 @@ export const UserHeader = ({ countOfItems }) => {
                      </NavLink>
                   </li>
                   <li>
-                     <NavLink to="becomevendor" className="eBook">
+                     <NavLink to="/becomevendor" className="eBook">
                         Начать продавать на eBook
                      </NavLink>
                   </li>
@@ -59,6 +67,7 @@ export const UserHeader = ({ countOfItems }) => {
                ling-height="21.79px"
                bgColorHover="#484848"
                bgColorActive={theme.secondary.orange}
+               onClick={clientEnterSumbitHandler}
             >
                Войти
             </Button>
@@ -132,12 +141,16 @@ const Basket = styled.p`
 `
 const VendorHeaderContainer = styled.div`
    min-width: 1280px;
+   margin: 0 auto;
    display: flex;
    justify-content: center;
    flex-direction: column;
    position: fixed;
    right: 50%;
    transform: translateX(50%);
+   background: white;
+   z-index: 99;
+   flex-shrink: 0;
 `
 const InnerContainer = styled.div`
    display: flex;
