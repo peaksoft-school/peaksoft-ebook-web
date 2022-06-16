@@ -9,6 +9,7 @@ import {
    DEFAULT_ROUTES,
 } from '../utils/constants/routes'
 import { ClientBasket } from '../pages/Client/ClientBasket'
+import { ClientPromocode } from '../pages/Client/ClientPromocode'
 
 export const ClientRoutes = () => {
    return (
@@ -21,6 +22,10 @@ export const ClientRoutes = () => {
             <Route
                path={CLIENT_ROUTES.CLIENT_BASKET.PATH}
                element={<ClientBasket />}
+            />
+            <Route
+               path={CLIENT_ROUTES.CLIENT_PROMOCODE.PATH}
+               element={<ClientPromocode />}
             />
          </Route>
          <Route

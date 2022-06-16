@@ -14,6 +14,10 @@ export const CLIENT_ROUTES = {
       PATH: '/basket',
       LABEL: 'Корзина',
    },
+   CLIENT_PROMOCODE: {
+      PATH: '/promocode',
+      LABEL: 'Промокод',
+   },
    CLIENT_PROFILE: {
       PATH: '/client-profile',
       LABEL: 'Профиль',

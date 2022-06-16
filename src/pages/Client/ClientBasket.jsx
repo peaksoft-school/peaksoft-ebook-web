@@ -23,21 +23,21 @@ const DATA = [
    },
    {
       firstPhoto:
-         'https://s3-alpha-sig.figma.com/img/66ac/38f9/629144e6ce4042ef47b5cc9c75a8714b?Expires=1655683200&Signature=aslgS3yAggXR2Mj5Z~aiQ3I68XApL3lgGwgLXi0HTrsf3r7t6j~7zBN~0Q7a0jEr-tTRYXKNIlb7E1IBScuD2MzClHXWQynRbFEzoWahKBeR7BRzDm7NxDKqjL~sENpaAK8vddXCUkPYhf-0DBnJYbTy~CH7FwRM~3wxv9O-uq4A4M6GcDNE8QGqmwbKgapc3G~3L~IxAzRBC3ZtRUq2mFn0IHJF0oKDrJuYoKQhcVn164G1XTYhXulSh9lZhh7OSOHtHc17qEFK2IJWiBlGvGIX15nay0warXFmD4x-vdJf1MjvIius8Mc0~e0HuzDEgrfkJ-XE2kt0OPy8aXSnCw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
+         'https://s3-alpha-sig.figma.com/img/5485/c0c9/8a3c093891f4501e8ae42eb81b716745?Expires=1656288000&Signature=KFVE8-m1J9YfalHqIe2vzZiqJuv4MVpuFzHu0YkAr0H1UlriTu7cV2RssKv0A90Uj1gAFU2d67-tVqtxMm-~mj7F1Gd8jVvnCeaArIzS~J1ww0N7P0dbv9ik8I3T-pnA4bbKw6qM9DtcyUICOsOJ3vBREcdne~fwctDRlSGPOQ2A42jBJt-4oaeqaOkm4tj1sTWEtWTf1hoQc2sJmjU5CMUMzC3Uh66O12DkTxhIvRTDtSrMWspfJsgzI0DgeTuuW4l03JWKSXpGvMCOk5QDZUdMFO9pO~Dhp6dmcnSt3c19M2bX1G4kcOSLRFSCI7V5j4~3O92rN8S8MHvzEWnupw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
       bookId: 1,
-      title: 'Гарри Поттер и тайная комната ',
-      authorFullName: 'Роулинг Джоан Кэтлин',
-      price: 220,
+      title: 'История книги и ',
+      authorFullName: 'А.Бахтиаров',
+      price: 310,
       promocode: '22',
       discount: '11%',
    },
    {
       firstPhoto:
-         'https://s3-alpha-sig.figma.com/img/66ac/38f9/629144e6ce4042ef47b5cc9c75a8714b?Expires=1655683200&Signature=aslgS3yAggXR2Mj5Z~aiQ3I68XApL3lgGwgLXi0HTrsf3r7t6j~7zBN~0Q7a0jEr-tTRYXKNIlb7E1IBScuD2MzClHXWQynRbFEzoWahKBeR7BRzDm7NxDKqjL~sENpaAK8vddXCUkPYhf-0DBnJYbTy~CH7FwRM~3wxv9O-uq4A4M6GcDNE8QGqmwbKgapc3G~3L~IxAzRBC3ZtRUq2mFn0IHJF0oKDrJuYoKQhcVn164G1XTYhXulSh9lZhh7OSOHtHc17qEFK2IJWiBlGvGIX15nay0warXFmD4x-vdJf1MjvIius8Mc0~e0HuzDEgrfkJ-XE2kt0OPy8aXSnCw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
+         'https://s3-alpha-sig.figma.com/img/5832/f113/509dad26f63c503c63d2317244d87089?Expires=1656288000&Signature=L3JJwUa1cokyIM61vnr3d9zLgivmGNARf18s6s3RCgtoVAXVjH9YjRjkS00g4HeWxTPBtzSHR0YC3yqOdjnxdXS9fGbe0hPpKmGETsjR7LJH7ORKEmqwBTYzjNUbCgSbpP6FAaM5WK6scM8QsMQKtVxRFm7xYVmD2i2kzDyVmSwo7I0A6hGOjQ9MWOPJLoqneANUZ7uYruuqdT2aQaO047-q9Q6ctj5w2vg~xRkZEz4bzfVpqXANaq3~xCPcA6XnPTFm5pwgeyOfe7VZLNtMwgMfuTRSDP8tTGd052st~5Td1zbIIQFZrLHUauLN6987EtP9ZArkzoci7Dm6-69ptw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
       bookId: 3,
-      title: 'Гарри Поттер и тайная комната ',
-      authorFullName: 'Роулинг Джоан Кэтлин',
-      price: 220,
+      title: 'Тонкое искусство пофигизма',
+      authorFullName: 'Марк Мэнсон',
+      price: 440,
       promocode: '22',
       discount: '11%',
    },
@@ -84,8 +84,8 @@ export const ClientBasket = () => {
                      </div>
                      <ul>
                         {/* <li>{count} шт</li>
-                     <li>{discount} c</li>
-                     <li>{sum} c</li> */}
+                        <li>{discount} c</li>
+                        <li>{sum} c</li> */}
                      </ul>
                   </StyledUl>
                   <StyledPromocode>
