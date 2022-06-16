@@ -10,7 +10,7 @@ import { DescriptionOfBook } from '../../../components/UI/AboutBook/DescriptionO
 import { Input } from '../../../components/UI/Inputs/Input'
 import { Modal } from '../../../components/UI/Modals/Modal'
 import { Button } from '../../../components/UI/Buttons/Button'
-import { acceptBook, getBook, refuseBook } from '../../../store/admin-slice'
+import { acceptBook, getBookById, refuseBook } from '../../../store/admin-slice'
 import { SuccessConfirmModalForAdmin } from '../../../components/UI/Modals/SuccessConfirmModalForAdmin'
 
 export const ApplicationsInnerPage = () => {
@@ -20,10 +20,10 @@ export const ApplicationsInnerPage = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const specificBook = useSelector((state) => state.adminVendors.book)
+   const specificBook = useSelector((state) => state.admin.book)
 
    useEffect(() => {
-      dispatch(getBook(id))
+      dispatch(getBookById(id))
    }, [])
 
    useEffect(() => {
