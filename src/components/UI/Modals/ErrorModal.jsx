@@ -20,6 +20,7 @@ export const ErrorModal = ({ onCloseBackDrop, onClose, isOpen }) => {
                   ling-height="21.79px"
                   bgColorHover="#484848"
                   bgColorActive={theme.secondary.orange}
+                  onClick={onClose}
                >
                   Ок
                </Button>

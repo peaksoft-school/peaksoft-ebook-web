@@ -1,8 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { ClientPersonalProfile } from '../components/User/ClientPersonalProfile'
 import { UserLayout } from '../layout/UserLayout'
-import { BecomeVendor } from '../components/User/BecomeVendor'
 import {
    BECOME_VENDOR_ROUTES,
    CLIENT_ROUTES,
@@ -10,6 +8,8 @@ import {
 } from '../utils/constants/routes'
 import { ClientBasket } from '../pages/Client/ClientBasket'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
+import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
+import { BecomeVendor } from '../pages/Client/BecomeVendor'
 
 export const ClientRoutes = () => {
    return (
