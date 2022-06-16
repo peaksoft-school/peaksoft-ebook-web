@@ -148,7 +148,6 @@ const HeadContainer = styled.div`
 const BooksAmount = styled.span`
    color: #969696;
    font-size: 16px;
-   padding-left: 35px;
 `
 const ContainerOfIcons = styled.div`
    display: flex;

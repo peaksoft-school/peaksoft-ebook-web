@@ -2,6 +2,8 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 import { ReactComponent as Vector } from '../../assets/icons/vector.svg'
 import { UnderlinedButton } from '../UI/Buttons/UnderlinedButton'
+import { ReactComponent as Minus } from '../../assets/icons/minus.svg'
+import { ReactComponent as Plus } from '../../assets/icons/plus-count.svg'
 
 export const ClientBasketItem = ({
    firstPhoto,
@@ -31,6 +33,11 @@ export const ClientBasketItem = ({
                ) : (
                   ''
                )}
+               <ContainerOfCounut>
+                  <Minus />
+                  <div>1</div>
+                  <Plus />
+               </ContainerOfCounut>
             </ul>
          </StyledData>
          <StyledDiv>
@@ -43,6 +50,18 @@ export const ClientBasketItem = ({
       </Container>
    )
 }
+
+const ContainerOfCounut = styled.div`
+   width: 75px;
+   height: 28px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   &:hover rect {
+      fill: #222222;
+      cursor: pointer;
+   }
+`
 
 const StyledImage = styled.div`
    padding-left: 30px;

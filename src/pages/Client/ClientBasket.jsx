@@ -1,8 +1,11 @@
 import styled from '@emotion/styled/macro'
 import { Breadcrumbs, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from '../../components/UI/Buttons/Button'
 import { TextButton } from '../../components/UI/Buttons/TextButton'
+import { InputForPromocode } from '../../components/UI/Inputs/InputForPromocode'
+import { SuccessModal } from '../../components/UI/Modals/SuccessModal'
 import { ClientBasketItem } from '../../components/User/ClientBasketItem'
 import { DEFAULT_ROUTES } from '../../utils/constants/routes'
 import { theme } from '../../utils/constants/theme'
@@ -41,38 +44,143 @@ const DATA = [
 ]
 
 export const ClientBasket = () => {
+   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false)
    return (
-      <Container>
-         <Breadcrumbs>
-            <Link to={DEFAULT_ROUTES.INDEX.PATH}>Главная</Link>
-            <Typography color={theme.primary.black}>Корзина</Typography>
-         </Breadcrumbs>
-         <HeadContainer>
-            <BooksTitle>Ваши книги</BooksTitle>
-            <BooksAmount>Всего: 3</BooksAmount>
-         </HeadContainer>
-         <StyledButton>
-            <StyledTextButton>Очистить корзину</StyledTextButton>
-         </StyledButton>
-         {DATA.map((basket) => (
-            <ClientBasketItem
-               key={basket.bookId}
-               bookId={basket.bookId}
-               firstPhoto={basket.firstPhoto}
-               title={basket.title}
-               authorFullName={basket.authorFullName}
-               price={basket.price}
-               promocode={basket.promocode}
-               //    discount={basket.discount}
-            />
-         ))}
-      </Container>
+      <>
+         <Container>
+            <ContainerOfBasket>
+               <Breadcrumbs>
+                  <Link to={DEFAULT_ROUTES.INDEX.PATH}>Главная</Link>
+                  <Typography color={theme.primary.black}>Корзина</Typography>
+               </Breadcrumbs>
+               <HeadContainer>
+                  <BooksTitle>Ваши книги</BooksTitle>
+                  <BooksAmount>Всего: 3</BooksAmount>
+               </HeadContainer>
+               <StyledButton>
+                  <StyledTextButton>Очистить корзину</StyledTextButton>
+               </StyledButton>
+               {DATA.map((basket) => (
+                  <ClientBasketItem
+                     key={basket.bookId}
+                     bookId={basket.bookId}
+                     firstPhoto={basket.firstPhoto}
+                     title={basket.title}
+                     authorFullName={basket.authorFullName}
+                     price={basket.price}
+                     promocode={basket.promocode}
+                     // discount={basket.discount}
+                  />
+               ))}
+            </ContainerOfBasket>
+            <ContainerOfBooking>
+               <StyledContainer>
+                  <StyledTitle>Общая стоимость</StyledTitle>
+                  <StyledUl>
+                     <div>
+                        <li>Количество книг:</li>
+                        <li>Скидка</li>
+                        <li>Сумма </li>
+                     </div>
+                     <ul>
+                        {/* <li>{count} шт</li>
+                     <li>{discount} c</li>
+                     <li>{sum} c</li> */}
+                     </ul>
+                  </StyledUl>
+                  <StyledPromocode>
+                     <InputForPromocode placeholder="Введите промокод" />
+                  </StyledPromocode>
+                  <StyledTotal>
+                     <li>Итого:</li>
+                     {/* <li>{total} с</li> */}
+                  </StyledTotal>
+               </StyledContainer>
+               <Button
+                  padding="10px 131px"
+                  lHeight="18px"
+                  bgColor="#222222"
+                  weight="400"
+                  color="#ffffff"
+                  bgColorHover="#484848"
+                  colorHover={theme.primary.white}
+                  bgColorActive={theme.secondary.orange}
+                  onClick={(e) => {
+                     setIsOpenSuccessModal(true)
+                     e.stopPropagation()
+                  }}
+               >
+                  Оформить заказ
+               </Button>
+            </ContainerOfBooking>
+         </Container>
+         <SuccessModal
+            isOpen={isOpenSuccessModal}
+            onClose={() => setIsOpenSuccessModal(false)}
+            onCloseBackDrop={() => setIsOpenSuccessModal(false)}
+            // onClick={}
+         />
+      </>
    )
 }
+const StyledTotal = styled.div`
+   display: flex;
+   justify-content: space-between;
+   padding-right: 39px;
+   padding-left: 39px;
+   padding-top: 26px;
+   li {
+      font-size: 16px;
+      font-weight: 600;
+      color: #222222;
+      text-align: right;
+      list-style: none;
+   }
+`
+const StyledPromocode = styled.div`
+   padding: 32px 21px 0px 21px;
+`
+
+const StyledUl = styled.div`
+   display: flex;
+   justify-content: space-between;
+   padding-right: 39px;
+   padding-left: 39px;
+   ul {
+      text-align: right;
+   }
+   li {
+      color: #696969;
+      padding-bottom: 12px;
+      list-style: none;
+   }
+`
+
+const StyledTitle = styled.div`
+   font-size: 18px;
+   font-weight: 400;
+   padding: 20px 108px 32px 100px;
+`
+
+const ContainerOfBooking = styled.div`
+   padding-right: 80px;
+   padding-top: 32px;
+`
+const ContainerOfBasket = styled.div`
+   width: 799px;
+`
+
+const StyledContainer = styled.div`
+   margin-bottom: 24px;
+   width: 374px;
+   height: 310px;
+   border: 1px solid #c4c4c4;
+`
 
 const Container = styled.div`
    padding-top: 46px;
-   width: 799px;
+   display: flex;
+   justify-content: space-between;
    .MuiBreadcrumbs-root {
       font-size: 14px;
       font-weight: 400;
@@ -106,6 +214,9 @@ const BooksTitle = styled.span`
 
 const StyledTextButton = styled(TextButton)`
    color: #545454;
+   &:hover {
+      color: #222222;
+   }
 `
 
 const StyledButton = styled.div`

@@ -142,6 +142,7 @@ const VendorHeaderContainer = styled.div`
    right: 50%;
    transform: translateX(50%);
    background: white;
+   z-index: 99;
 `
 const InnerContainer = styled.div`
    display: flex;

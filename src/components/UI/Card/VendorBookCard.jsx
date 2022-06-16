@@ -126,7 +126,7 @@ export const VendorBookCard = ({
                   setRemoveModal(false)
                }}
                title={`Вы уверены, что хотите удалить 
-                "${name}"`}
+                "${name}" ?`}
             />
          )}
       </VendorCardContainer>

@@ -74,7 +74,7 @@ export const AdminBookCard = ({
       },
       {
          icon: <DeleteIcon />,
-         title: 'Удалить',
+         title: 'Отклонить',
          action: (bookId) => showDeleteModal(bookId),
       },
    ]
