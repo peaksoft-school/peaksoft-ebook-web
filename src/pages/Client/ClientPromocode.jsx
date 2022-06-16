@@ -1,26 +1,43 @@
 import styled from '@emotion/styled/macro'
-import React from 'react'
+import React, { useState } from 'react'
 import { ReactComponent as PromocodeImage } from '../../assets/icons/promocode-image.svg'
 import { Button } from '../../components/UI/Buttons/Button'
 import { Input } from '../../components/UI/Inputs/Input'
+import { ErrorModal } from '../../components/UI/Modals/ErrorModal'
 
 export const ClientPromocode = () => {
+   const [isOpen, setIsOpen] = useState(false)
    return (
-      <ContainerOfPromocode>
-         <StyledDiv>
-            <PromocodeImage />
-            <StyledImage>
-               <b>Активация промокода eBook</b>
-            </StyledImage>
-         </StyledDiv>
-         <StyledInput>
-            <Input placeholder="Введите промокод" />
-            <Button>Активировать</Button>
-         </StyledInput>
-         <p>
-            Промокоды eBook на скидки и подарки вы можете получить в рассылках.
-         </p>
-      </ContainerOfPromocode>
+      <>
+         <ContainerOfPromocode>
+            <StyledDiv>
+               <PromocodeImage />
+               <StyledImage>
+                  <b>Активация промокода eBook</b>
+               </StyledImage>
+            </StyledDiv>
+            <StyledInput>
+               <Input placeholder="Введите промокод" />
+               <Button
+                  onClick={(e) => {
+                     setIsOpen(true)
+                     e.stopPropagation()
+                  }}
+               >
+                  Активировать
+               </Button>
+            </StyledInput>
+            <p>
+               Промокоды eBook на скидки и подарки вы можете получить в
+               рассылках.
+            </p>
+         </ContainerOfPromocode>
+         <ErrorModal
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            onCloseBackDrop={() => setIsOpen(false)}
+         />
+      </>
    )
 }
 

@@ -25,7 +25,7 @@ const DATA = [
       firstPhoto:
          'https://s3-alpha-sig.figma.com/img/5485/c0c9/8a3c093891f4501e8ae42eb81b716745?Expires=1656288000&Signature=KFVE8-m1J9YfalHqIe2vzZiqJuv4MVpuFzHu0YkAr0H1UlriTu7cV2RssKv0A90Uj1gAFU2d67-tVqtxMm-~mj7F1Gd8jVvnCeaArIzS~J1ww0N7P0dbv9ik8I3T-pnA4bbKw6qM9DtcyUICOsOJ3vBREcdne~fwctDRlSGPOQ2A42jBJt-4oaeqaOkm4tj1sTWEtWTf1hoQc2sJmjU5CMUMzC3Uh66O12DkTxhIvRTDtSrMWspfJsgzI0DgeTuuW4l03JWKSXpGvMCOk5QDZUdMFO9pO~Dhp6dmcnSt3c19M2bX1G4kcOSLRFSCI7V5j4~3O92rN8S8MHvzEWnupw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
       bookId: 1,
-      title: 'История книги и ',
+      title: 'История книги на Руси и Сочи',
       authorFullName: 'А.Бахтиаров',
       price: 310,
       promocode: '22',
@@ -83,9 +83,9 @@ export const ClientBasket = () => {
                         <li>Сумма </li>
                      </div>
                      <ul>
-                        {/* <li>{count} шт</li>
-                        <li>{discount} c</li>
-                        <li>{sum} c</li> */}
+                        <li>3 шт</li>
+                        <li>0 c</li>
+                        <li>970 c</li>
                      </ul>
                   </StyledUl>
                   <StyledPromocode>
@@ -93,7 +93,7 @@ export const ClientBasket = () => {
                   </StyledPromocode>
                   <StyledTotal>
                      <li>Итого:</li>
-                     {/* <li>{total} с</li> */}
+                     <li>970 с</li>
                   </StyledTotal>
                </StyledContainer>
                <Button
@@ -118,7 +118,6 @@ export const ClientBasket = () => {
             isOpen={isOpenSuccessModal}
             onClose={() => setIsOpenSuccessModal(false)}
             onCloseBackDrop={() => setIsOpenSuccessModal(false)}
-            // onClick={}
          />
       </>
    )
