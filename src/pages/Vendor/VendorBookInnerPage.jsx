@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { OutlookOfBooks } from '../../components/UI/AboutBook/OutlookOfBooks/OutlookOfBooks'
 import { adminActions, getBookById } from '../../store/admin-slice'
 import { DEFAULT_ROUTES, VENDOR_ROUTES } from '../../utils/constants/routes'
@@ -13,6 +14,7 @@ import { AnimatedModal } from '../../components/UI/Modals/AnimatedModal'
 import { Button } from '../../components/UI/Buttons/Button'
 import { theme } from '../../utils/constants/theme'
 import { removeVendorBook } from '../../store/vendor-slice'
+import { Notification } from '../../components/UI/Notification/Notification'
 
 export const VendorBookInnerPage = () => {
    const { book } = useSelector((state) => state.admin)
@@ -25,6 +27,15 @@ export const VendorBookInnerPage = () => {
 
    const [isShowModal, setIsShowModal] = useState(false)
 
+   const showNotification = (message) =>
+      toast(
+         <Notification
+            title="Удаление книги"
+            message={message}
+            type="success"
+         />
+      )
+
    useEffect(() => {
       dispatch(getBookById(bookId))
       return () => dispatch(adminActions.resetBook())
@@ -35,14 +46,15 @@ export const VendorBookInnerPage = () => {
          (language) => language.key === languageFromBase
       )?.title
    }
-   const showDeleteModalHandler = () => {
+   const setIsShowDeleteModalHandler = () => {
       setIsShowModal((isShowed) => !isShowed)
    }
    const deleteBookHandler = () => {
       dispatch(removeVendorBook({ id: bookId }))
          .unwrap()
          .then(() => {
-            showDeleteModalHandler()
+            showNotification('Книга успешно удалена!')
+            setIsShowDeleteModalHandler()
             navigate(DEFAULT_ROUTES.INDEX.PATH)
          })
    }
@@ -60,9 +72,15 @@ export const VendorBookInnerPage = () => {
       if (book.bookType === TYPES_OF_BOOKS.PAPER.type) {
          return TYPES_OF_BOOKS.PAPER.key
       }
-      return null
+      return book.bookType
    }, [book])
 
+   const reconvertSizeOfBook = useCallback(() => {
+      if (book?.bookType === TYPES_OF_BOOKS.AUDIO.type) {
+         return `0 ч. 3 мин. 44 сек.`
+      }
+      return `${book?.[currentBookType()].numberOfPages || 0} стр.`
+   }, [book])
    return (
       <>
          <ParentContainer>
@@ -99,10 +117,10 @@ export const VendorBookInnerPage = () => {
                         }
                         publishingHouse={book?.publishingHouse}
                         yearOfIssue={book?.yearOfIssue}
+                        size={reconvertSizeOfBook()}
                         isAudioBook={checkIsAudioBook()}
-                        audioUrl={book?.fileInformation.bookFile}
                         whiteButtonInnerText="Удалить"
-                        onClickToWhiteButton={showDeleteModalHandler}
+                        onClickToWhiteButton={setIsShowDeleteModalHandler}
                         orangeButtonInnerText="Редактировать"
                      />
                   </BookInformationContainer>
@@ -116,7 +134,7 @@ export const VendorBookInnerPage = () => {
          </ParentContainer>
          <AnimatedModal
             isMounted={isShowModal}
-            onCloseModal={showDeleteModalHandler}
+            onCloseModal={setIsShowDeleteModalHandler}
          >
             <ModalInnerContainer>
                <h1>
@@ -124,7 +142,7 @@ export const VendorBookInnerPage = () => {
                   <span>“{book?.title}” ?</span>
                </h1>
                <div>
-                  <CancelButton onClick={showDeleteModalHandler}>
+                  <CancelButton onClick={setIsShowDeleteModalHandler}>
                      Отменить
                   </CancelButton>
                   <Button
@@ -191,6 +209,7 @@ const NameOfPageContainer = styled.div`
    }
    & span {
       color: #000000;
+      text-transform: capitalize;
    }
 
    margin-bottom: 82px;
@@ -215,6 +234,7 @@ const ModalInnerContainer = styled.div`
       span {
          margin-top: 0.5rem;
          font-weight: bold;
+         text-transform: capitalize;
       }
    }
    div {

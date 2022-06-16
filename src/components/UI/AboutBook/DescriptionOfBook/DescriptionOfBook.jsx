@@ -82,9 +82,11 @@ const AboutBookText = styled.p`
    font-weight: 400;
    font-size: 16px;
    line-height: 150%;
+   word-wrap: break-word;
 `
 const ReadFragmentText = styled.p`
    font-weight: 400;
    font-size: 16px;
    line-height: 150%;
+   word-wrap: break-word;
 `

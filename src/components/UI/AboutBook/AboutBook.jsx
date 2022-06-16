@@ -3,6 +3,7 @@ import React from 'react'
 import { theme } from '../../../utils/constants/theme'
 import { AudioListener } from '../AudioListener/AudioListener'
 import { Button } from '../Buttons/Button'
+import audio from '../../../assets/sounds/na_vostoke.mp3'
 
 export const AboutBook = ({
    title,
@@ -13,7 +14,6 @@ export const AboutBook = ({
    publishingHouse,
    yearOfIssue,
    isAudioBook,
-   audioUrl,
    size,
    whiteButtonInnerText,
    onClickToWhiteButton,
@@ -27,7 +27,7 @@ export const AboutBook = ({
             <p>{price} c</p>
             {isAudioBook && (
                <AudioListenerContainer>
-                  <AudioListener audio={audioUrl} />
+                  <AudioListener audio={audio} />
                </AudioListenerContainer>
             )}
          </PriceOfBookContainer>
@@ -143,6 +143,9 @@ const InformationTextContainer = styled.div`
       font-weight: 400;
       min-width: 200px;
       text-transform: capitalize;
+   }
+   &:last-of-type p {
+      text-transform: none;
    }
 `
 const AudioListenerContainer = styled.div`
