@@ -58,7 +58,7 @@ const FieldWithTextContainer = styled.div`
          -webkit-appearance: none;
          display: none;
       }
-      color: #969696;
+      color: #222222;
       font-size: 16px;
    }
 `

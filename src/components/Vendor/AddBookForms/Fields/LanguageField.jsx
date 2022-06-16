@@ -77,6 +77,6 @@ const SelectLanguage = styled.div`
    font-weight: 400;
    font-size: 16px;
    line-height: 130%;
-   color: #969696;
+   color: #222222;
    cursor: pointer;
 `

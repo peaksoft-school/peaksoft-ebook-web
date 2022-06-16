@@ -78,7 +78,7 @@ export const VendorMainPage = () => {
    return (
       <VendorMainPageContainer>
          <HeadContainer>
-            <BooksAmount>Всего книг {countOfVendorBooks.all}</BooksAmount>
+            <BooksAmount>Всего книг {countOfVendorBooks.all || 0}</BooksAmount>
             <ContainerOfIcons onClick={showPopUp}>
                <span>Все</span>
                <ArrowDownIcon />
@@ -102,9 +102,9 @@ export const VendorMainPage = () => {
                   maxHeight="427px"
                   key={book?.bookId}
                   id={book.bookId}
-                  amount={book.baskets}
+                  baskets={book.baskets || 0}
                   vendorImageUrl={book.fileInformation?.firstPhoto}
-                  like={book?.likes}
+                  amountOfLikes={book?.likes || 0}
                   date={book?.dateOfRegister}
                   name={book?.title}
                   price={book?.price}
