@@ -78,7 +78,7 @@ export const VendorMainPage = () => {
    return (
       <VendorMainPageContainer>
          <HeadContainer>
-            <BooksAmount>Всего книг {countOfVendorBooks.all}</BooksAmount>
+            <BooksAmount>Всего книг {countOfVendorBooks.all || 0}</BooksAmount>
             <ContainerOfIcons onClick={showPopUp}>
                <span>Все</span>
                <ArrowDownIcon />
@@ -102,9 +102,9 @@ export const VendorMainPage = () => {
                   maxHeight="427px"
                   key={book?.bookId}
                   id={book.bookId}
-                  amount={book.baskets}
+                  baskets={book.baskets || 0}
                   vendorImageUrl={book.fileInformation?.firstPhoto}
-                  like={book?.likes}
+                  amountOfLikes={book?.likes || 0}
                   date={book?.dateOfRegister}
                   name={book?.title}
                   price={book?.price}
@@ -170,13 +170,10 @@ const PopUpContainer = styled.div`
    z-index: 99;
 `
 const VendorBookCardContainer = styled.div`
-   margin: 0 auto;
-   padding-top: 30px;
+   padding-top: 20px;
    display: grid;
-   grid-column-gap: 20px;
-   grid-row-gap: 20px;
    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   grid-gap: 2rem;
+   grid-gap: 4rem;
    padding-bottom: 70px;
 `
 const SubmitSeeMore = styled.div`

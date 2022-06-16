@@ -4,7 +4,7 @@ import { VendorsTable } from '../../../components/Admin/Tables/VendorsTable'
 import { getAllVendors } from '../../../store/admin-slice'
 
 export const Vendors = () => {
-   const { listOfVendors } = useSelector((state) => state.adminVendors)
+   const { listOfVendors } = useSelector((state) => state.admin)
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getAllVendors())

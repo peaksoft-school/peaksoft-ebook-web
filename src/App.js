@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
+import { ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 import { AppRoutes } from './routes/AppRoutes'
 import { LOCAL_STORAGE_USER_KEY } from './utils/constants/general'
 import { localstorage } from './utils/helpers/general'

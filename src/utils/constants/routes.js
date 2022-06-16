@@ -9,22 +9,29 @@ export const DEFAULT_ROUTES = {
    },
 }
 export const GUEST_ROUTES = {}
-export const CLIENT_ROUTES = {}
-export const VENDOR_ROUTES = {
-   VENDOR_MAIN_PAGE: {
-      PATH: '/main-page',
-      LABEL: 'Главная',
+export const CLIENT_ROUTES = {
+   CLIENT_PROFILE: {
+      PATH: '/client-profile',
+      LABEL: 'Профиль',
    },
+}
+export const BECOME_VENDOR_ROUTES = {
+   BECOME_VENDOR: {
+      PATH: '/becomevendor',
+   },
+}
+export const VENDOR_ROUTES = {
    VENDOR_PROFILE: {
       PATH: '/profile',
       LABEL: 'Профиль',
    },
-   VENDOR_ABOUT_BOOKS: {
-      PATH: '/main-page/:id',
-   },
    ADD_BOOK: {
       PATH: '/add-book',
       LABEL: 'Добавить книгу',
+   },
+   BOOK_INNER_PAGE: {
+      PATH: '/:bookId',
+      LABEL: 'Название книги',
    },
 }
 

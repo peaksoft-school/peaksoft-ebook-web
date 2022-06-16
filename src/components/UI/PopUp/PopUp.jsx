@@ -58,7 +58,8 @@ const MenuContainer = styled.div`
    top: ${({ top }) => top || '50px'};
    right: ${({ right }) => right || '-5px'};
    width: ${({ width }) => width || '140px'};
-   box-shadow: ${({ boxShadow }) => boxShadow || ''};
+   box-shadow: ${({ boxShadow }) =>
+      boxShadow || '0px 4px 9px rgba(0, 0, 0, 0.1)'};
    padding: 5px 20px;
    min-width: 140px;
    display: flex;
