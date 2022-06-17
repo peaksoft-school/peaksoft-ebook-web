@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { Breadcrumbs, Typography } from '@mui/material'
 import { Link, useParams, useNavigate } from 'react-router-dom'
@@ -12,6 +12,7 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 import { Button } from '../../../components/UI/Buttons/Button'
 import { acceptBook, getBookById, refuseBook } from '../../../store/admin-slice'
 import { SuccessConfirmModalForAdmin } from '../../../components/UI/Modals/SuccessConfirmModalForAdmin'
+import { TYPES_OF_BOOKS } from '../../../utils/constants/general'
 
 export const ApplicationsInnerPage = () => {
    const [showSuccess, setShowSuccess] = useState(false)
@@ -66,6 +67,9 @@ export const ApplicationsInnerPage = () => {
          ? `${specificBook.audioBook.hour} ч. ${specificBook.audioBook.minute} мин. ${specificBook.audioBook.second} сек.`
          : `${specificBook?.[book]?.numberOfPages} стр.`
    }
+   const checkIsAudioBook = useCallback(() => {
+      return specificBook?.bookType === TYPES_OF_BOOKS.AUDIO.type
+   }, [specificBook])
    return (
       <>
          <Container>
@@ -94,7 +98,7 @@ export const ApplicationsInnerPage = () => {
                   onClickToWhiteButton={() => showDeleteModal(id)}
                   orangeButtonInnerText="Принять"
                   onClickToOrangeButton={() => showSuccessModal(id)}
-                  isAudioBook={specificBook?.bookType === 'AUDIOBOOK'}
+                  isAudioBook={checkIsAudioBook()}
                   size={reconvertSizeOfBookToString()}
                />
             </FirstLineContainer>
@@ -103,6 +107,7 @@ export const ApplicationsInnerPage = () => {
                   aboutBook={specificBook?.aboutBook}
                   thirdBook={specificBook?.fileInformation?.thirdPhoto}
                   fragmentOfBook={specificBook?.paperBook?.fragmentOfBook}
+                  isAudioBook={checkIsAudioBook()}
                />
             </SecondLineContainer>
          </Container>

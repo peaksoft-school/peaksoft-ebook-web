@@ -36,4 +36,5 @@ const StyledButton = styled.button`
    &:hover path {
       fill: ${({ hoverC }) => hoverC || ''};
    }
+   white-space: nowrap;
 `

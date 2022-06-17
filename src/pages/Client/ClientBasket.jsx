@@ -166,7 +166,7 @@ const ContainerOfBooking = styled.div`
    padding-top: 32px;
 `
 const ContainerOfBasket = styled.div`
-   width: 799px;
+   width: 90%;
 `
 
 const StyledContainer = styled.div`
@@ -180,6 +180,8 @@ const Container = styled.div`
    padding-top: 46px;
    display: flex;
    justify-content: space-between;
+   padding: 0 80px;
+   gap: 0 107px;
    .MuiBreadcrumbs-root {
       font-size: 14px;
       font-weight: 400;
@@ -220,4 +222,6 @@ const StyledTextButton = styled(TextButton)`
 
 const StyledButton = styled.div`
    padding: 20px 0 24px 655px;
+   text-align: end;
+   white-space: nowrap;
 `

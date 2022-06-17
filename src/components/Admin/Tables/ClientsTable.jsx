@@ -23,9 +23,9 @@ export const ClientsTable = ({ listOfClients }) => {
                </StyledTableRow>
             </TableHead>
             <TableBody>
-               {listOfClients?.map((client) => (
+               {listOfClients?.map((client, index) => (
                   <ClientsTableItem
-                     id={client.id}
+                     id={index + 1}
                      key={client.id}
                      vendorId={client.id}
                      firstName={client.name}

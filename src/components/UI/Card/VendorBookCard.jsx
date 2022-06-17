@@ -117,7 +117,7 @@ export const VendorBookCard = ({
             <ErrorConfirmModal
                isOpen={showRemoveModal}
                onExit={(e) => deleteVendorBook(e, id)}
-               onCencel={(e) => {
+               onCancel={(e) => {
                   e.stopPropagation()
                   setRemoveModal(false)
                }}
@@ -209,6 +209,10 @@ const VenderCardMain = styled.div`
       line-height: 120%;
       text-transform: uppercase;
       color: #222222;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
    }
 `
 

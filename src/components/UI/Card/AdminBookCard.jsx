@@ -174,12 +174,13 @@ const RejectedVendorCardContainer = styled.div`
    background-color: #ededed;
    display: flex;
    align-items: flex-start;
+   width: 268px;
 `
 const RejectedContent = styled.div`
    opacity: 0.4;
 `
 const VendorCardContainer = styled.div`
-   max-width: ${({ maxWidth }) => maxWidth || '305px'};
+   max-width: ${({ maxWidth }) => maxWidth || '268px'};
    min-height: ${({ minHeight }) => minHeight || '408px'};
    position: relative;
    display: flex;
@@ -201,7 +202,9 @@ const BookName = styled.p`
    text-transform: uppercase;
    color: #222222;
    width: 100%;
-   overflow-x: hidden;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
    height: 15px;
 `
 const MeatBallsRejectedContainer = styled.div`
@@ -224,6 +227,10 @@ const VenderCardHeader = styled.div`
 const VenderCardMain = styled.div`
    position: relative;
    cursor: pointer;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding-top: 15px;
    img {
       width: 197px;
       height: 297px;
@@ -231,14 +238,20 @@ const VenderCardMain = styled.div`
    }
 `
 
-const StyledDescription = styled.div``
+const StyledDescription = styled.div`
+   display: flex;
+   flex-direction: column;
+   gap: 7px 0;
+   margin-top: 14px;
+   width: 197px;
+`
 const MeatBallsContainer = styled.div`
    cursor: pointer;
    display: flex;
    flex-direction: row;
    position: absolute;
    right: 15px;
-   top: 0;
+   top: 5px;
 `
 const VenderCardFooter = styled.div`
    width: 197px;

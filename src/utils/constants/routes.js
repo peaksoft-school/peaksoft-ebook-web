@@ -7,12 +7,19 @@ export const DEFAULT_ROUTES = {
       PATH: '*',
       LABEL: 'Страница не найдена',
    },
+   BECOME_VENDOR: {
+      PATH: '/become-vendor',
+   },
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {
    FILTER_PAGE: {
       PATH: '/filter-page',
       LABEL: 'Электронные книги',
+   },
+   PROFILE: {
+      PATH: '/profile',
+      LABEL: 'Профиль',
    },
    CLIENT_BASKET: {
       PATH: '/basket',
@@ -21,15 +28,6 @@ export const CLIENT_ROUTES = {
    CLIENT_PROMOCODE: {
       PATH: '/promocode',
       LABEL: 'Промокод',
-   },
-   CLIENT_PROFILE: {
-      PATH: '/client-profile',
-      LABEL: 'Профиль',
-   },
-}
-export const BECOME_VENDOR_ROUTES = {
-   BECOME_VENDOR: {
-      PATH: '/becomevendor',
    },
 }
 export const VENDOR_ROUTES = {

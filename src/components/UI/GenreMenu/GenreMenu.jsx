@@ -26,18 +26,19 @@ const GenreMenuContainer = styled.div`
    grid-column-gap: 108px;
    padding: 31px 30px;
    min-width: 1280px;
-   min-height: 445px;
+   height: 445px;
    position: absolute;
-   top: 50px;
-   left: 0;
+   top: 100%;
+   left: 50%;
+   transform: translate(-50%, -0%);
+   z-index: 97;
    animation: GENRES 0.3s;
-   z-index: 2;
    @keyframes GENRES {
       from {
-         top: -150px;
+         top: 0%;
       }
       to {
-         top: 50px;
+         top: 100%;
       }
    }
 `

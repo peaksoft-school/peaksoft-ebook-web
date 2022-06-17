@@ -6,27 +6,25 @@ import { UserHeader } from '../components/User/UserHeader'
 
 export const UserLayout = () => {
    return (
-      <UsersLayout>
+      <Layout>
          <UserHeader countOfItems={0} />
-         <ContentContainer>
+         <Content>
             <Outlet />
-         </ContentContainer>
+         </Content>
          <UserFooter />
-      </UsersLayout>
+      </Layout>
    )
 }
-
-const UsersLayout = styled.div`
+const Layout = styled.div`
    display: flex;
    flex-direction: column;
    align-items: stretch;
+   width: 100%;
 `
-const ContentContainer = styled.div`
+
+const Content = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
-   flex-grow: 1;
-   flex-shrink: 0;
    min-height: 100vh;
-   padding: 170px 0 0 95px;
 `
