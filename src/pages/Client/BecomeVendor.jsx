@@ -15,18 +15,25 @@ import { logout } from '../../store/auth-slice'
 import { Button } from '../../components/UI/Buttons/Button'
 import { UserFooter } from '../../components/User/UserFooter'
 import { Logo } from '../../components/UI/Logo/Logo'
-import { SIGN_IN_QUERY_PARAMS } from '../../utils/constants/general'
+import {
+   SIGN_IN_QUERY_PARAMS,
+   SIGN_UP_VENDOR_QUERY_PARAMS,
+} from '../../utils/constants/general'
+import { CLIENT_ROUTES } from '../../utils/constants/routes'
 
 export const BecomeVendor = () => {
    const { isAuthorized } = useSelector((state) => state.auth)
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const [, setSearchParams] = useSearchParams()
+
    const navigateToSignIn = () => {
       setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
    }
    const navigateToProfile = () => {
-      return isAuthorized ? navigate('/client-profile') : navigateToSignIn()
+      return isAuthorized
+         ? navigate(CLIENT_ROUTES.PROFILE.PATH)
+         : navigateToSignIn()
    }
    const navigateHandler = () => {
       dispatch(logout(navigateToSignIn))
@@ -43,7 +50,13 @@ export const BecomeVendor = () => {
                <PortalText>
                   <PortalIcon />
                   <p>Начните продавать свои книги на eBook</p>
-                  <Button onClick={navigateHandler}>Стать продавцом</Button>
+                  <Button
+                     onClick={() =>
+                        setSearchParams({ [SIGN_UP_VENDOR_QUERY_PARAMS]: true })
+                     }
+                  >
+                     Стать продавцом
+                  </Button>
                </PortalText>
                <BecomeVendorImage />
                <GirlImage>

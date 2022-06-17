@@ -46,7 +46,12 @@ export const GuestRoutes = () => {
             />
             <Route
                path={CLIENT_ROUTES.BOOK_INNER_PAGE.PATH}
-               element={<ClientBookInnerPage />}
+               element={
+                  <>
+                     <ClientBookInnerPage />
+                     {renderAuthModals()}
+                  </>
+               }
             />
          </Route>
          <Route

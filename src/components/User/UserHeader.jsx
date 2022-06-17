@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link as ScrollLink } from 'react-scroll'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
@@ -53,7 +54,9 @@ export const UserHeader = () => {
    }
    useEffect(() => {
       dispatch(getGenreList())
-      dispatch(getCountOfBookInCount())
+      if (isAuthorized) {
+         dispatch(getCountOfBookInCount())
+      }
    }, [getCountOfBookInCount])
    const options = [
       {
@@ -85,7 +88,7 @@ export const UserHeader = () => {
             <SearchInput booksList={[]} />
             <StyledFavoriteIcon />
             <Basket onClick={passToBasket}>
-               Корзина ({countOfBooksInBasket})
+               Корзина ({isAuthorized ? countOfBooksInBasket : 0})
             </Basket>
          </InnerContainer>
          <ContainerOfLinks>
@@ -96,10 +99,24 @@ export const UserHeader = () => {
                </StyledGenres>
                <ul>
                   <li>
-                     <NavLink to="electronicbooks">Электронные книги</NavLink>
+                     <StyledScrollLink
+                        activeClass="active"
+                        smooth
+                        spy
+                        to="electronicbooks"
+                     >
+                        Электронные книги
+                     </StyledScrollLink>
                   </li>
                   <li>
-                     <NavLink to="audiobooks">Aудиокниги</NavLink>
+                     <StyledScrollLink
+                        activeClass="active"
+                        smooth
+                        spy
+                        to="audiobooks"
+                     >
+                        Aудиокниги
+                     </StyledScrollLink>
                   </li>
                   <li>
                      <NavLink
@@ -176,7 +193,13 @@ export const UserHeader = () => {
       </VendorHeaderContainer>
    )
 }
-
+const StyledScrollLink = styled(ScrollLink)`
+   cursor: pointer;
+   .active {
+      color: #f34901;
+      border-bottom: 1px solid #f34901;
+   }
+`
 const VendorHeaderContainer = styled.div`
    display: flex;
    justify-content: center;

@@ -5,7 +5,7 @@ import { AboutBookWithSlider } from './AboutBookWithSlider'
 
 export const ElectronicBooks = ({ eBooks }) => {
    return (
-      <Container>
+      <Container id="electronicbooks">
          <Nav>
             <h1>Электронные книги</h1>
             <StyledLink to="/">Смотреть все</StyledLink>
@@ -15,7 +15,7 @@ export const ElectronicBooks = ({ eBooks }) => {
    )
 }
 
-const Container = styled.div`
+const Container = styled.section`
    padding: 0 80px;
    display: flex;
    flex-direction: column;
@@ -27,6 +27,7 @@ const Nav = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
+   margin-top: 25px;
    h1 {
       font-family: 'Open Sans';
       font-style: normal;

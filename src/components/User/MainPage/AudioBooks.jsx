@@ -1,13 +1,20 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ReactComponent as NewBook } from '../../../assets/icons/new-book.svg'
 
 export const AudioBooks = ({ audioBooks }) => {
+   const navigate = useNavigate()
    const convertDurationAsText = (duration) => {
-      return `${duration?.hour} ч. ${duration?.minute} мин. ${duration?.second} сек.`
+      return `${duration?.hour || 0} ч. ${duration?.minute || 0} мин. ${
+         duration?.second || 0
+      } сек.`
+   }
+   const passToBookInnerPage = (id) => {
+      navigate(`/${id}`)
    }
    return (
-      <Container>
+      <Container id="audiobooks">
          <Nav>
             <h1>Аудиокниги</h1>
             <StyledLink to="/">Смотреть все</StyledLink>
@@ -18,10 +25,12 @@ export const AudioBooks = ({ audioBooks }) => {
                   <img
                      src={audioBooks[0]?.fileInformation.firstPhoto}
                      alt="img"
+                     onClick={() => passToBookInnerPage(audioBooks[0]?.bookId)}
                   />
+                  {audioBooks[0]?.isNew && <NewBookSticker />}
                </FirstImg>
-               <h1>{audioBooks[0]?.title}</h1>
-               <h5>{audioBooks[0]?.authorFullName}</h5>
+               <h1>{audioBooks[0]?.title || 'Название книги'}</h1>
+               <h5>{audioBooks[0]?.authorFullName || 'Автор книги'}</h5>
                <Footer>
                   <p>{convertDurationAsText(audioBooks[0]?.audioBook)}</p>
                   <span>{audioBooks[0]?.price || 0} с</span>
@@ -32,10 +41,12 @@ export const AudioBooks = ({ audioBooks }) => {
                   <img
                      src={audioBooks[1]?.fileInformation.firstPhoto}
                      alt="img"
+                     onClick={() => passToBookInnerPage(audioBooks[1]?.bookId)}
                   />
+                  {audioBooks[1]?.isNew && <NewBookSticker />}
                </SecondImg>
-               <h1>{audioBooks[1]?.title}</h1>
-               <h5>{audioBooks[1]?.authorFullName}</h5>
+               <h1>{audioBooks[1]?.title || 'Название книги'}</h1>
+               <h5>{audioBooks[1]?.authorFullName || 'Автор книги'}</h5>
                <Footer>
                   <p>{convertDurationAsText(audioBooks[1]?.audioBook)}</p>
                   <span>{audioBooks[1]?.price || 0}с</span>
@@ -46,10 +57,12 @@ export const AudioBooks = ({ audioBooks }) => {
                   <img
                      src={audioBooks[2]?.fileInformation.firstPhoto}
                      alt="img"
+                     onClick={() => passToBookInnerPage(audioBooks[2]?.bookId)}
                   />
+                  {audioBooks[2]?.isNew && <NewBookSticker />}
                </ThirdImg>
-               <h1>{audioBooks[2]?.title}</h1>
-               <h5>{audioBooks[2]?.authorFullName}</h5>
+               <h1>{audioBooks[2]?.title || 'Название книги'}</h1>
+               <h5>{audioBooks[2]?.authorFullName || 'Автор книги'}</h5>
                <Footer>
                   <p>{convertDurationAsText(audioBooks[2]?.audioBook)}</p>
                   <span>{audioBooks[2]?.price || 0} с</span>
@@ -59,16 +72,18 @@ export const AudioBooks = ({ audioBooks }) => {
       </Container>
    )
 }
-const Container = styled.div`
+const Container = styled.section`
    padding: 0 80px;
    display: flex;
    flex-direction: column;
    min-height: 623px;
+   width: 100%;
 `
 const Nav = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
+   margin-top: 25px;
    h1 {
       font-family: 'Open Sans';
       font-style: normal;
@@ -90,7 +105,7 @@ const StyledLink = styled(Link)`
 const Content = styled.div`
    display: flex;
    justify-content: space-between;
-   margin-top: 45px;
+   margin-top: 35px;
    h1 {
       font-family: 'Open Sans';
       font-style: normal;
@@ -122,10 +137,12 @@ const Content = styled.div`
    img {
       object-fit: cover;
       object-position: top;
+      cursor: pointer;
    }
 `
 const FirstImg = styled.div`
    margin-top: 280px;
+   position: relative;
    img {
       width: 309px;
       height: 309px;
@@ -133,12 +150,15 @@ const FirstImg = styled.div`
 `
 const SecondImg = styled.div`
    margin-top: 110px;
+   position: relative;
+
    img {
       width: 441px;
       height: 441px;
    }
 `
 const ThirdImg = styled.div`
+   position: relative;
    img {
       width: 344px;
       height: 305px;
@@ -152,4 +172,10 @@ const FlexBlock = styled.div`
    display: flex;
    flex-direction: column;
    gap: 7px;
+`
+const NewBookSticker = styled(NewBook)`
+   position: absolute;
+   right: -103px;
+   top: 15px;
+   z-index: 2;
 `
