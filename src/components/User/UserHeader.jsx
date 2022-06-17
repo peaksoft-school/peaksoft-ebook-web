@@ -40,7 +40,7 @@ export const UserHeader = ({ countOfItems }) => {
                </StyledGenres>
                <ul>
                   <li>
-                     <NavLink to="electronicbooks">Электронные книги</NavLink>
+                     <NavLink to="/filter-page">Электронные книги</NavLink>
                   </li>
                   <li>
                      <NavLink to="audiobooks">Aудиокниги</NavLink>
