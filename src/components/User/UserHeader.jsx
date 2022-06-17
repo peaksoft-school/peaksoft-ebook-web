@@ -70,15 +70,18 @@ export const UserHeader = ({ countOfItems }) => {
          },
       },
    ]
+   const passToBasket = () => {
+      return isAuthorized
+         ? navigate(CLIENT_ROUTES.CLIENT_BASKET.PATH)
+         : loginHandler()
+   }
    return (
       <VendorHeaderContainer>
          <InnerContainer>
             <Logo />
             <SearchInput booksList={[]} />
             <StyledFavoriteIcon />
-            <Basket onClick={() => navigate('/basket')}>
-               Корзина ({countOfItems})
-            </Basket>
+            <Basket onClick={passToBasket}>Корзина ({countOfItems})</Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>

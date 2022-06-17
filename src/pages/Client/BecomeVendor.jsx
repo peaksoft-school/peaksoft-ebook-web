@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as PortalIcon } from '../../assets/icons/portal.svg'
 import { ReactComponent as BecomeVendorImage } from '../../assets/icons/become-vendor-image.svg'
 import { ReactComponent as BecomeVendorIcon } from '../../assets/icons/knowledge-cuate 1.svg'
@@ -15,15 +15,18 @@ import { logout } from '../../store/auth-slice'
 import { Button } from '../../components/UI/Buttons/Button'
 import { UserFooter } from '../../components/User/UserFooter'
 import { Logo } from '../../components/UI/Logo/Logo'
+import { SIGN_IN_QUERY_PARAMS } from '../../utils/constants/general'
 
 export const BecomeVendor = () => {
+   const { isAuthorized } = useSelector((state) => state.auth)
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const navigateToProfile = () => {
-      navigate('/client-profile')
-   }
+   const [, setSearchParams] = useSearchParams()
    const navigateToSignIn = () => {
-      navigate('/?sign-up-vendor=true')
+      setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+   }
+   const navigateToProfile = () => {
+      return isAuthorized ? navigate('/client-profile') : navigateToSignIn()
    }
    const navigateHandler = () => {
       dispatch(logout(navigateToSignIn))

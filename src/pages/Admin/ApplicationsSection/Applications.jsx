@@ -11,6 +11,7 @@ import {
 } from '../../../store/admin-slice'
 
 export const Applications = () => {
+   const applications = useSelector((state) => state.admin.listOfApplications)
    const [offset, setOffset] = useState(1)
    const navigate = useNavigate()
    const dispatch = useDispatch()
@@ -18,7 +19,6 @@ export const Applications = () => {
    const navigateToBook = (bookId) => {
       navigate(`${bookId}`)
    }
-   const applications = useSelector((state) => state.admin.listOfApplications)
    const countOfApplications = useSelector(
       (state) => state.admin.countOfBooksInProgress
    )
@@ -36,7 +36,7 @@ export const Applications = () => {
             <span>Всего: {countOfApplications.all}</span>
             <span>
                Непросмотренные:
-               <p>{countOfApplications.unread}</p>
+               <p>{countOfApplications.unread - 1 || 0}</p>
             </span>
          </HeadContainer>
          <ContentContainer>

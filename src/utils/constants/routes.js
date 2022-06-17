@@ -15,6 +15,7 @@ export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {
    PROFILE: {
       PATH: '/profile',
+      LABEL: 'Профиль',
    },
    CLIENT_BASKET: {
       PATH: '/basket',
