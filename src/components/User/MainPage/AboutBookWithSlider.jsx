@@ -21,6 +21,7 @@ export const AboutBookWithSlider = ({ books }) => {
       beforeChange: (_, index) => {
          setImageIndex(index)
       },
+      initialSlide: 0,
    }
    const currentBook = useCallback(() => {
       return books[imageIndex]

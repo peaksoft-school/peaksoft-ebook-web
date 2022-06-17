@@ -6,6 +6,7 @@ import { SignUpClient } from '../components/Authorization/SignUpClient'
 import { SignUpVendor } from '../components/Authorization/SignUpVendor'
 import { UserLayout } from '../layout/UserLayout'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
+import { ClientBookInnerPage } from '../pages/Client/ClientBookInnerPage'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
 import { Main } from '../pages/Client/Main'
 import { signInUser, signUpClient, signUpVendor } from '../store/auth-slice'
@@ -39,6 +40,15 @@ export const GuestRoutes = () => {
                element={
                   <>
                      <ClientPromocode />
+                     {renderAuthModals()}
+                  </>
+               }
+            />
+            <Route
+               path={CLIENT_ROUTES.BOOK_INNER_PAGE.PATH}
+               element={
+                  <>
+                     <ClientBookInnerPage />
                      {renderAuthModals()}
                   </>
                }

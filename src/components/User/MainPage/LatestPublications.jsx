@@ -85,7 +85,7 @@ const Content = styled.div`
    display: flex;
    justify-content: space-evenly;
    align-items: center;
-   gap: 0 247px;
+   gap: 0 150px;
 `
 
 const Genres = styled.div`
@@ -118,6 +118,7 @@ const AboutBook = styled.div`
    align-items: flex-start;
    gap: 50px;
    margin-bottom: 100px;
+   min-width: 305px;
    h4 {
       font-family: 'Open Sans';
       font-style: normal;

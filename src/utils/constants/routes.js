@@ -29,6 +29,9 @@ export const CLIENT_ROUTES = {
       PATH: '/promocode',
       LABEL: 'Промокод',
    },
+   BOOK_INNER_PAGE: {
+      PATH: '/:bookId',
+   },
 }
 export const VENDOR_ROUTES = {
    VENDOR_PROFILE: {

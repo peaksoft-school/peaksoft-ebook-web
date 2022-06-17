@@ -8,6 +8,7 @@ import { ClientPromocode } from '../pages/Client/ClientPromocode'
 import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
 import { FilterPage } from '../pages/Client/FilterPage/FilterPage'
+import { ClientBookInnerPage } from '../pages/Client/ClientBookInnerPage'
 
 export const ClientRoutes = () => {
    return (
@@ -29,6 +30,10 @@ export const ClientRoutes = () => {
             <Route
                path={CLIENT_ROUTES.CLIENT_PROMOCODE.PATH}
                element={<ClientPromocode />}
+            />
+            <Route
+               path={CLIENT_ROUTES.BOOK_INNER_PAGE.PATH}
+               element={<ClientBookInnerPage />}
             />
          </Route>
          <Route
