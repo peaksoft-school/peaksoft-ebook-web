@@ -8,7 +8,7 @@ export const LatestPublications = () => {
       <Container>
          <Nav>
             <h1>Последние публикации</h1>
-            <StyledLink to="/">Смотреть все</StyledLink>
+            <StyledLink to="/filter-page">Смотреть все</StyledLink>
          </Nav>
          <Content>
             <Genres>

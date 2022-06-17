@@ -14,7 +14,7 @@ import {
    getListOfVendorBooks,
 } from '../../../store/admin-slice'
 
-export const VendorBooks = ({ countOfBooks }) => {
+export const VendorBooks = () => {
    const books = useSelector((state) => state.admin.listOfVendorBooks)
    const [showOptions, setShowOptions] = useState(false)
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
@@ -88,7 +88,7 @@ export const VendorBooks = ({ countOfBooks }) => {
       <>
          <BooksContainer>
             <HeadContainer>
-               <BooksAmount>Всего {countOfBooks} книг</BooksAmount>
+               <BooksAmount>Всего {books.length} книг</BooksAmount>
                <ContainerOfIcons onClick={showPopUp}>
                   <span>Все</span>
                   <ArrowDownIcon />
@@ -180,7 +180,7 @@ const StyledButton = styled.div`
 const ContentContainer = styled.div`
    padding-top: 20px;
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
    grid-gap: 4rem;
    padding-bottom: 70px;
 `

@@ -7,6 +7,7 @@ import { ClientBasket } from '../pages/Client/ClientBasket'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
 import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
+import { FilterPage } from '../pages/Client/FilterPage/FilterPage'
 import { ClientBookInnerPage } from '../pages/Client/ClientBookInnerPage'
 
 export const ClientRoutes = () => {
@@ -17,6 +18,10 @@ export const ClientRoutes = () => {
             <Route
                path={CLIENT_ROUTES.PROFILE.PATH}
                element={<ClientPersonalProfile />}
+            />
+            <Route
+               path={CLIENT_ROUTES.FILTER_PAGE.PATH}
+               element={<FilterPage />}
             />
             <Route
                path={CLIENT_ROUTES.CLIENT_BASKET.PATH}

@@ -13,6 +13,10 @@ export const DEFAULT_ROUTES = {
 }
 export const GUEST_ROUTES = {}
 export const CLIENT_ROUTES = {
+   FILTER_PAGE: {
+      PATH: '/filter-page',
+      LABEL: 'Электронные книги',
+   },
    PROFILE: {
       PATH: '/profile',
       LABEL: 'Профиль',

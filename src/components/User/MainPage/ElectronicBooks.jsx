@@ -8,7 +8,7 @@ export const ElectronicBooks = ({ eBooks }) => {
       <Container id="electronicbooks">
          <Nav>
             <h1>Электронные книги</h1>
-            <StyledLink to="/">Смотреть все</StyledLink>
+            <StyledLink to="/filter-page">Смотреть все</StyledLink>
          </Nav>
          <AboutBookWithSlider books={eBooks} />
       </Container>
