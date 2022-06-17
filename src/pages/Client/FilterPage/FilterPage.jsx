@@ -7,8 +7,8 @@ import { ListOfUserCards } from './ListOfUserCards'
 export const FilterPage = () => {
    return (
       <FilterPageContainer>
+         <FilterSection />
          <MainContentFilterPage>
-            <FilterSection />
             <ListOfUserCards />
          </MainContentFilterPage>
       </FilterPageContainer>
@@ -16,7 +16,9 @@ export const FilterPage = () => {
 }
 
 const FilterPageContainer = styled.div`
-   margin: 40px;
+   margin: 0 auto;
+   display: flex;
+   padding: 0 80px;
 `
 const MainContentFilterPage = styled.div`
    display: flex;

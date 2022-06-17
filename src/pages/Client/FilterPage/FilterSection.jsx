@@ -13,14 +13,13 @@ export const FilterSection = () => {
    const bookList = []
    return (
       <FilterSectionContainer>
-         <div>
+         <Transition>
             <Breadcrumbs>
                <Link to="/">Главная</Link>
                <Typography color={theme.primary.black}>Психология</Typography>
             </Breadcrumbs>
-
-            <FoundBooks>Найдены 2344 книг</FoundBooks>
-         </div>
+         </Transition>
+         <FoundBooks>Найдены 2344 книг</FoundBooks>
 
          <OptionContainer>
             <p>Жанры</p>
@@ -79,7 +78,7 @@ export const FilterSection = () => {
             <hr />
             <PriceContainer>
                <Button> от 500</Button>
-               <Button>от 500</Button>
+               <Button>от 1000</Button>
             </PriceContainer>
          </div>
          <div>
@@ -107,6 +106,29 @@ export const FilterSection = () => {
 
 const FilterSectionContainer = styled.div`
    width: 236px;
+   height: 935px;
+`
+const Transition = styled.div`
+   margin-top: 30px;
+   p {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 130%;
+   }
+   .MuiBreadcrumbs-root {
+      font-size: 14px;
+      font-weight: 400px;
+      a {
+         text-decoration: none;
+         color: inherit;
+      }
+   }
+   .MuiTypography-root {
+      font-size: 14px;
+      font-weight: 400px;
+   }
 `
 const OptionContainer = styled.div`
    display: flex;
@@ -128,6 +150,7 @@ const FoundBooks = styled.p`
    font-size: 14px;
    line-height: 130%;
    color: #969696;
+   margin-top: 40px;
 `
 const SearchInputContainer = styled.div`
    margin-top: 15px;
