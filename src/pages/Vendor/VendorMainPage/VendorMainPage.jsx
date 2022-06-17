@@ -115,7 +115,7 @@ export const VendorMainPage = () => {
             ))}
          </VendorBookCardContainer>
          <SubmitSeeMore>
-            {getCountOfVendorsBooks.countOfPages > offset && (
+            {countOfVendorBooks?.all > 12 && (
                <Button
                   padding="10px 580px 10px 580px"
                   lHeight="18px"
@@ -127,6 +127,7 @@ export const VendorMainPage = () => {
                   onClick={() => {
                      setOffset((prevOffset) => prevOffset + 1)
                   }}
+                  fullWidth
                >
                   Смотреть больше
                </Button>

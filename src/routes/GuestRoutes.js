@@ -8,6 +8,7 @@ import { UserLayout } from '../layout/UserLayout'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
 import { ClientBookInnerPage } from '../pages/Client/ClientBookInnerPage'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
+import { FilterPage } from '../pages/Client/FilterPage/FilterPage'
 import { Main } from '../pages/Client/Main'
 import { signInUser, signUpClient, signUpVendor } from '../store/auth-slice'
 import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
@@ -31,6 +32,15 @@ export const GuestRoutes = () => {
                element={
                   <>
                      <Main />
+                     {renderAuthModals()}
+                  </>
+               }
+            />
+            <Route
+               path={CLIENT_ROUTES.FILTER_PAGE.PATH}
+               element={
+                  <>
+                     <FilterPage />
                      {renderAuthModals()}
                   </>
                }
