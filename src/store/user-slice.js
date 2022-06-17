@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { appFetch } from '../api/appFetch'
+import { getBookById } from './admin-slice'
 
 export const getGenreList = createAsyncThunk('user/getGenreList', async () => {
    try {
@@ -94,6 +95,90 @@ export const getBooksInMain = createAsyncThunk(
    }
 )
 
+export const postLike = createAsyncThunk(
+   'user/postLike',
+   async ({ id, showNotification }, { dispatch }) => {
+      try {
+         const result = await appFetch({
+            path: 'client/like',
+            method: 'POST',
+            body: {
+               id,
+            },
+         })
+         if (result && result.message) {
+            return dispatch(getBookById(id))
+               .unwrap()
+               .then(() =>
+                  showNotification({ message: 'Книга добавлена в избранное' })
+               )
+         }
+         return result
+      } catch (err) {
+         return err?.message === 'You already put like to this book!'
+            ? showNotification({
+                 title: 'Ошибка',
+                 message: 'Книга уже добавлена в избранное',
+                 type: 'error',
+              })
+            : showNotification({
+                 title: 'Ошибка',
+                 message: 'Не удалось добавить в избранное',
+                 type: 'error',
+              })
+      }
+   }
+)
+export const addToBasket = createAsyncThunk(
+   'user/addToBasket',
+   async ({ id, showNotification }, { dispatch }) => {
+      try {
+         const result = await appFetch({
+            path: 'client/books/basket',
+            method: 'POST',
+            body: {
+               id,
+            },
+         })
+         if (result && result.message) {
+            return dispatch(getBookById(id))
+               .unwrap()
+               .then(() => {
+                  showNotification({ message: 'Книга добавлена в корзину' })
+                  dispatch(getCountOfBookInCount())
+               })
+         }
+         return result
+      } catch (err) {
+         return err?.message === 'You already put this book in your basket'
+            ? showNotification({
+                 title: 'Ошибка',
+                 message: 'Книга уже добавлена в корзину',
+                 type: 'error',
+              })
+            : showNotification({
+                 title: 'Ошибка',
+                 message: 'Не удалось добавить книгу в корзину',
+                 type: 'error',
+              })
+      }
+   }
+)
+export const getCountOfBookInCount = createAsyncThunk(
+   'user/addToBasket',
+   async () => {
+      try {
+         const result = await appFetch({
+            path: 'client/client-basket',
+            method: 'GET',
+         })
+         return result
+      } catch (err) {
+         return err.message
+      }
+   }
+)
+
 const initialState = {
    genreList: [],
    books: {
@@ -104,6 +189,7 @@ const initialState = {
       ebook: [],
    },
    clientSettings: null,
+   countOfBooksInBasket: 0,
 }
 export const userSlice = createSlice({
    name: 'user',
@@ -147,6 +233,12 @@ export const userSlice = createSlice({
       },
       [getClientProfile.fulfilled]: (state, { payload }) => {
          state.clientSettings = payload
+      },
+      [getCountOfBookInCount.fulfilled]: (state, { payload }) => {
+         state.countOfBooksInBasket = payload.length
+      },
+      [getCountOfBookInCount.rejected]: (state) => {
+         state.countOfBooksInBasket = 0
       },
    },
 })

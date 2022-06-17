@@ -71,6 +71,7 @@ const Top3BooksContainer = styled.section`
    display: flex;
    justify-content: center;
    align-items: center;
+   width: 100vw;
 `
 const SubscribeToTheNewsletter = styled.div`
    display: flex;
@@ -115,4 +116,5 @@ const LatestPublicationsContainer = styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
+   width: 100vw;
 `

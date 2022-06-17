@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link as ScrollLink } from 'react-scroll'
 import { SearchInput } from '../UI/SearchInput/SearchInput'
 import { ReactComponent as MenuIcon } from '../../assets/icons/menu-icon.svg'
 import { ReactComponent as FavoriteIcon } from '../../assets/icons/favorite-icon.svg'
@@ -12,16 +13,18 @@ import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 import { SIGN_IN_QUERY_PARAMS } from '../../utils/constants/general'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/profile.svg'
 import { PopUpBackdrop } from '../UI/PopUp/PopUpBackdrop'
-import { getGenreList } from '../../store/user-slice'
+import { getCountOfBookInCount, getGenreList } from '../../store/user-slice'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { logout } from '../../store/auth-slice'
 import { AnimatedModal } from '../UI/Modals/AnimatedModal'
 import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../../utils/constants/routes'
 
-export const UserHeader = ({ countOfItems }) => {
+export const UserHeader = () => {
    const { isAuthorized, userName } = useSelector((state) => state.auth)
 
-   const { genreList } = useSelector((state) => state.user)
+   const { genreList, countOfBooksInBasket } = useSelector(
+      (state) => state.user
+   )
 
    const dispatch = useDispatch()
 
@@ -51,7 +54,10 @@ export const UserHeader = ({ countOfItems }) => {
    }
    useEffect(() => {
       dispatch(getGenreList())
-   }, [])
+      if (isAuthorized) {
+         dispatch(getCountOfBookInCount())
+      }
+   }, [getCountOfBookInCount])
    const options = [
       {
          title: 'Профиль',
@@ -81,7 +87,9 @@ export const UserHeader = ({ countOfItems }) => {
             <Logo />
             <SearchInput booksList={[]} />
             <StyledFavoriteIcon />
-            <Basket onClick={passToBasket}>Корзина ({countOfItems})</Basket>
+            <Basket onClick={passToBasket}>
+               Корзина ({isAuthorized ? countOfBooksInBasket : 0})
+            </Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>
@@ -91,10 +99,24 @@ export const UserHeader = ({ countOfItems }) => {
                </StyledGenres>
                <ul>
                   <li>
-                     <NavLink to="electronicbooks">Электронные книги</NavLink>
+                     <StyledScrollLink
+                        activeClass="active"
+                        smooth
+                        spy
+                        to="electronicbooks"
+                     >
+                        Электронные книги
+                     </StyledScrollLink>
                   </li>
                   <li>
-                     <NavLink to="audiobooks">Aудиокниги</NavLink>
+                     <StyledScrollLink
+                        activeClass="active"
+                        smooth
+                        spy
+                        to="audiobooks"
+                     >
+                        Aудиокниги
+                     </StyledScrollLink>
                   </li>
                   <li>
                      <NavLink
@@ -171,7 +193,13 @@ export const UserHeader = ({ countOfItems }) => {
       </VendorHeaderContainer>
    )
 }
-
+const StyledScrollLink = styled(ScrollLink)`
+   cursor: pointer;
+   .active {
+      color: #f34901;
+      border-bottom: 1px solid #f34901;
+   }
+`
 const VendorHeaderContainer = styled.div`
    display: flex;
    justify-content: center;

@@ -7,7 +7,7 @@ import { UserHeader } from '../components/User/UserHeader'
 export const UserLayout = () => {
    return (
       <Layout>
-         <UserHeader countOfItems={0} />
+         <UserHeader />
          <Content>
             <Outlet />
          </Content>
@@ -26,5 +26,6 @@ const Content = styled.div`
    display: flex;
    flex-direction: column;
    width: 100%;
+   overflow-x: hidden;
    min-height: 100vh;
 `
