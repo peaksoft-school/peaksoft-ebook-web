@@ -4,9 +4,7 @@ import { ClientsTable } from '../../../components/Admin/Tables/ClientsTable'
 import { getAllClients } from '../../../store/admin-slice'
 
 export const Clients = () => {
-   const listOfClients = useSelector(
-      (state) => state.adminVendors.listOfClients
-   )
+   const listOfClients = useSelector((state) => state.admin.listOfClients)
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getAllClients())

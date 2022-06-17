@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { theme } from '../../../utils/constants/theme'
 
 export const VendorDetails = () => {
-   const seller = useSelector((state) => state.adminVendors.singleVendor)
+   const seller = useSelector((state) => state.admin.singleVendor)
    const params = useParams()
    return (
       <VendorProfileContainer>

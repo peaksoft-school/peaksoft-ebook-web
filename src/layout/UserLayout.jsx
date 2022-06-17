@@ -1,6 +1,7 @@
 import styled from '@emotion/styled/macro'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { UserFooter } from '../components/User/UserFooter'
 import { UserHeader } from '../components/User/UserHeader'
 
 export const UserLayout = () => {
@@ -10,6 +11,7 @@ export const UserLayout = () => {
          <ContentContainer>
             <Outlet />
          </ContentContainer>
+         <UserFooter />
       </UsersLayout>
    )
 }

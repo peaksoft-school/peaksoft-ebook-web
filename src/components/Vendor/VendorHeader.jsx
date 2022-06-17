@@ -55,7 +55,12 @@ export const VendorHeader = () => {
                <StyledBellIcon />
                <ContainerOfIcons onClick={showPopUp}>
                   <ProfileIcon />
-                  {isShowOptions && <PopUp options={options} />}
+                  {isShowOptions && (
+                     <PopUp
+                        options={options}
+                        boxShadow="0 5px 10px 3px rgba(226, 219, 219, 0.5)"
+                     />
+                  )}
                </ContainerOfIcons>
             </InnerContainer>
          </SearchHeaderContainer>

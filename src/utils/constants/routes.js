@@ -14,6 +14,14 @@ export const CLIENT_ROUTES = {
       PATH: '/filter-page',
       LABEL: 'Электронные книги',
    },
+   CLIENT_BASKET: {
+      PATH: '/basket',
+      LABEL: 'Корзина',
+   },
+   CLIENT_PROMOCODE: {
+      PATH: '/promocode',
+      LABEL: 'Промокод',
+   },
    CLIENT_PROFILE: {
       PATH: '/client-profile',
       LABEL: 'Профиль',
@@ -25,20 +33,17 @@ export const BECOME_VENDOR_ROUTES = {
    },
 }
 export const VENDOR_ROUTES = {
-   VENDOR_MAIN_PAGE: {
-      PATH: '/main-page',
-      LABEL: 'Главная',
-   },
    VENDOR_PROFILE: {
       PATH: '/profile',
       LABEL: 'Профиль',
    },
-   VENDOR_ABOUT_BOOKS: {
-      PATH: '/main-page/:id',
-   },
    ADD_BOOK: {
       PATH: '/add-book',
       LABEL: 'Добавить книгу',
+   },
+   BOOK_INNER_PAGE: {
+      PATH: '/:bookId',
+      LABEL: 'Название книги',
    },
 }
 

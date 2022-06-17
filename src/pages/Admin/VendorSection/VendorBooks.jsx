@@ -15,7 +15,7 @@ import {
 } from '../../../store/admin-slice'
 
 export const VendorBooks = ({ countOfBooks }) => {
-   const books = useSelector((state) => state.adminVendors.listOfVendorBooks)
+   const books = useSelector((state) => state.admin.listOfVendorBooks)
    const [showOptions, setShowOptions] = useState(false)
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
    const dispatch = useDispatch()
@@ -172,10 +172,10 @@ const StyledButton = styled.div`
 `
 
 const ContentContainer = styled.div`
-   padding-top: 30px;
+   padding-top: 20px;
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   grid-gap: 2rem;
+   grid-gap: 4rem;
    padding-bottom: 70px;
 `
 

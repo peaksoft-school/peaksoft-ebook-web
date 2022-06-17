@@ -29,7 +29,9 @@ export const UserHeader = ({ countOfItems }) => {
             <StyledLogo />
             <SearchInput booksList={booksList} />
             <StyledFavoriteIcon />
-            <Basket>Корзина ({countOfItems})</Basket>
+            <Basket onClick={() => navigate('/basket')}>
+               Корзина ({countOfItems})
+            </Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>

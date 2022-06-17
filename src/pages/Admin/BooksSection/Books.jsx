@@ -17,8 +17,8 @@ export const Books = () => {
    const [genreId, setGenreId] = useState(28)
    const [bookType, setBookType] = useState('ALL')
    const dispatch = useDispatch()
-   const listOfBooks = useSelector((state) => state.adminVendors.acceptedBooks)
-   const genres = useSelector((state) => state.adminVendors.listOfGenres)
+   const listOfBooks = useSelector((state) => state.admin.acceptedBooks)
+   const genres = useSelector((state) => state.admin.listOfGenres)
 
    const countOfPages = Math.ceil(listOfBooks?.length / 8)
 
