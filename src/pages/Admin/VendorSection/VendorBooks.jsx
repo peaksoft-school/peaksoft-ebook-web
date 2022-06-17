@@ -178,10 +178,10 @@ const StyledButton = styled.div`
 `
 
 const ContentContainer = styled.div`
-   padding-top: 30px;
+   padding-top: 20px;
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   grid-gap: 2rem;
+   grid-gap: 4rem;
    padding-bottom: 70px;
 `
 

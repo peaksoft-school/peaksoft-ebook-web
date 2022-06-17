@@ -19,6 +19,9 @@ import { Logo } from '../../components/UI/Logo/Logo'
 export const BecomeVendor = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const navigateToProfile = () => {
+      navigate('/client-profile')
+   }
    const navigateToSignIn = () => {
       navigate('/?sign-up-vendor=true')
    }
@@ -31,7 +34,7 @@ export const BecomeVendor = () => {
          <MainContent>
             <BecomeVendorHeader>
                <StyledLogo />
-               <Button>Личный кабинет</Button>
+               <Button onClick={navigateToProfile}>Личный кабинет</Button>
             </BecomeVendorHeader>
             <ImageContent>
                <PortalText>

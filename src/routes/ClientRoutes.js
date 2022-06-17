@@ -1,9 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { ClientPersonalProfile } from '../components/User/ClientPersonalProfile'
 import { UserLayout } from '../layout/UserLayout'
 import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
 import { Main } from '../pages/Client/Main'
+import { ClientBasket } from '../pages/Client/ClientBasket'
+import { ClientPromocode } from '../pages/Client/ClientPromocode'
+import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
 
 export const ClientRoutes = () => {
@@ -14,6 +16,14 @@ export const ClientRoutes = () => {
             <Route
                path={CLIENT_ROUTES.PROFILE.PATH}
                element={<ClientPersonalProfile />}
+            />
+            <Route
+               path={CLIENT_ROUTES.CLIENT_BASKET.PATH}
+               element={<ClientBasket />}
+            />
+            <Route
+               path={CLIENT_ROUTES.CLIENT_PROMOCODE.PATH}
+               element={<ClientPromocode />}
             />
          </Route>
          <Route

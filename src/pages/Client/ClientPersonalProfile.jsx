@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { theme } from '../../utils/constants/theme'
-import { Input } from '../UI/Inputs/Input'
-import { InputForPassword } from '../UI/Inputs/InputForPassword'
-import { TextButton } from '../UI/Buttons/TextButton'
-import { Button } from '../UI/Buttons/Button'
-import { ErrorConfirmModal } from '../UI/Modals/ErrorConfirmModal'
+import { Input } from '../../components/UI/Inputs/Input'
+import { InputForPassword } from '../../components/UI/Inputs/InputForPassword'
+import { TextButton } from '../../components/UI/Buttons/TextButton'
+import { Button } from '../../components/UI/Buttons/Button'
+import { ErrorConfirmModal } from '../../components/UI/Modals/ErrorConfirmModal'
 import {
    editClientProfile,
    getClientProfile,
@@ -21,7 +21,7 @@ import {
    ErrorMessageForExactField,
 } from '../../assets/styles/styles'
 import { logout } from '../../store/auth-slice'
-import { SuccessModal } from '../UI/Modals/SuccessModal'
+import { SuccessModal } from '../../components/UI/Modals/SuccessModal'
 
 export const ClientPersonalProfile = () => {
    const [showSuccess, setShowSuccess] = useState(false)

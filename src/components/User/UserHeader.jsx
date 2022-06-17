@@ -76,7 +76,9 @@ export const UserHeader = ({ countOfItems }) => {
             <Logo />
             <SearchInput booksList={[]} />
             <StyledFavoriteIcon />
-            <Basket>Корзина ({countOfItems})</Basket>
+            <Basket onClick={() => navigate('/basket')}>
+               Корзина ({countOfItems})
+            </Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>
