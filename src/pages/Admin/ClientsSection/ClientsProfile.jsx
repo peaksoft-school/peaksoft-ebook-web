@@ -11,7 +11,7 @@ import { Modal } from '../../../components/UI/Modals/Modal'
 
 export const ClientsProfile = () => {
    const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false)
-   const user = useSelector((state) => state.adminVendors.singleClient)
+   const user = useSelector((state) => state.admin.singleClient)
    const params = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()

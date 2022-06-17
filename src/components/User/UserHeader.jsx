@@ -16,6 +16,7 @@ import { getGenreList } from '../../store/user-slice'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { logout } from '../../store/auth-slice'
 import { AnimatedModal } from '../UI/Modals/AnimatedModal'
+import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../../utils/constants/routes'
 
 export const UserHeader = ({ countOfItems }) => {
    const { isAuthorized, userName } = useSelector((state) => state.auth)
@@ -54,6 +55,10 @@ export const UserHeader = ({ countOfItems }) => {
    const options = [
       {
          title: 'Профиль',
+         action: () => {
+            showPopUp()
+            navigate(CLIENT_ROUTES.PROFILE.PATH)
+         },
          id: 'e1',
       },
       {
@@ -95,7 +100,10 @@ export const UserHeader = ({ countOfItems }) => {
                      </NavLink>
                   </li>
                   <li>
-                     <NavLink to="/becomevendor" className="eBook">
+                     <NavLink
+                        to={DEFAULT_ROUTES.BECOME_VENDOR.PATH}
+                        className="eBook"
+                     >
                         Начать продавать на eBook
                      </NavLink>
                   </li>

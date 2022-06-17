@@ -26,7 +26,7 @@ export const ClientsTableItem = ({ vendorId, firstName, email, id }) => {
    const deleteVendor = () => {
       dispatch(
          removeVendor({
-            id,
+            id: vendorId,
             navigateAfterSuccessDelete,
             successModalAfterDelete,
          })
@@ -40,7 +40,7 @@ export const ClientsTableItem = ({ vendorId, firstName, email, id }) => {
                navigate(`${vendorId}/profile`)
             }}
          >
-            <TableCell>{vendorId}</TableCell>
+            <TableCell>{id}</TableCell>
             <TableCell>{firstName}</TableCell>
             <TableCell>{email}</TableCell>
             <TableCell>

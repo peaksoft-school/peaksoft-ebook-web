@@ -2,8 +2,6 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Logo } from '../UI/Logo/Logo'
-import { Button } from '../UI/Buttons/Button'
 import { ReactComponent as PortalIcon } from '../../assets/icons/portal.svg'
 import { ReactComponent as BecomeVendorImage } from '../../assets/icons/become-vendor-image.svg'
 import { ReactComponent as BecomeVendorIcon } from '../../assets/icons/knowledge-cuate 1.svg'
@@ -13,8 +11,10 @@ import ThirdPhoto from '../../assets/images/third-photo.jpg'
 import FourthPhoto from '../../assets/images/fourth-photo.jpg'
 import FivePhoto from '../../assets/images/five.jpg'
 import SixPhoto from '../../assets/images/six.jpg'
-import { UserFooter } from './UserFooter'
 import { logout } from '../../store/auth-slice'
+import { Button } from '../../components/UI/Buttons/Button'
+import { UserFooter } from '../../components/User/UserFooter'
+import { Logo } from '../../components/UI/Logo/Logo'
 
 export const BecomeVendor = () => {
    const navigate = useNavigate()
@@ -200,6 +200,8 @@ const ConditionsContainer = styled.div`
    img {
       width: 413px;
       height: 203px;
+      object-fit: cover;
+      object-position: center;
    }
    p {
       margin-top: 30px;

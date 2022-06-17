@@ -10,7 +10,7 @@ export const ErrorConfirmModal = ({
    isOpen,
    exit,
    title,
-   onCencel,
+   onCancel,
    onExit,
 }) => {
    return (
@@ -18,18 +18,7 @@ export const ErrorConfirmModal = ({
          <ConfirmModal>
             <p>{title}</p>
             <ConfirmSubmit>
-               <Button
-                  padding="10px 24px 10px 24px"
-                  bgColor="#FFFFFF"
-                  color="#A3A3A3"
-                  fontSize="16px"
-                  ling-height="21.79px"
-                  bgColorActive="#FF4C00"
-                  bgColorHover="rgb(72, 72, 72)"
-                  onClick={onCencel}
-               >
-                  Отменить
-               </Button>
+               <CancelButton onClick={onCancel}>Отменить</CancelButton>
                {(exit && (
                   <Button
                      padding="10px 24px 10px 24px"
@@ -38,7 +27,7 @@ export const ErrorConfirmModal = ({
                      ling-height="21.79px"
                      bgColorHover="#484848"
                      bgColorActive={theme.secondary.orange}
-                     onClick={onCencel}
+                     onClick={onCancel}
                   >
                      Выйти
                   </Button>
@@ -77,5 +66,23 @@ const ConfirmSubmit = styled.div`
    justify-content: center;
    Button {
       margin: 20px;
+   }
+`
+const CancelButton = styled.button`
+   outline: none;
+   border: none;
+   padding: 10px 24px;
+   cursor: pointer;
+   font-family: 'Open Sans';
+   font-weight: 600;
+   font-size: 16px;
+   line-height: 22px;
+   color: #a3a3a3;
+   background: #ffffff;
+   &:hover {
+      color: #818181;
+   }
+   &:active {
+      color: #000000;
    }
 `

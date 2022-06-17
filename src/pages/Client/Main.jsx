@@ -3,18 +3,23 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '../../components/UI/Buttons/Button'
 import { Input } from '../../components/UI/Inputs/Input'
-import { getBooksInMain } from '../../store/user-slice'
+import { getBooksInMain, userActions } from '../../store/user-slice'
 import { theme } from '../../utils/constants/theme'
 import backLine from '../../assets/icons/back-line.svg'
 import { Top3Books } from '../../components/User/MainPage/Top3Books'
 import { Bestsellers } from '../../components/User/MainPage/Bestsellers'
+import { ElectronicBooks } from '../../components/User/MainPage/ElectronicBooks'
+import { AudioBooks } from '../../components/User/MainPage/AudioBooks'
+import { LatestPublications } from '../../components/User/MainPage/LatestPublications'
 
 export const Main = () => {
    const { books } = useSelector((state) => state.user)
+
    const dispatch = useDispatch()
 
    useEffect(() => {
       dispatch(getBooksInMain())
+      return () => dispatch(userActions.resetBook())
    }, [])
 
    return (
@@ -23,6 +28,12 @@ export const Main = () => {
             <Top3Books books={books?.top3} />
          </Top3BooksContainer>
          <Bestsellers bestsellers={books?.latestPublications} />
+         <LatestPublicationsContainer>
+            <LatestPublications />
+         </LatestPublicationsContainer>
+         <AudioBooks audioBooks={books?.audio} />
+         <ElectronicBooks eBooks={books?.ebook} />
+
          <SubscribeToTheNewsletter>
             <h1>Подписаться на рассылку</h1>
             <div>
@@ -56,7 +67,7 @@ const ParentContainer = styled.div`
 const Top3BooksContainer = styled.section`
    background: #1c1c1c;
    background-image: url(${backLine});
-   min-height: 719px;
+   min-height: 720px;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -97,4 +108,11 @@ const SocialNetworks = styled.div`
       color: #222222;
       cursor: pointer;
    }
+`
+const LatestPublicationsContainer = styled.div`
+   background: #1c1c1c;
+   min-height: 960px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 `

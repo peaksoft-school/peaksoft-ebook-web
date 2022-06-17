@@ -11,6 +11,61 @@ export const getGenreList = createAsyncThunk('user/getGenreList', async () => {
       return err.message
    }
 })
+export const getClientProfile = createAsyncThunk(
+   'client/getClientProfile',
+   async (_, { rejectWithValue }) => {
+      try {
+         const result = await appFetch({
+            path: 'client/profile',
+            method: 'GET',
+         })
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const editClientProfile = createAsyncThunk(
+   'client/editClientProfile',
+   async (data, { dispatch }) => {
+      dispatch(userActions.setIsLoading(true))
+      try {
+         const result = await appFetch({
+            path: 'client/profile/settings',
+            method: 'PATCH',
+            body: data,
+         })
+         if (result) {
+            dispatch(userActions.setIsShowSuccessModal(true))
+         }
+         return result
+      } catch (error) {
+         return dispatch(userActions.setErrorMessagePassword(error.message))
+      }
+   }
+)
+
+export const removeClientProfile = createAsyncThunk(
+   'vendor/removeClientProfile',
+   async ({ navigateAfterSuccessDelete }, { rejectWithValue }) => {
+      try {
+         const result = await appFetch(
+            {
+               path: `client/profile`,
+               method: 'DELETE',
+            },
+            { asText: true }
+         )
+         if (result) {
+            navigateAfterSuccessDelete()
+         }
+         return result
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
 
 export const getBooksInMain = createAsyncThunk(
    'user/getBooksInMain',
@@ -48,11 +103,36 @@ const initialState = {
       audio: [],
       ebook: [],
    },
+   clientSettings: null,
 }
 export const userSlice = createSlice({
    name: 'user',
    initialState,
-   reducers: {},
+   reducers: {
+      setErrorMessagePassword(state, { payload }) {
+         if (payload === 'You wrote wrong old password!') {
+            state.errorMessagePassword = 'Введенные пароли не совпадают'
+         }
+         if (payload === "Your new password didn't match!") {
+            state.errorMessagePassword = 'Ваш новый пароль не совпадают'
+         }
+      },
+      setIsLoading: (state, { payload }) => {
+         state.isLoading = payload
+      },
+      setIsShowSuccessModal: (state, { payload }) => {
+         state.isShowSuccessModal = payload
+      },
+      resetBook(state) {
+         state.books = {
+            top3: [],
+            bestseller: [],
+            latestPublications: [],
+            audio: [],
+            ebook: [],
+         }
+      },
+   },
    extraReducers: {
       [getGenreList.fulfilled]: (state, { payload }) => {
          state.genreList = payload
@@ -64,6 +144,9 @@ export const userSlice = createSlice({
                ...current,
             }
          }, state.books)
+      },
+      [getClientProfile.fulfilled]: (state, { payload }) => {
+         state.clientSettings = payload
       },
    },
 })

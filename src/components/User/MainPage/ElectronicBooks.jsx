@@ -1,16 +1,16 @@
-import styled from '@emotion/styled/macro'
+import styled from '@emotion/styled'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { AboutBookWithSlider } from './AboutBookWithSlider'
 
-export const Bestsellers = ({ bestsellers }) => {
+export const ElectronicBooks = ({ eBooks }) => {
    return (
       <Container>
          <Nav>
-            <h1>Бестселлеры</h1>
+            <h1>Электронные книги</h1>
             <StyledLink to="/">Смотреть все</StyledLink>
          </Nav>
-         <AboutBookWithSlider books={bestsellers} />
+         <AboutBookWithSlider books={eBooks} />
       </Container>
    )
 }

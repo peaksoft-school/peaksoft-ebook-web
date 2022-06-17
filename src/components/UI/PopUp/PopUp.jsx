@@ -45,13 +45,19 @@ const MenuItem = styled.div`
    }
 `
 const MenuContainer = styled.div`
-   animation: POPUP 0.05s;
+   animation: POPUP 0.3s;
    @keyframes POPUP {
       from {
-         height: 0;
+         & ${StyledOptions} {
+            opacity: 0;
+         }
+         opacity: 0;
       }
       to {
-         height: 100px;
+         opacity: 1;
+         & ${StyledOptions} {
+            opacity: 1;
+         }
       }
    }
    position: absolute;

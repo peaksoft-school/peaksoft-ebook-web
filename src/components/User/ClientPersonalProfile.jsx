@@ -14,7 +14,7 @@ import {
    editClientProfile,
    getClientProfile,
    removeClientProfile,
-} from '../../store/client-slice'
+} from '../../store/user-slice'
 
 import {
    ErrorMessage,
@@ -35,7 +35,7 @@ export const ClientPersonalProfile = () => {
       }
    }, [showSuccess])
    const { clientSettings, errorMessagePassword } = useSelector(
-      (state) => state.client
+      (state) => state.user
    )
    useEffect(() => {
       dispatch(getClientProfile())
@@ -86,21 +86,21 @@ export const ClientPersonalProfile = () => {
          <ProfileContainer>
             <PersonalInformationContainer>
                <Private>Личная информация</Private>
-               <PersonalInformation>
+               <div>
                   <p>Мое имя</p>
                   <Input
                      placeholder="Напишите ваше имя"
                      {...register('firstName', { required: true })}
                   />
-               </PersonalInformation>
-               <PersonalInformation>
+               </div>
+               <div>
                   <p>Email</p>
                   <Input
                      type="email"
                      placeholder="Напишите ваш Email"
                      {...register('email', { required: true })}
                   />
-               </PersonalInformation>
+               </div>
             </PersonalInformationContainer>
             <PersonalInformationContainer>
                <Private>Изменить пароль</Private>
@@ -146,39 +146,14 @@ export const ClientPersonalProfile = () => {
                )}
             </PersonalInformationContainer>
          </ProfileContainer>
-         <RemoveProfile>
+         <div>
             <TextButton color="red" onClick={showDeleteModal} type="button">
                Удалить профиль?
             </TextButton>
-            {showRemoveModal && (
-               <ErrorConfirmModal
-                  isOpen={showRemoveModal}
-                  onCencel={() => setRemoveModal(false)}
-                  onExit={deleteClientProfile}
-                  onCloseBackDrop={(e) => {
-                     e.stopPropagation()
-                     setRemoveModal(false)
-                  }}
-                  title={`Вы уверены, что хотите удалить профиль?
-          `}
-               />
-            )}
-         </RemoveProfile>
-         <SubmitProfile>
+         </div>
+         <ButtonsContainer>
             <Link to="/">
-               <Button
-                  type="button"
-                  padding="10px 24px 10px 24px"
-                  bgColor="#FFFFFF"
-                  color="#A3A3A3"
-                  fontSize="16px"
-                  colorHover="#FFFFFF"
-                  ling-height="21.79px"
-                  bgColorActive="#FF4C00"
-                  bgColorHover="#484848"
-               >
-                  Отменить
-               </Button>
+               <CancelButton>Отменить</CancelButton>
             </Link>
             <Button
                padding="10px 24px 10px 24px"
@@ -191,21 +166,31 @@ export const ClientPersonalProfile = () => {
             >
                Сохранить
             </Button>
-            <SuccessModal
-               isOpen={showSuccess}
-               onCloseBackDrop={() => setShowSuccess(false)}
-               title={`ssefe `}
+         </ButtonsContainer>
+         {showRemoveModal && (
+            <ErrorConfirmModal
+               isOpen={showRemoveModal}
+               onCancel={() => setRemoveModal(false)}
+               onExit={deleteClientProfile}
+               onCloseBackDrop={(e) => {
+                  e.stopPropagation()
+                  setRemoveModal(false)
+               }}
+               title={`Вы уверены, что хотите удалить профиль?
+          `}
             />
-         </SubmitProfile>
+         )}
+         <SuccessModal
+            isOpen={showSuccess}
+            onCloseBackDrop={() => setShowSuccess(false)}
+            title={`ssefe `}
+         />
       </StyledForm>
    )
 }
 
 const StyledForm = styled.form`
-   position: relative;
-   margin: 0 auto;
-   padding-top: 50px;
-   right: 90px;
+   padding: 50px 80px 0 80px;
 
    .MuiBreadcrumbs-root {
       font-size: 14px;
@@ -227,8 +212,7 @@ const PasswordContainer = styled.div`
 const ProfileContainer = styled.div`
    display: flex;
    justify-content: space-between;
-   width: 1180px;
-   margin: 0 auto;
+   gap: 0 160px;
    margin-top: 50px;
    input {
       width: 514px;
@@ -249,18 +233,29 @@ const Private = styled.p`
    line-height: 25px;
    color: #222222;
 `
-const PersonalInformation = styled.div``
-const RemoveProfile = styled.div`
-   margin-top: 50px;
-`
-const SubmitProfile = styled.div`
-   button {
-      margin: 20px;
-   }
-   position: absolute;
+const ButtonsContainer = styled.div`
+   padding: 97px 0 50px 0;
+   width: 100%;
    display: flex;
-   justify-content: space-between;
-   width: 355px;
-   right: 0;
-   padding: 50px 0 0 120px;
+   justify-content: flex-end;
+   align-items: center;
+   gap: 0 40px;
+`
+const CancelButton = styled.button`
+   outline: none;
+   border: none;
+   padding: 10px 24px;
+   cursor: pointer;
+   font-family: 'Open Sans';
+   font-weight: 600;
+   font-size: 16px;
+   line-height: 22px;
+   color: #a3a3a3;
+   background: #ffffff;
+   &:hover {
+      color: #818181;
+   }
+   &:active {
+      color: #000000;
+   }
 `

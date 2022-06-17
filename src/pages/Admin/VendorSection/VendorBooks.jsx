@@ -104,18 +104,24 @@ export const VendorBooks = ({ countOfBooks }) => {
                </ContainerOfIcons>
             </HeadContainer>
             <ContentContainer>
-               {books.map((vendorBooks) => (
-                  <VendorBookCard
-                     marginTop="15px"
-                     key={vendorBooks.bookId}
-                     vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
-                     amountOfLikes={vendorBooks.likes}
-                     baskets={vendorBooks.baskets}
-                     date={vendorBooks.dateOfRegister}
-                     name={vendorBooks.title}
-                     price={vendorBooks.price}
-                  />
-               ))}
+               {books.length > 0 ? (
+                  books.map((vendorBooks) => (
+                     <VendorBookCard
+                        marginTop="15px"
+                        key={vendorBooks.bookId}
+                        vendorImageUrl={vendorBooks.fileInformation.firstPhoto}
+                        amountOfLikes={vendorBooks.likes}
+                        baskets={vendorBooks.baskets}
+                        date={vendorBooks.dateOfRegister}
+                        name={vendorBooks.title}
+                        price={vendorBooks.price}
+                     />
+                  ))
+               ) : (
+                  <NotFoundText>
+                     У данного продавца пока нет добавленных книг
+                  </NotFoundText>
+               )}
             </ContentContainer>
             <StyledButton>
                <TextButton
@@ -230,4 +236,14 @@ const StyledModal = styled.div`
       justify-content: space-between;
       padding: 0 91px 20px 91px;
    }
+`
+const NotFoundText = styled.h1`
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 25px;
+   line-height: 130%;
+   color: #222222;
+   text-align: center;
+   padding: 50px 0;
 `
