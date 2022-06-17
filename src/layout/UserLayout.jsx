@@ -7,7 +7,7 @@ import { UserHeader } from '../components/User/UserHeader'
 export const UserLayout = () => {
    return (
       <Layout>
-         <UserHeader countOfItems={0} />
+         <UserHeader />
          <Content>
             <Outlet />
          </Content>

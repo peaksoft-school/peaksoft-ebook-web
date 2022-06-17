@@ -12,16 +12,18 @@ import { GenreMenu } from '../UI/GenreMenu/GenreMenu'
 import { SIGN_IN_QUERY_PARAMS } from '../../utils/constants/general'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/profile.svg'
 import { PopUpBackdrop } from '../UI/PopUp/PopUpBackdrop'
-import { getGenreList } from '../../store/user-slice'
+import { getCountOfBookInCount, getGenreList } from '../../store/user-slice'
 import { PopUp } from '../UI/PopUp/PopUp'
 import { logout } from '../../store/auth-slice'
 import { AnimatedModal } from '../UI/Modals/AnimatedModal'
 import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../../utils/constants/routes'
 
-export const UserHeader = ({ countOfItems }) => {
+export const UserHeader = () => {
    const { isAuthorized, userName } = useSelector((state) => state.auth)
 
-   const { genreList } = useSelector((state) => state.user)
+   const { genreList, countOfBooksInBasket } = useSelector(
+      (state) => state.user
+   )
 
    const dispatch = useDispatch()
 
@@ -51,7 +53,8 @@ export const UserHeader = ({ countOfItems }) => {
    }
    useEffect(() => {
       dispatch(getGenreList())
-   }, [])
+      dispatch(getCountOfBookInCount())
+   }, [getCountOfBookInCount])
    const options = [
       {
          title: 'Профиль',
@@ -81,7 +84,9 @@ export const UserHeader = ({ countOfItems }) => {
             <Logo />
             <SearchInput booksList={[]} />
             <StyledFavoriteIcon />
-            <Basket onClick={passToBasket}>Корзина ({countOfItems})</Basket>
+            <Basket onClick={passToBasket}>
+               Корзина ({countOfBooksInBasket})
+            </Basket>
          </InnerContainer>
          <ContainerOfLinks>
             <StyledNavlinks>
