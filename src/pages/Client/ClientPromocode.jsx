@@ -1,12 +1,24 @@
 import styled from '@emotion/styled/macro'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { ReactComponent as PromocodeImage } from '../../assets/icons/promocode-image.svg'
 import { Button } from '../../components/UI/Buttons/Button'
 import { Input } from '../../components/UI/Inputs/Input'
 import { ErrorModal } from '../../components/UI/Modals/ErrorModal'
+import { SIGN_IN_QUERY_PARAMS } from '../../utils/constants/general'
 
 export const ClientPromocode = () => {
+   const { isAuthorized } = useSelector((state) => state.auth)
+   const [, setSearchParams] = useSearchParams()
+
    const [isOpen, setIsOpen] = useState(false)
+   const activatePromocodeHandler = (e) => {
+      e.stopPropagation()
+      return isAuthorized
+         ? setIsOpen(true)
+         : setSearchParams({ [SIGN_IN_QUERY_PARAMS]: true })
+   }
    return (
       <>
          <ContainerOfPromocode>
@@ -18,14 +30,7 @@ export const ClientPromocode = () => {
             </StyledDiv>
             <StyledInput>
                <Input placeholder="Введите промокод" />
-               <Button
-                  onClick={(e) => {
-                     setIsOpen(true)
-                     e.stopPropagation()
-                  }}
-               >
-                  Активировать
-               </Button>
+               <Button onClick={activatePromocodeHandler}>Активировать</Button>
             </StyledInput>
             <p>
                Промокоды eBook на скидки и подарки вы можете получить в

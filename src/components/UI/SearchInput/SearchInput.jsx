@@ -102,5 +102,8 @@ const StyledSearchInput = styled.div`
       cursor: pointer;
       position: relative;
       right: 15px;
+      &:active path {
+         fill: rgba(243, 73, 1, 1);
+      }
    }
 `

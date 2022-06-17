@@ -1,11 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { UserLayout } from '../layout/UserLayout'
-import {
-   BECOME_VENDOR_ROUTES,
-   CLIENT_ROUTES,
-   DEFAULT_ROUTES,
-} from '../utils/constants/routes'
+import { CLIENT_ROUTES, DEFAULT_ROUTES } from '../utils/constants/routes'
+import { Main } from '../pages/Client/Main'
 import { ClientBasket } from '../pages/Client/ClientBasket'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
 import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
@@ -15,8 +12,9 @@ export const ClientRoutes = () => {
    return (
       <Routes>
          <Route path={DEFAULT_ROUTES.INDEX.PATH} element={<UserLayout />}>
+            <Route path="" element={<Main />} />
             <Route
-               path={CLIENT_ROUTES.CLIENT_PROFILE.PATH}
+               path={CLIENT_ROUTES.PROFILE.PATH}
                element={<ClientPersonalProfile />}
             />
             <Route
@@ -29,7 +27,7 @@ export const ClientRoutes = () => {
             />
          </Route>
          <Route
-            path={BECOME_VENDOR_ROUTES.BECOME_VENDOR.PATH}
+            path={DEFAULT_ROUTES.BECOME_VENDOR.PATH}
             element={<BecomeVendor />}
          />
          <Route

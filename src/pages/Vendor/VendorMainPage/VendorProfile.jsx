@@ -206,7 +206,7 @@ export const VendorProfile = () => {
             {showRemoveModal && (
                <ErrorConfirmModal
                   isOpen={showRemoveModal}
-                  onCencel={() => setRemoveModal(false)}
+                  onCancel={() => setRemoveModal(false)}
                   onExit={deleteVendorProfile}
                   onCloseBackDrop={(e) => {
                      e.stopPropagation()

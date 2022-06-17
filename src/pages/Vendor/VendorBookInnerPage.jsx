@@ -129,6 +129,7 @@ export const VendorBookInnerPage = () => {
                   aboutBook={book?.aboutBook}
                   fragmentOfBook={book?.[currentBookType()]?.fragmentOfBook}
                   thirdBook={book?.fileInformation.thirdPhoto}
+                  isAudioBook={checkIsAudioBook()}
                />
             </AboutBookContainer>
          </ParentContainer>
