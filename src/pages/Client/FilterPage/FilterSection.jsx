@@ -1,15 +1,27 @@
 import styled from '@emotion/styled'
+import { Breadcrumbs, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/black-arrow-down-icon.svg'
-import { Button } from '../../UI/Buttons/Button'
-import { Checkbox } from '../../UI/Checkbox/Checkbox'
-import { RadioButton } from '../../UI/RadioButton/RadioButton'
-import { SearchInput } from '../../UI/SearchInput/SearchInput'
+import { Button } from '../../../components/UI/Buttons/Button'
+import { Checkbox } from '../../../components/UI/Checkbox/Checkbox'
+import { RadioButton } from '../../../components/UI/RadioButton/RadioButton'
+import { SearchInput } from '../../../components/UI/SearchInput/SearchInput'
+import { theme } from '../../../utils/constants/theme'
 
 export const FilterSection = () => {
    const bookList = []
    return (
       <FilterSectionContainer>
+         <div>
+            <Breadcrumbs>
+               <Link to="/">Главная</Link>
+               <Typography color={theme.primary.black}>Психология</Typography>
+            </Breadcrumbs>
+
+            <FoundBooks>Найдены 2344 книг</FoundBooks>
+         </div>
+
          <OptionContainer>
             <p>Жанры</p>
             <ArrowDownIcon />
@@ -108,6 +120,14 @@ const OptionContainer = styled.div`
       font-size: 16px;
       line-height: 120%;
    }
+`
+const FoundBooks = styled.p`
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 130%;
+   color: #969696;
 `
 const SearchInputContainer = styled.div`
    margin-top: 15px;

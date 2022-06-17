@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { UserLayout } from '../layout/UserLayout'
-import { FilterPage } from '../components/User/FilterPage/FilterPage'
 import {
    BECOME_VENDOR_ROUTES,
    CLIENT_ROUTES,
@@ -11,6 +10,7 @@ import { ClientBasket } from '../pages/Client/ClientBasket'
 import { ClientPromocode } from '../pages/Client/ClientPromocode'
 import { ClientPersonalProfile } from '../pages/Client/ClientPersonalProfile'
 import { BecomeVendor } from '../pages/Client/BecomeVendor'
+import { FilterPage } from '../pages/Client/FilterPage/FilterPage'
 
 export const ClientRoutes = () => {
    return (
