@@ -12,6 +12,7 @@ import {
    removeVendor,
    getSingleVendor,
    getListOfVendorBooks,
+   adminActions,
 } from '../../../store/admin-slice'
 
 export const VendorBooks = () => {
@@ -32,12 +33,11 @@ export const VendorBooks = () => {
    }
 
    const { id } = useParams()
-   useEffect(() => {
-      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
-   }, [])
 
    useEffect(() => {
       dispatch(getSingleVendor(id))
+      dispatch(getListOfVendorBooks({ data: 'books', id, offset: 1 }))
+      return () => dispatch(adminActions.resetVendorBooks())
    }, [])
 
    const options = [
@@ -104,7 +104,7 @@ export const VendorBooks = () => {
                </ContainerOfIcons>
             </HeadContainer>
             <ContentContainer>
-               {books.length > 0 ? (
+               {books.length > 0 &&
                   books.map((vendorBooks) => (
                      <VendorBookCard
                         marginTop="15px"
@@ -116,13 +116,13 @@ export const VendorBooks = () => {
                         name={vendorBooks.title}
                         price={vendorBooks.price}
                      />
-                  ))
-               ) : (
-                  <NotFoundText>
-                     У данного продавца пока нет добавленных книг
-                  </NotFoundText>
-               )}
+                  ))}
             </ContentContainer>
+            {books.length === 0 && (
+               <NotFoundText>
+                  У данного продавца пока нет добавленных книг
+               </NotFoundText>
+            )}
             <StyledButton>
                <TextButton
                   onClick={(e) => {

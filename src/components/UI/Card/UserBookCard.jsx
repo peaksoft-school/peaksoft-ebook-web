@@ -126,4 +126,6 @@ const AudioIcon = styled.button`
 const BooksImage = styled.img`
    width: 224px;
    height: 343px;
+   object-fit: cover;
+   object-position: top;
 `

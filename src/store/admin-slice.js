@@ -253,6 +253,9 @@ export const adminSlice = createSlice({
       resetBook(state) {
          state.book = null
       },
+      resetVendorBooks(state) {
+         state.listOfVendorBooks = []
+      },
    },
    extraReducers: {
       [getAllVendors.fulfilled]: (state, { payload }) => {

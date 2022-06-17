@@ -219,18 +219,7 @@ export const VendorProfile = () => {
          </RemoveProfile>
          <SubmitProfile>
             <Link to="/main-page">
-               <Button
-                  type="button"
-                  padding="10px 24px 10px 24px"
-                  bgColor="#FFFFFF"
-                  color="#A3A3A3"
-                  fontSize="16px"
-                  ling-height="21.79px"
-                  bgColorActive="#FF4C00"
-                  bgColorHover="#484848"
-               >
-                  Отменить
-               </Button>
+               <CancelButton>Отменить</CancelButton>
             </Link>
             <Button
                padding="10px 24px 10px 24px"
@@ -309,4 +298,22 @@ const SubmitProfile = styled.div`
    width: 300px;
    right: 0;
    padding: 50px 0 50px 0;
+`
+const CancelButton = styled.button`
+   outline: none;
+   border: none;
+   padding: 10px 24px;
+   cursor: pointer;
+   font-family: 'Open Sans';
+   font-weight: 600;
+   font-size: 16px;
+   line-height: 22px;
+   color: #a3a3a3;
+   background: #ffffff;
+   &:hover {
+      color: #818181;
+   }
+   &:active {
+      color: #000000;
+   }
 `
