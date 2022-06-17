@@ -99,7 +99,6 @@ export const UserHeader = () => {
                </StyledGenres>
                <ul>
                   <li>
-                     <NavLink to="/filter-page">Электронные книги</NavLink>
                      <StyledScrollLink
                         activeClass="active"
                         smooth

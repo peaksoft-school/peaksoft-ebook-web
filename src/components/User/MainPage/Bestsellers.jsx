@@ -8,7 +8,7 @@ export const Bestsellers = ({ bestsellers }) => {
       <Container>
          <Nav>
             <h1>Бестселлеры</h1>
-            <StyledLink to="/">Смотреть все</StyledLink>
+            <StyledLink to="/filter-page">Смотреть все</StyledLink>
          </Nav>
          <AboutBookWithSlider books={bestsellers} />
       </Container>

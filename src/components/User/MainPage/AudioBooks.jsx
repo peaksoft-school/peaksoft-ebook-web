@@ -17,7 +17,7 @@ export const AudioBooks = ({ audioBooks }) => {
       <Container id="audiobooks">
          <Nav>
             <h1>Аудиокниги</h1>
-            <StyledLink to="/">Смотреть все</StyledLink>
+            <StyledLink to="/filter-page">Смотреть все</StyledLink>
          </Nav>
          <Content>
             <FlexBlock>

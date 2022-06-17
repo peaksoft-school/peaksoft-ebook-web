@@ -36,19 +36,19 @@ export const FilterSection = () => {
             </FilterType>
             <FilterType>
                <Checkbox />
-               <p>Зарубежная литература</p>
+               <p>Наука и техника</p>
             </FilterType>
             <FilterType>
                <Checkbox />
-               <p>Зарубежная литература</p>
+               <p>Деловая литература</p>
             </FilterType>
             <FilterType>
                <Checkbox />
-               <p>Зарубежная литература</p>
+               <p>Психология</p>
             </FilterType>
             <FilterType>
                <Checkbox />
-               <p>Зарубежная литература</p>
+               <p>Книги для детей</p>
             </FilterType>
          </FilterTypeContainer>
          <div>
